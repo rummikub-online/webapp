@@ -1,0 +1,12 @@
+{
+  "main": "main.js",
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "node --watch -r ts-node/register main.ts"
+  }
+}
