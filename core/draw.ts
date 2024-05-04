@@ -1,4 +1,10 @@
 import { CardList, cards } from "./card/cards";
+import { PLAYER_STARTUP_CARD_COUNT } from "./player";
+
+export type Draw = Readonly<{
+  cards: CardList;
+  drawStack: CardList;
+}>;
 
 const toShuffled = <T>(arr: readonly T[]) => {
   const arrCopy = [...arr];
@@ -13,8 +19,23 @@ const toShuffled = <T>(arr: readonly T[]) => {
 
 export const makeDrawStack = () => toShuffled(toShuffled(toShuffled(cards)));
 
-export const drawCard = ([card, ...newDrawStack]: CardList) =>
-  Object.freeze({
-    card,
-    drawStack: Object.freeze(newDrawStack),
-  });
+const drawCards = (drawStack: CardList, count: number): Draw => {
+  const draw = (stack: CardList, cards: CardList): Draw => {
+    if (stack[0] !== undefined && cards.length < count) {
+      const [drawedCard, ...newDrawStack] = stack;
+      return draw(newDrawStack, [...cards, drawedCard]);
+    }
+
+    return Object.freeze({
+      cards,
+      drawStack: Object.freeze(stack),
+    });
+  };
+
+  return draw(drawStack, []);
+};
+
+export const drawCard = (drawStack: CardList): Draw => drawCards(drawStack, 1);
+
+export const drawStartupCards = (drawStack: CardList): Draw =>
+  drawCards(drawStack, PLAYER_STARTUP_CARD_COUNT);
