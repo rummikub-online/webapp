@@ -1,11 +1,9 @@
-import {
-  CardList,
-  SUITE_MAX_CARDS_COUNT,
-  SUITE_MAX_END_NUM,
-  SUITE_MIN_CARDS_COUNT,
-  SUITE_MIN_START_NUM,
-  isJoker,
-} from "./card";
+import { CardList, isJoker } from "./cards";
+
+const SUITE_MIN_START_NUM = 1;
+const SUITE_MAX_END_NUM = 13;
+const SUITE_MIN_CARDS_COUNT = 3;
+const SUITE_MAX_CARDS_COUNT = 13;
 
 const hasValidLength = (cardSuite: CardList): boolean =>
   SUITE_MIN_CARDS_COUNT <= cardSuite.length &&
@@ -21,8 +19,9 @@ const firstIndexOfNonJokerCard = (cardSuite: CardList): number => {
 
     return currentIndex;
   };
+  const firstIndex = 0;
 
-  return nextIndexIfJokerAt(0);
+  return nextIndexIfJokerAt(firstIndex);
 };
 
 const lastIndexOfNonJokerCard = (cardSuite: CardList): number => {
@@ -34,8 +33,9 @@ const lastIndexOfNonJokerCard = (cardSuite: CardList): number => {
     }
     return currentIndex;
   };
+  const lastIndex = cardSuite.length - 1;
 
-  return previousIndexIfJokerAt(cardSuite.length - 1);
+  return previousIndexIfJokerAt(lastIndex);
 };
 
 const areColorsSame = (cardSuite: CardList): boolean => {
@@ -63,6 +63,7 @@ const findLastNum = (cardSuite: CardList): number => {
 
 const areNumbersFollowing = (cardSuite: CardList): boolean => {
   const firstNum = findFirstNum(cardSuite);
+  const firstIndex = 0;
 
   const isFollowing = (currentIndex: number): boolean => {
     const currentCard = cardSuite[currentIndex];
@@ -82,7 +83,7 @@ const areNumbersFollowing = (cardSuite: CardList): boolean => {
     return false;
   };
 
-  return isFollowing(0);
+  return isFollowing(firstIndex);
 };
 
 const hasValidBounds = (cardSuite: CardList): boolean =>

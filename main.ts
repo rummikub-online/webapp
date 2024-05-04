@@ -1,11 +1,11 @@
-import { CardList } from "./cards/card";
-import { drawCard, makeDrawStack } from "./draw";
+import { CardList } from "./core/card/cards";
+import { drawCard, makeDrawStack } from "./core/draw";
 import {
-  NUMBER_CARDS_PLAYER_STARTUP,
+  PLAYER_STARTUP_CARD_COUNT,
   Player,
   giveCard,
   makePlayer,
-} from "./player";
+} from "./core/player";
 
 const drawStack = makeDrawStack();
 const player1: Player = makePlayer();
@@ -19,7 +19,7 @@ const turn = (drawStack: CardList, player: Player) => {
 
   const newPlayer = giveCard(player, [drawn.card]);
 
-  if (newPlayer.cards.length < NUMBER_CARDS_PLAYER_STARTUP) {
+  if (newPlayer.cards.length < PLAYER_STARTUP_CARD_COUNT) {
     turn(newDrawStack, newPlayer);
   }
 };
