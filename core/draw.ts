@@ -1,5 +1,6 @@
 import { CardList, cards } from "./card/cards";
-import { PLAYER_STARTUP_CARD_COUNT } from "./player";
+
+export const PLAYER_STARTUP_CARD_COUNT = 14;
 
 export type Draw = Readonly<{
   cards: CardList;
