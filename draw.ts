@@ -1,4 +1,4 @@
-import { Card, cards } from "./cards";
+import { CardList, cards } from "./cards/card";
 
 const toShuffled = <T>(arr: readonly T[]) => {
   const arrCopy = [...arr];
@@ -11,13 +11,13 @@ const toShuffled = <T>(arr: readonly T[]) => {
   return arrCopy;
 };
 
-export const shuffledCards = () => toShuffled(toShuffled(toShuffled(cards)));
+export const makeDrawStack = () => toShuffled(toShuffled(toShuffled(cards)));
 
-export const drawCard = (oldCards: Card[]) => {
-  const [drawn, ...cards] = oldCards;
+export const drawCard = (drawStack: CardList) => {
+  const [card, ...newDrawStack] = drawStack;
 
   return Object.freeze({
-    drawn,
-    cards: Object.freeze(cards),
+    card,
+    drawStack: Object.freeze(newDrawStack),
   });
 };
