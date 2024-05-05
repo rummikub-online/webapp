@@ -1,0 +1,50 @@
+- name: Player
+  frName: Joueur
+  description: >
+    Il peut y avoir 2 à 4 joueurs
+- name: Card
+  frName: Carte
+  description: Carte de jeu qui possède un nombre de 1 à 13 et une couleur (jaune, rouge, bleu, noir) ou alors c'est un joker, il est noir ou rouge
+- name: Joker
+  frName: Joker
+  description: >
+    Carte pouvant remplacer n'importe quelle autre carte : sa couleur et son nombre sont ceux que le joueur souhaite
+- name: Point
+  frName: Point
+  description: >
+    Le nombre de point d'une carte est le nombre inscrit dessus. Les points d'une combinaison de carte correspondent à la somme des points de chaque carte.
+- name: Draw stack
+  frName: Pioche
+- name: Start
+  frName: Démarrage
+  description: >
+    Poser des cartes la première fois de la partie est un *démarrage*.
+    Pour qu’un joueur puisse $démarrer*, il faut que la ou les combinaisons qu’il dépose sur la table valent 30 points minimum.
+    Un joueur qui a *démarré* est un joueur qui a posé des cartes.
+- name: Turn
+  frName: Tour de jeu
+  description: >
+    Tour durant lequel un joueur peut jouer s'il a démarré ou piocher une carte.
+    Si le joueur ne peut pas démarrer, il pioche et termine son tour.
+- name: Combinasion of cards
+  frName: Combinaison de cartes
+  description: >
+    Groupe de cartes, peut être une suite ou une série.
+- name: Serie of cards
+  frName: Série de cartes
+  description: >
+    Liste de minimum 3 cartes et de maximum 4 cartes du même nombre mais de couleurs différentes.
+    Exemple de série valide : 3 rouge, 3 jaune, 3 bleu
+    Exemples de séries invalides : 
+    - 3 rouge, 3 bleu
+    - 3 rouge, 3 rouge, 3 jaune
+    - 3 rouge, 3 jaune, 4 bleu
+- name: Suite of cards
+  frName: Suite de cartes
+  description: >
+    Liste de de minimum 3 cartes et de maximum 13 cartes de la même couleur et de nombres se suivant.
+    Exemple de suite valide : 1 rouge, 2 rouge, 3 rouge, 4 rouge
+    Exemples de suites invalides : 
+    - 1 rouge, 2 rouge
+    - 1 rouge, 2 noir, 3 rouge
+    - 1 rouge, 3 rouge, 4 rouge
