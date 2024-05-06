@@ -1,5 +1,6 @@
-import { CardList } from "./card/cards";
-import { Turn, nextTurn } from "./turn";
+import { CardList } from "./entities/card";
+import { Turn } from "./entities/turn";
+import { nextTurn } from "./turn";
 
 const fakeDrawStackOf30Cards: CardList = Object.freeze(
   [...Array(30)].map((_) => Object.freeze({ color: "blue", num: 1 }))

@@ -1,24 +1,6 @@
-import { CardList, cards } from "./card/cards";
-
-export const PLAYER_STARTUP_CARD_COUNT = 14;
-
-export type Draw = Readonly<{
-  cards: CardList;
-  drawStack: CardList;
-}>;
-
-const toShuffled = <T>(arr: readonly T[]) => {
-  const arrCopy = [...arr];
-
-  for (let i = arrCopy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arrCopy[i], arrCopy[j]] = [arrCopy[j], arrCopy[i]];
-  }
-
-  return arrCopy;
-};
-
-export const makeDrawStack = () => toShuffled(toShuffled(toShuffled(cards)));
+import { PLAYER_STARTUP_CARD_COUNT } from "./constants/card";
+import { CardList } from "./entities/card";
+import { Draw } from "./entities/drawStack";
 
 const drawCards = (drawStack: CardList, count: number): Draw => {
   const draw = (stack: CardList, cards: CardList): Draw => {

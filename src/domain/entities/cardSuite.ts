@@ -1,9 +1,10 @@
-import { CardList, isJoker } from "./cards";
-
-const SUITE_MIN_START_NUM = 1;
-const SUITE_MAX_END_NUM = 13;
-const SUITE_MIN_CARDS_COUNT = 3;
-const SUITE_MAX_CARDS_COUNT = 13;
+import {
+  SUITE_MAX_CARDS_COUNT,
+  SUITE_MAX_END_NUM,
+  SUITE_MIN_CARDS_COUNT,
+  SUITE_MIN_START_NUM,
+} from "../constants/cardSuite";
+import { CardList, isJoker } from "./card";
 
 const hasValidLength = (cardSuite: CardList): boolean =>
   SUITE_MIN_CARDS_COUNT <= cardSuite.length &&

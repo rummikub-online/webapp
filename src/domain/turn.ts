@@ -1,13 +1,6 @@
-import { CardList } from "./card/cards";
 import { drawStartupCards } from "./draw";
-import { Player, giveStartupCards } from "./player";
-
-export type Turn = {
-  drawStack: CardList;
-  gameBoard: Array<CardList>;
-  players: Array<Player>;
-  currentPlayerIndex: number;
-};
+import { Turn } from "./entities/turn";
+import { giveStartupCards } from "./player";
 
 const currentPlayer = (turn: Turn) => turn.players[turn.currentPlayerIndex];
 const nextPlayerIndex = (turn: Turn) =>

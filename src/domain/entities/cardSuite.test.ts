@@ -1,4 +1,4 @@
-import { CardList } from "./cards";
+import { CardList } from "./card";
 import { isValidCardSuite } from "./cardSuite";
 
 describe("isValidCardSuite", () => {

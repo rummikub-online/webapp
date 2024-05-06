@@ -1,10 +1,5 @@
-import { CardList } from "./card/cards";
-
-export type Player = {
-  id: string;
-  cards: CardList;
-  hasDrewStartupCards: boolean;
-};
+import { CardList } from "./entities/card";
+import { Player } from "./entities/player";
 
 export const giveCards = (player: Player, cards: CardList): Player => ({
   id: player.id,
@@ -19,10 +14,4 @@ export const giveStartupCards = (
   id: player.id,
   cards: [...player.cards, ...startupCards],
   hasDrewStartupCards: true,
-});
-
-export const makePlayer = (): Player => ({
-  id: crypto.randomUUID(),
-  cards: [],
-  hasDrewStartupCards: false,
 });
