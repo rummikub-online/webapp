@@ -1,8 +1,8 @@
-import { CardList } from "./card";
+import { CardCombination } from "./cardCombination";
 
 export type Player = {
   id: string;
-  cards: CardList;
+  cards: CardCombination;
   hasDrewStartupCards: boolean;
 };
 

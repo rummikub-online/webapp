@@ -1,4 +1,4 @@
-import { JOKER_NUM } from "../constants/card";
+import { CARD_JOKER_NUMBER } from "../constants/card";
 
 export type CardColor = "red" | "blue" | "black" | "yellow";
 
@@ -25,8 +25,6 @@ export type Card = Readonly<{
   num: CardNum;
 }>;
 
-export type CardList = Readonly<Card[]>;
-
 export const isJoker = (card: Card) => {
-  return card.num === JOKER_NUM;
+  return card.num === CARD_JOKER_NUMBER;
 };

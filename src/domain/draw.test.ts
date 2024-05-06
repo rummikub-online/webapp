@@ -1,13 +1,13 @@
 import { drawCard, drawStartupCards } from "./draw";
-import { CardList } from "./entities/card";
+import { CardCombination } from "./entities/cardCombination";
 
-const fakeDrawStackOf30Cards: CardList = Object.freeze(
+const fakeDrawStackOf30Cards: CardCombination = Object.freeze(
   [...Array(30)].map((_) => Object.freeze({ color: "blue", num: 1 }))
 );
 
 describe("drawCard", () => {
   test("returns the first card of drawStack", () => {
-    const drawStack: CardList = [
+    const drawStack: CardCombination = [
       {
         color: "black",
         num: 2,
@@ -23,13 +23,13 @@ describe("drawCard", () => {
   });
 
   test("returns empty cards if drawStack is empty", () => {
-    const drawStack: CardList = [];
+    const drawStack: CardCombination = [];
 
     expect(drawCard(drawStack).cards).toStrictEqual([]);
   });
 
   test("returns the new drawStack without drawed card", () => {
-    const drawStack: CardList = [
+    const drawStack: CardCombination = [
       {
         color: "black",
         num: 2,
@@ -40,7 +40,7 @@ describe("drawCard", () => {
   });
 
   test("returns new empty drawStack if drawStack is empty", () => {
-    const drawStack: CardList = [];
+    const drawStack: CardCombination = [];
 
     expect(drawCard(drawStack).drawStack).toStrictEqual([]);
   });

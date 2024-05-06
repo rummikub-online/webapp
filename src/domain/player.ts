@@ -1,7 +1,7 @@
-import { CardList } from "./entities/card";
+import { CardCombination } from "./entities/cardCombination";
 import { Player } from "./entities/player";
 
-export const giveCards = (player: Player, cards: CardList): Player => ({
+export const giveCards = (player: Player, cards: CardCombination): Player => ({
   id: player.id,
   cards: [...player.cards, ...cards],
   hasDrewStartupCards: player.hasDrewStartupCards,
@@ -9,7 +9,7 @@ export const giveCards = (player: Player, cards: CardList): Player => ({
 
 export const giveStartupCards = (
   player: Player,
-  startupCards: CardList
+  startupCards: CardCombination
 ): Player => ({
   id: player.id,
   cards: [...player.cards, ...startupCards],

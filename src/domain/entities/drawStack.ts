@@ -1,13 +1,8 @@
-import { cards } from "../constants/card";
+import { CARDS } from "../constants/card";
 import { toShuffled } from "../utils/array";
-import { CardList } from "./card";
+import { Card } from "./card";
 
-export type DrawStack = CardList;
+export type DrawStack = Array<Card>;
 
 export const makeDrawStack = (): DrawStack =>
-  toShuffled(toShuffled(toShuffled(cards)));
-
-export type Draw = Readonly<{
-  cards: CardList;
-  drawStack: CardList;
-}>;
+  toShuffled(toShuffled(toShuffled(CARDS)));

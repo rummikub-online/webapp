@@ -1,14 +1,14 @@
-import { CardList } from "./entities/card";
-import { Turn } from "./entities/turn";
+import { CardCombination } from "./entities/cardCombination";
+import { Game } from "./entities/game";
 import { nextTurn } from "./turn";
 
-const fakeDrawStackOf30Cards: CardList = Object.freeze(
+const fakeDrawStackOf30Cards: CardCombination = Object.freeze(
   [...Array(30)].map((_) => Object.freeze({ color: "blue", num: 1 }))
 );
 
 describe("turn", () => {
   test("give startup cards if payer don't have received them", () => {
-    const turn1: Turn = {
+    const turn1: Game = {
       drawStack: fakeDrawStackOf30Cards,
       players: [
         {
@@ -28,7 +28,7 @@ describe("turn", () => {
   });
 
   test("pass the turn to the next player in the circle", () => {
-    const turn1: Turn = {
+    const turn1: Game = {
       drawStack: fakeDrawStackOf30Cards,
       players: [
         {
@@ -52,7 +52,7 @@ describe("turn", () => {
   });
 
   test("pass the turn to the first player if previous player was the last of the circle", () => {
-    const turn1: Turn = {
+    const turn1: Game = {
       drawStack: fakeDrawStackOf30Cards,
       players: [
         {

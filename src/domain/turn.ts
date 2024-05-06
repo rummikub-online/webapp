@@ -1,14 +1,14 @@
 import { drawStartupCards } from "./draw";
-import { Turn } from "./entities/turn";
+import { Game } from "./entities/game";
 import { giveStartupCards } from "./player";
 
-const currentPlayer = (turn: Turn) => turn.players[turn.currentPlayerIndex];
-const nextPlayerIndex = (turn: Turn) =>
+const currentPlayer = (turn: Game) => turn.players[turn.currentPlayerIndex];
+const nextPlayerIndex = (turn: Game) =>
   turn.currentPlayerIndex >= turn.players.length - 1
     ? 0
     : turn.currentPlayerIndex + 1;
 
-const startupTurn = (turn: Turn) => {
+const startupTurn = (turn: Game) => {
   const { drawStack, cards } = drawStartupCards(turn.drawStack);
 
   const newCurrentPlayer = giveStartupCards(currentPlayer(turn), cards);
@@ -25,7 +25,7 @@ const startupTurn = (turn: Turn) => {
   };
 };
 
-export const nextTurn = (turn: Turn): Turn => {
+export const nextTurn = (turn: Game): Game => {
   if (!currentPlayer(turn).hasDrewStartupCards) {
     return startupTurn(turn);
   }
