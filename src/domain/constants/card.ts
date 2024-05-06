@@ -1,4 +1,4 @@
-import { Card, CardColor, CardNum } from "../entities/card";
+import { CardColor, CardDto, CardNum } from "../dtos/card";
 
 export const CARD_COLORS: Readonly<Array<CardColor>> = Object.freeze([
   "red",
@@ -13,7 +13,7 @@ export const CARD_NUMBERS: Readonly<Array<CardNum>> = Object.freeze([
 
 export const CARD_JOKER_NUMBER = 0;
 
-const makeCard = (color: CardColor, num: CardNum): Card =>
+const makeCard = (color: CardColor, num: CardNum): CardDto =>
   Object.freeze({
     color,
     num,
