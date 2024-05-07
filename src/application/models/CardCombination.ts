@@ -1,7 +1,8 @@
 import { CardDto } from "../../domain/dtos/card";
 import { CardCombinationDto } from "../../domain/dtos/cardCombination";
+import { CardListDto } from "../../domain/dtos/cardList";
+import { CardCombinationType } from "../../domain/enums/CardCombinationType";
 import { isValidCardSuite } from "../../domain/gamerules/cardSuite/isValid";
-import { CardCombinationType } from "../enums/CardCombinationType";
 
 export interface ICardCombination {
   toDto(): CardCombinationDto;
@@ -14,11 +15,11 @@ export interface ICardCombination {
 }
 
 type CardCombinationProps = {
-  cards?: CardCombinationDto;
+  cards?: CardListDto;
 };
 
 export class CardCombination implements ICardCombination {
-  private cards: CardCombinationDto;
+  private cards: CardListDto;
 
   constructor(props: CardCombinationProps) {
     this.cards = props.cards ?? [];
@@ -85,6 +86,9 @@ export class CardCombination implements ICardCombination {
   }
 
   toDto(): CardCombinationDto {
-    return [...this.cards];
+    return {
+      type: this.type(),
+      cards: [...this.cards],
+    };
   }
 }

@@ -4,14 +4,14 @@ import {
   SUITE_MIN_CARDS_COUNT,
   SUITE_MIN_START_NUM,
 } from "../../constants/cardSuite";
-import { CardCombinationDto } from "../../dtos/cardCombination";
+import { CardListDto } from "../../dtos/cardList";
 import { isJoker } from "../../utils/card";
 
-const hasValidLength = (cardSuite: CardCombinationDto): boolean =>
+const hasValidLength = (cardSuite: CardListDto): boolean =>
   SUITE_MIN_CARDS_COUNT <= cardSuite.length &&
   cardSuite.length <= SUITE_MAX_CARDS_COUNT;
 
-const firstIndexOfNonJokerCard = (cardSuite: CardCombinationDto): number => {
+const firstIndexOfNonJokerCard = (cardSuite: CardListDto): number => {
   const nextIndexIfJokerAt = (currentIndex: number): number => {
     const currentCard = cardSuite[currentIndex];
 
@@ -26,7 +26,7 @@ const firstIndexOfNonJokerCard = (cardSuite: CardCombinationDto): number => {
   return nextIndexIfJokerAt(firstIndex);
 };
 
-const lastIndexOfNonJokerCard = (cardSuite: CardCombinationDto): number => {
+const lastIndexOfNonJokerCard = (cardSuite: CardListDto): number => {
   const previousIndexIfJokerAt = (currentIndex: number): number => {
     const currentCard = cardSuite[currentIndex];
 
@@ -40,7 +40,7 @@ const lastIndexOfNonJokerCard = (cardSuite: CardCombinationDto): number => {
   return previousIndexIfJokerAt(lastIndex);
 };
 
-const areColorsSame = (cardSuite: CardCombinationDto): boolean => {
+const areColorsSame = (cardSuite: CardListDto): boolean => {
   const firstCard = cardSuite[firstIndexOfNonJokerCard(cardSuite)];
 
   return cardSuite
@@ -48,13 +48,13 @@ const areColorsSame = (cardSuite: CardCombinationDto): boolean => {
     .every((card) => card.color === firstCard.color);
 };
 
-const findFirstNum = (cardSuite: CardCombinationDto): number => {
+const findFirstNum = (cardSuite: CardListDto): number => {
   const firstNonJokerIndex = firstIndexOfNonJokerCard(cardSuite);
 
   return cardSuite[firstNonJokerIndex].num - firstNonJokerIndex;
 };
 
-const findLastNum = (cardSuite: CardCombinationDto): number => {
+const findLastNum = (cardSuite: CardListDto): number => {
   const lastNonJokerIndex = lastIndexOfNonJokerCard(cardSuite);
 
   return (
@@ -63,7 +63,7 @@ const findLastNum = (cardSuite: CardCombinationDto): number => {
   );
 };
 
-const areNumbersFollowing = (cardSuite: CardCombinationDto): boolean => {
+const areNumbersFollowing = (cardSuite: CardListDto): boolean => {
   const firstNum = findFirstNum(cardSuite);
   const firstIndex = 0;
 
@@ -88,11 +88,11 @@ const areNumbersFollowing = (cardSuite: CardCombinationDto): boolean => {
   return isFollowing(firstIndex);
 };
 
-const hasValidBounds = (cardSuite: CardCombinationDto): boolean =>
+const hasValidBounds = (cardSuite: CardListDto): boolean =>
   SUITE_MIN_START_NUM <= findFirstNum(cardSuite) &&
   findLastNum(cardSuite) <= SUITE_MAX_END_NUM;
 
-export const isValidCardSuite = (cardSuite: CardCombinationDto): boolean =>
+export const isValidCardSuite = (cardSuite: CardListDto): boolean =>
   hasValidLength(cardSuite) &&
   areColorsSame(cardSuite) &&
   areNumbersFollowing(cardSuite) &&

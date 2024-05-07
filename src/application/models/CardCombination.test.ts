@@ -1,4 +1,4 @@
-import { CardCombinationType } from "../enums/CardCombinationType";
+import { CardCombinationType } from "../../domain/enums/CardCombinationType";
 import { CardCombination } from "./CardCombination";
 
 describe("CardCombination", () => {
@@ -110,11 +110,11 @@ describe("CardCombination", () => {
       const splitted = combi.splitAfter(1);
 
       expect(splitted).toHaveLength(2);
-      expect(splitted[0].toDto()).toStrictEqual([
+      expect(splitted[0].explode()).toStrictEqual([
         { color: "black", num: 2 },
         { color: "black", num: 3 },
       ]);
-      expect(splitted[1].toDto()).toStrictEqual([
+      expect(splitted[1].explode()).toStrictEqual([
         { color: "black", num: 4 },
         { color: "black", num: 5 },
       ]);
@@ -133,13 +133,13 @@ describe("CardCombination", () => {
       const splitted = combi.splitAfter(3);
 
       expect(splitted).toHaveLength(2);
-      expect(splitted[0].toDto()).toStrictEqual([
+      expect(splitted[0].explode()).toStrictEqual([
         { color: "black", num: 2 },
         { color: "black", num: 3 },
         { color: "black", num: 4 },
         { color: "black", num: 5 },
       ]);
-      expect(splitted[1].toDto()).toStrictEqual([]);
+      expect(splitted[1].explode()).toStrictEqual([]);
     });
 
     test("throw error if index is out of range", () => {
@@ -174,14 +174,14 @@ describe("CardCombination", () => {
       combi1.addCardAt({ color: "black", num: 6 }, 4);
       combi2.addCardAt({ color: "black", num: 6 }, 0);
 
-      expect(combi1.toDto()).toStrictEqual([
+      expect(combi1.explode()).toStrictEqual([
         { color: "black", num: 2 },
         { color: "black", num: 3 },
         { color: "black", num: 4 },
         { color: "black", num: 5 },
         { color: "black", num: 6 },
       ]);
-      expect(combi2.toDto()).toStrictEqual([{ color: "black", num: 6 }]);
+      expect(combi2.explode()).toStrictEqual([{ color: "black", num: 6 }]);
     });
 
     test("throw error if index is out of range", () => {
@@ -231,7 +231,7 @@ describe("CardCombination", () => {
 
       combi.pickCardFrom(1);
 
-      expect(combi.toDto()).toStrictEqual([
+      expect(combi.explode()).toStrictEqual([
         { color: "black", num: 2 },
         { color: "black", num: 4 },
         { color: "black", num: 5 },
@@ -262,10 +262,13 @@ describe("CardCombination", () => {
         ],
       });
 
-      expect(combi.toDto()).toStrictEqual([
-        { color: "blue", num: 7 },
-        { color: "blue", num: 8 },
-      ]);
+      expect(combi.toDto()).toStrictEqual({
+        type: CardCombinationType.Invalid,
+        cards: [
+          { color: "blue", num: 7 },
+          { color: "blue", num: 8 },
+        ],
+      });
     });
   });
 });

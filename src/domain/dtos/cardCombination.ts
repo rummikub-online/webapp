@@ -1,3 +1,7 @@
-import { CardDto } from "./card";
+import { CardCombinationType } from "../enums/CardCombinationType";
+import { CardListDto } from "./cardList";
 
-export type CardCombinationDto = Readonly<CardDto[]>;
+export type CardCombinationDto = Readonly<{
+  type: CardCombinationType;
+  cards: CardListDto;
+}>;

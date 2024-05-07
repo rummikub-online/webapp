@@ -1,9 +1,9 @@
-import { CardCombinationDto } from "../../dtos/cardCombination";
+import { CardListDto } from "../../dtos/cardList";
 import { isValidCardSuite } from "./isValid";
 
 describe("isValidCardSuite", () => {
   test("Returns true if suite is valid and contains 1 joker", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 1,
@@ -24,7 +24,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns true if suite is valid and contains 2 jokers", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 1,
@@ -49,7 +49,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns true if suite is valid and starts with 1 joker", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "black",
         num: 0,
@@ -74,7 +74,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns true if suite is valid and starts with 2 jokers", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "black",
         num: 0,
@@ -99,7 +99,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns true if suite is valid and ends with 1 joker", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 8,
@@ -124,7 +124,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns true if suite is valid and ends with 2 jokers", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 9,
@@ -149,7 +149,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns true if suite is minimum and valid", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 1,
@@ -170,7 +170,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns true if suite is maximum and valid", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 1,
@@ -231,7 +231,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns false if suite is too short", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 1,
@@ -248,7 +248,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns false if suite starts before 1", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 0,
@@ -269,7 +269,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns false if suite ends after 13", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 12,
@@ -290,7 +290,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns false if suite has different colors", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 1,
@@ -311,7 +311,7 @@ describe("isValidCardSuite", () => {
   });
 
   test("Returns false numbers are not following", () => {
-    const cardSuite: CardCombinationDto = [
+    const cardSuite: CardListDto = [
       {
         color: "red",
         num: 1,
