@@ -29,7 +29,7 @@ export class CardCombination implements ICardCombination {
       return CardCombinationType.Suite;
     }
 
-    // todo @matthieu
+    // todo @matthieu: ajouter cette condition quand la fonction est dispo
     // if (isValidCardSerie(this.cards)) {
     //   return CardCombinationType.Serie;
     // }

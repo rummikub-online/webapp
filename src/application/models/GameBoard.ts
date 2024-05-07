@@ -9,7 +9,7 @@ export interface IGameBoard {
 }
 
 type GameBoardProps = {
-  combinations: Array<ICardCombination>;
+  combinations?: Array<ICardCombination>;
 };
 
 export class GameBoard implements IGameBoard {

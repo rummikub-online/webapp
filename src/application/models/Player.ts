@@ -1,10 +1,10 @@
 import { CardDto } from "../../domain/dtos/card";
 import { PlayerDto } from "../../domain/dtos/player";
 import { IDrawStack } from "./DrawStack";
-import { IGame } from "./Game";
 import { IGameBoard } from "./GameBoard";
 
 export interface IPlayer {
+  id: string;
   receiveCards(...cards: Array<CardDto>): void;
   drawCard(): void;
   play(): void;
