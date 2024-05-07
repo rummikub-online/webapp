@@ -1,4 +1,4 @@
-import { CardColor, CardDto, CardNum } from "../../domain/dtos/card";
+import { CardDto } from "../../domain/dtos/card";
 import { CardCombinationDto } from "../../domain/dtos/cardCombination";
 import { isValidCardSuite } from "../../domain/gamerules/cardSuite/isValid";
 import { CardCombinationType } from "../enums/CardCombinationType";
@@ -10,7 +10,7 @@ export interface ICardCombination {
   addCardAt(card: CardDto, index: number): void;
   pickCardFrom(index: number): CardDto;
   explode(): Array<CardDto>;
-  splitAt(index: number): [ICardCombination, ICardCombination];
+  splitAfter(index: number): [ICardCombination, ICardCombination];
 }
 
 type CardCombinationProps = {
@@ -37,8 +37,8 @@ export class CardCombination implements ICardCombination {
     return CardCombinationType.Invalid;
   }
 
-  explode(): Readonly<{ color: CardColor; num: CardNum }>[] {
-    throw new Error("Method not implemented.");
+  explode(): Array<CardDto> {
+    return [...this.cards];
   }
 
   isValid(): boolean {
@@ -46,15 +46,42 @@ export class CardCombination implements ICardCombination {
   }
 
   addCardAt(card: CardDto, index: number = 0): void {
-    throw new Error("Method not implemented.");
+    if (index < 0 || this.cards.length < index) {
+      throw new Error("Index is out of range");
+    }
+
+    const newCards = [...this.cards];
+
+    newCards.splice(index, 0, card);
+
+    this.cards = Object.freeze(newCards);
   }
 
   pickCardFrom(index: number): CardDto {
-    throw new Error("Method not implemented.");
+    if (index < 0 || this.cards.length - 1 < index) {
+      throw new Error("Index is out of range");
+    }
+
+    const newCards = [...this.cards];
+
+    const [pickedCard] = newCards.splice(index, 1);
+
+    this.cards = Object.freeze(newCards);
+
+    return pickedCard;
   }
 
-  splitAt(index: number): [ICardCombination, ICardCombination] {
-    throw new Error("Method not implemented.");
+  splitAfter(index: number): [ICardCombination, ICardCombination] {
+    if (index < 0 || this.cards.length - 1 < index) {
+      throw new Error("Index is out of range");
+    }
+
+    const sliceIndex = index + 1;
+
+    return [
+      new CardCombination({ cards: this.cards.slice(0, sliceIndex) }),
+      new CardCombination({ cards: this.cards.slice(sliceIndex) }),
+    ];
   }
 
   toDto(): CardCombinationDto {
