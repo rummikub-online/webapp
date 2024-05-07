@@ -12,7 +12,7 @@ export interface IDrawStack {
 }
 
 type DrawStackProps = {
-  cards: Array<CardDto>;
+  cards?: Array<CardDto>;
 };
 
 export class DrawStack implements IDrawStack {

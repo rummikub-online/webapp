@@ -25,7 +25,7 @@ export class Game implements IGame {
   private state: GameState;
 
   constructor(props: GameProps) {
-    this.drawStack = props.drawStack ?? new DrawStack();
+    this.drawStack = props.drawStack ?? new DrawStack({});
     this.gameBoard = props.gameBoard ?? new GameBoard({});
     this.state = props.state ?? GameState.Created;
   }
@@ -66,7 +66,7 @@ export class Game implements IGame {
 
   private distributeStartupCardsToPlayers(): void {
     this.players.forEach((player) =>
-      player.receiveCards(this.drawStack.drawStartupCards())
+      player.receiveCards(...this.drawStack.drawStartupCards())
     );
   }
 
