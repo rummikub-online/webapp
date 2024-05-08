@@ -2,19 +2,6 @@ import { DrawStack } from "./DrawStack";
 
 describe("DrawStack", () => {
   describe("drawCard", () => {
-    test("draw return the first card", () => {
-      const drawStack = new DrawStack({
-        cards: [
-          { color: "blue", num: 7 },
-          { color: "blue", num: 6 },
-        ],
-      });
-
-      const drawedCard = drawStack.drawCard();
-
-      expect(drawedCard).toStrictEqual({ color: "blue", num: 7 });
-    });
-
     test("return the first card", () => {
       const drawStack = new DrawStack({
         cards: [
@@ -28,15 +15,7 @@ describe("DrawStack", () => {
       expect(drawedCard).toStrictEqual({ color: "blue", num: 7 });
     });
 
-    test("throw error if not more cards", () => {
-      const drawStack = new DrawStack({
-        cards: [],
-      });
-
-      expect(() => drawStack.drawCard()).toThrow(Error);
-    });
-
-    test("draw card remove it from stack", () => {
+    test("remove the drawed card from the stack", () => {
       const drawStack = new DrawStack({
         cards: [{ color: "blue", num: 7 }],
       });
@@ -45,10 +24,33 @@ describe("DrawStack", () => {
 
       expect(drawStack.isEmpty()).toBeTruthy();
     });
+
+    test("throw error if no more cards", () => {
+      const drawStack = new DrawStack({
+        cards: [],
+      });
+
+      expect(() => drawStack.drawCard()).toThrow(Error);
+    });
+  });
+
+  describe("putBack", () => {
+    test("add the card to beginning of the stack", () => {
+      const drawStack = new DrawStack({
+        cards: [
+          { color: "blue", num: 7 },
+          { color: "blue", num: 6 },
+        ],
+      });
+
+      drawStack.putBack({ color: "blue", num: 9 });
+
+      expect(drawStack.drawCard()).toStrictEqual({ color: "blue", num: 9 });
+    });
   });
 
   describe("drawStartupCards", () => {
-    test("draw return the first 14th cards", () => {
+    test("return the first 14th cards", () => {
       const drawStack = new DrawStack({
         cards: [
           { color: "blue", num: 0 },

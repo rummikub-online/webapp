@@ -1,5 +1,6 @@
 import { CARDS, PLAYER_STARTUP_CARD_COUNT } from "../../domain/constants/card";
 import { CardDto } from "../../domain/dtos/card";
+import { CardListDto } from "../../domain/dtos/cardList";
 import { DrawStackDto } from "../../domain/dtos/drawStack";
 import { toShuffled } from "../utils/array";
 
@@ -7,19 +8,23 @@ export interface IDrawStack {
   isEmpty(): boolean;
   shuffle(): void;
   drawCard(): CardDto;
-  drawStartupCards(): Array<CardDto>;
+  drawStartupCards(): CardListDto;
+  putBack(card: CardDto): void;
   toDto(): DrawStackDto;
 }
 
 type DrawStackProps = {
-  cards?: Array<CardDto>;
+  cards?: CardListDto;
 };
 
 export class DrawStack implements IDrawStack {
-  private cards: Array<CardDto>;
+  private cards: CardListDto;
 
   constructor(props: DrawStackProps) {
     this.cards = props.cards ?? [...CARDS];
+  }
+  putBack(card: CardDto): void {
+    this.cards = [card, ...this.cards];
   }
 
   shuffle(): void {
@@ -35,16 +40,14 @@ export class DrawStack implements IDrawStack {
       throw new Error("Draw stack is empty");
     }
 
-    const card = this.cards.shift();
+    const [drawedCard, ...remainingCards] = this.cards;
 
-    if (card === undefined) {
-      throw new Error("Draw stack is empty");
-    }
+    this.cards = remainingCards;
 
-    return card;
+    return drawedCard;
   }
 
-  drawStartupCards(): Array<CardDto> {
+  drawStartupCards(): CardListDto {
     const drawedCards = [];
 
     for (let i = 0; i < PLAYER_STARTUP_CARD_COUNT; i++) {
