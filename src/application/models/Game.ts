@@ -1,4 +1,4 @@
-import { firstPlayer } from "../../domain/gamerules/player/firstToPlay";
+import { indexOfFirstPlayerByDrawedCard } from "../../domain/gamerules/player/firstToPlay";
 import { isPlayerCountValid } from "../../domain/gamerules/player/isCountValid";
 import { DrawStack, IDrawStack } from "./DrawStack";
 import { GameBoard, IGameBoard } from "./GameBoard";
@@ -60,27 +60,24 @@ export class Game implements IGame {
 
     this.state = "started";
 
-    this.distributeStartupCardsToPlayers();
+    this.drawStack.shuffle();
 
-    this.giveMainToFirstPlayer();
+    this.players.forEach((player) => player.drawStartupCards());
+
+    this.determineFirstPlayer();
   }
 
-  private distributeStartupCardsToPlayers(): void {
-    this.players.forEach((player) =>
-      player.receiveCards(...this.drawStack.drawStartupCards())
-    );
-  }
-
-  private giveMainToFirstPlayer(): void {
-    const firstPlayerDto = firstPlayer(
-      this.players.map((player) => player.toDto())
+  private determineFirstPlayer(): void {
+    const drawedCardsByPLayers = this.players.map(() =>
+      this.drawStack.drawCard()
     );
 
-    const firstPlayerIndex = this.players.findIndex(
-      (player) => player.id === firstPlayerDto.id
-    );
+    const firstPlayerIndex =
+      indexOfFirstPlayerByDrawedCard(drawedCardsByPLayers);
 
     this.currentPlayerIndex = firstPlayerIndex;
+
+    drawedCardsByPLayers.forEach((card) => this.drawStack.putBack(card));
   }
 
   private currentPlayer(): IPlayer {

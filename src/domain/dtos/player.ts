@@ -1,7 +1,8 @@
-import { CardCombinationDto } from "./cardCombination";
+import { CardListDto } from "./cardList";
 
 export type PlayerDto = {
   id: string;
-  cards: CardCombinationDto;
+  cards: CardListDto;
   hasDrewStartupCards: boolean;
+  hasStarted: boolean;
 };
