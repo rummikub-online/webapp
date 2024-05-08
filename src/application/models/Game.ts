@@ -1,6 +1,5 @@
 import { firstPlayer } from "../../domain/gamerules/player/firstToPlay";
 import { isPlayerCountValid } from "../../domain/gamerules/player/isCountValid";
-import { GameState } from "../enums/GameState";
 import { DrawStack, IDrawStack } from "./DrawStack";
 import { GameBoard, IGameBoard } from "./GameBoard";
 import { IPlayer, Player } from "./Player";
@@ -9,6 +8,8 @@ export interface IGame {
   addPlayer(): void;
   start(): void;
 }
+
+type GameState = "created" | "started" | "ended";
 
 type GameProps = {
   playerCount: number;
@@ -27,11 +28,11 @@ export class Game implements IGame {
   constructor(props: GameProps) {
     this.drawStack = props.drawStack ?? new DrawStack({});
     this.gameBoard = props.gameBoard ?? new GameBoard({});
-    this.state = props.state ?? GameState.Created;
+    this.state = props.state ?? "created";
   }
 
   addPlayer(): void {
-    if (this.state !== GameState.Created) {
+    if (this.state !== "created") {
       throw new Error("Game already started");
     }
 
@@ -49,7 +50,7 @@ export class Game implements IGame {
   }
 
   start() {
-    if (this.state !== GameState.Created) {
+    if (this.state !== "created") {
       throw new Error("Game already started");
     }
 
@@ -57,7 +58,7 @@ export class Game implements IGame {
       throw new Error("Invalid number of players");
     }
 
-    this.state = GameState.Started;
+    this.state = "started";
 
     this.distributeStartupCardsToPlayers();
 

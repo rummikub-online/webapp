@@ -1,4 +1,3 @@
-import { CardCombinationType } from "../../domain/enums/CardCombinationType";
 import { CardCombination } from "./CardCombination";
 
 describe("CardCombination", () => {
@@ -12,7 +11,7 @@ describe("CardCombination", () => {
         ],
       });
 
-      expect(combi.type()).toBe(CardCombinationType.Suite);
+      expect(combi.type()).toBe("suite");
     });
 
     test.skip("guess Serie", () => {
@@ -24,7 +23,7 @@ describe("CardCombination", () => {
         ],
       });
 
-      expect(combi.type()).toBe(CardCombinationType.Serie);
+      expect(combi.type()).toBe("serie");
     });
 
     test("fallback to Invalid type if not a Suite nor a Serie", () => {
@@ -36,7 +35,7 @@ describe("CardCombination", () => {
         ],
       });
 
-      expect(combi.type()).toBe(CardCombinationType.Invalid);
+      expect(combi.type()).toBe("invalid");
     });
   });
 
@@ -263,7 +262,7 @@ describe("CardCombination", () => {
       });
 
       expect(combi.toDto()).toStrictEqual({
-        type: CardCombinationType.Invalid,
+        type: "invalid",
         cards: [
           { color: "blue", num: 7 },
           { color: "blue", num: 8 },

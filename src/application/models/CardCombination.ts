@@ -1,7 +1,9 @@
 import { CardDto } from "../../domain/dtos/card";
-import { CardCombinationDto } from "../../domain/dtos/cardCombination";
+import {
+  CardCombinationDto,
+  CardCombinationType,
+} from "../../domain/dtos/cardCombination";
 import { CardListDto } from "../../domain/dtos/cardList";
-import { CardCombinationType } from "../../domain/enums/CardCombinationType";
 import { isValidCardSuite } from "../../domain/gamerules/cardSuite/isValid";
 
 export interface ICardCombination {
@@ -27,15 +29,15 @@ export class CardCombination implements ICardCombination {
 
   type(): CardCombinationType {
     if (isValidCardSuite(this.cards)) {
-      return CardCombinationType.Suite;
+      return "suite";
     }
 
     // todo @matthieu: ajouter cette condition quand la fonction est dispo
     // if (isValidCardSerie(this.cards)) {
-    //   return CardCombinationType.Serie;
+    //   return "serie";
     // }
 
-    return CardCombinationType.Invalid;
+    return "invalid";
   }
 
   explode(): Array<CardDto> {
@@ -43,7 +45,7 @@ export class CardCombination implements ICardCombination {
   }
 
   isValid(): boolean {
-    return this.type() !== CardCombinationType.Invalid;
+    return this.type() !== "invalid";
   }
 
   addCardAt(card: CardDto, index: number = 0): void {

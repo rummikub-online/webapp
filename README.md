@@ -13,9 +13,9 @@
     > Le code est ici écrit en "Programmation fonctionnelle" : tout est immuable, les fonctions sont pures et sans effet de bord.
     - [**constants/**](src/domain/constants)
       > Nombre de joueur max, cartes, etc. Pas de fonctions exportées.
-    - [**entities/**](src/domain/entities)
-      > Les entités sont des interfaces, les fichiers peuvent contenir et exporter des fonctions utilitaires aux entités mais rien de plus.
+    - [**dtos/**](src/domain/dots)
+      > Les DataTransferObjects, ce sont les types des entités manipulées.
     - [**gamerules/**](src/domain/gamerules)
       > Fonctions qui régissent le jeu : est-ce qu'un joueur a gagné, est-ce que la suite est valide, etc.
     - [**utils/**](src/domain/utils)
-      > Des fonctions globales et utilitaires pour le jeu
+      > Fonctions globales et utilitaires pour le jeu, ex : isJoker(card)
