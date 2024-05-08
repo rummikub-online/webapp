@@ -1,5 +1,6 @@
 import { CardListDto } from "../../domain/dtos/cardList";
 import { GameBoardDto } from "../../domain/dtos/gameBoard";
+import { cardCombinationsPoints } from "../../domain/gamerules/cardCombination/points";
 import { CardCombination, ICardCombination } from "./CardCombination";
 
 export interface IGameBoard {
@@ -8,6 +9,7 @@ export interface IGameBoard {
   backup(): void;
   restoreBackup(): void;
   toDto(): GameBoardDto;
+  points(): number;
 }
 
 type GameBoardProps = {
@@ -20,6 +22,10 @@ export class GameBoard implements IGameBoard {
 
   constructor(props: GameBoardProps) {
     this.combinations = props.combinations ?? [];
+  }
+
+  points(): number {
+    return cardCombinationsPoints(this.toDto().combinations);
   }
 
   createCombination(cards: CardListDto): void {

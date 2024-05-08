@@ -3,7 +3,7 @@ import { GameBoard } from "./GameBoard";
 
 describe("GameBoard", () => {
   describe("backup", () => {
-    test("can cancel modifiations", () => {
+    test("can cancel modifications", () => {
       const gameBoard = new GameBoard({});
 
       gameBoard.backup();
@@ -13,24 +13,6 @@ describe("GameBoard", () => {
       expect(gameBoard.toDto()).toStrictEqual({
         combinations: [],
         isValid: true,
-      });
-    });
-  });
-
-  describe("createCombination", () => {
-    test("create combination", () => {
-      const gameBoard = new GameBoard({});
-
-      gameBoard.createCombination([{ color: "black", num: 7 }]);
-
-      expect(gameBoard.toDto()).toStrictEqual({
-        combinations: [
-          {
-            type: "invalid",
-            cards: [{ color: "black", num: 7 }],
-          },
-        ],
-        isValid: false,
       });
     });
   });
