@@ -5,19 +5,19 @@ describe("DrawStack", () => {
     test("return the first card", () => {
       const drawStack = new DrawStack({
         cards: [
-          { color: "blue", num: 7 },
-          { color: "blue", num: 6 },
+          { color: "blue", number: 7 },
+          { color: "blue", number: 6 },
         ],
       });
 
       const drawedCard = drawStack.drawCard();
 
-      expect(drawedCard).toStrictEqual({ color: "blue", num: 7 });
+      expect(drawedCard).toStrictEqual({ color: "blue", number: 7 });
     });
 
     test("remove the drawed card from the stack", () => {
       const drawStack = new DrawStack({
-        cards: [{ color: "blue", num: 7 }],
+        cards: [{ color: "blue", number: 7 }],
       });
 
       drawStack.drawCard();
@@ -38,14 +38,14 @@ describe("DrawStack", () => {
     test("add the card to beginning of the stack", () => {
       const drawStack = new DrawStack({
         cards: [
-          { color: "blue", num: 7 },
-          { color: "blue", num: 6 },
+          { color: "blue", number: 7 },
+          { color: "blue", number: 6 },
         ],
       });
 
-      drawStack.putBack({ color: "blue", num: 9 });
+      drawStack.putBack({ color: "blue", number: 9 });
 
-      expect(drawStack.drawCard()).toStrictEqual({ color: "blue", num: 9 });
+      expect(drawStack.drawCard()).toStrictEqual({ color: "blue", number: 9 });
     });
   });
 
@@ -53,20 +53,20 @@ describe("DrawStack", () => {
     test("return the first 14th cards", () => {
       const drawStack = new DrawStack({
         cards: [
-          { color: "blue", num: 0 },
-          { color: "blue", num: 1 },
-          { color: "blue", num: 2 },
-          { color: "blue", num: 3 },
-          { color: "blue", num: 4 },
-          { color: "blue", num: 5 },
-          { color: "blue", num: 6 },
-          { color: "blue", num: 7 },
-          { color: "blue", num: 8 },
-          { color: "blue", num: 9 },
-          { color: "blue", num: 10 },
-          { color: "blue", num: 11 },
-          { color: "blue", num: 12 },
-          { color: "blue", num: 13 },
+          { color: "blue", number: 0 },
+          { color: "blue", number: 1 },
+          { color: "blue", number: 2 },
+          { color: "blue", number: 3 },
+          { color: "blue", number: 4 },
+          { color: "blue", number: 5 },
+          { color: "blue", number: 6 },
+          { color: "blue", number: 7 },
+          { color: "blue", number: 8 },
+          { color: "blue", number: 9 },
+          { color: "blue", number: 10 },
+          { color: "blue", number: 11 },
+          { color: "blue", number: 12 },
+          { color: "blue", number: 13 },
         ],
       });
 
@@ -88,7 +88,7 @@ describe("DrawStack", () => {
 
     test("return false when not empty", () => {
       const drawStack = new DrawStack({
-        cards: [{ color: "blue", num: 7 }],
+        cards: [{ color: "blue", number: 7 }],
       });
 
       expect(drawStack.isEmpty()).toBeFalsy();
@@ -98,7 +98,7 @@ describe("DrawStack", () => {
   describe("toDto", () => {
     test("return corresponding dto", () => {
       const drawStack = new DrawStack({
-        cards: [{ color: "blue", num: 7 }],
+        cards: [{ color: "blue", number: 7 }],
       });
 
       expect(drawStack.toDto()).toStrictEqual({

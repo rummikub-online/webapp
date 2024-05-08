@@ -6,15 +6,15 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 1,
+        number: 1,
       },
       {
         color: "black",
-        num: 0,
+        number: 0,
       },
       {
         color: "red",
-        num: 3,
+        number: 3,
       },
     ];
 
@@ -27,19 +27,19 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 1,
+        number: 1,
       },
       {
         color: "black",
-        num: 0,
+        number: 0,
       },
       {
         color: "red",
-        num: 0,
+        number: 0,
       },
       {
         color: "red",
-        num: 4,
+        number: 4,
       },
     ];
 
@@ -52,19 +52,19 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "black",
-        num: 0,
+        number: 0,
       },
       {
         color: "red",
-        num: 8,
+        number: 8,
       },
       {
         color: "red",
-        num: 9,
+        number: 9,
       },
       {
         color: "red",
-        num: 10,
+        number: 10,
       },
     ];
 
@@ -77,19 +77,19 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "black",
-        num: 0,
+        number: 0,
       },
       {
         color: "red",
-        num: 0,
+        number: 0,
       },
       {
         color: "red",
-        num: 9,
+        number: 9,
       },
       {
         color: "red",
-        num: 10,
+        number: 10,
       },
     ];
 
@@ -102,19 +102,19 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 8,
+        number: 8,
       },
       {
         color: "red",
-        num: 9,
+        number: 9,
       },
       {
         color: "red",
-        num: 10,
+        number: 10,
       },
       {
         color: "black",
-        num: 0,
+        number: 0,
       },
     ];
 
@@ -127,19 +127,19 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 9,
+        number: 9,
       },
       {
         color: "red",
-        num: 10,
+        number: 10,
       },
       {
         color: "black",
-        num: 0,
+        number: 0,
       },
       {
         color: "red",
-        num: 0,
+        number: 0,
       },
     ];
 
@@ -152,15 +152,15 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 1,
+        number: 1,
       },
       {
         color: "red",
-        num: 2,
+        number: 2,
       },
       {
         color: "red",
-        num: 3,
+        number: 3,
       },
     ];
 
@@ -173,55 +173,55 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 1,
+        number: 1,
       },
       {
         color: "red",
-        num: 2,
+        number: 2,
       },
       {
         color: "red",
-        num: 3,
+        number: 3,
       },
       {
         color: "red",
-        num: 4,
+        number: 4,
       },
       {
         color: "red",
-        num: 5,
+        number: 5,
       },
       {
         color: "red",
-        num: 6,
+        number: 6,
       },
       {
         color: "red",
-        num: 7,
+        number: 7,
       },
       {
         color: "red",
-        num: 8,
+        number: 8,
       },
       {
         color: "red",
-        num: 9,
+        number: 9,
       },
       {
         color: "red",
-        num: 10,
+        number: 10,
       },
       {
         color: "red",
-        num: 11,
+        number: 11,
       },
       {
         color: "red",
-        num: 12,
+        number: 12,
       },
       {
         color: "red",
-        num: 13,
+        number: 13,
       },
     ];
 
@@ -234,11 +234,11 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 1,
+        number: 1,
       },
       {
         color: "red",
-        num: 2,
+        number: 2,
       },
     ];
 
@@ -251,15 +251,15 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 0,
+        number: 0,
       },
       {
         color: "red",
-        num: 1,
+        number: 1,
       },
       {
         color: "red",
-        num: 2,
+        number: 2,
       },
     ];
 
@@ -272,15 +272,15 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 12,
+        number: 12,
       },
       {
         color: "red",
-        num: 13,
+        number: 13,
       },
       {
         color: "red",
-        num: 0,
+        number: 0,
       },
     ];
 
@@ -293,15 +293,15 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 1,
+        number: 1,
       },
       {
         color: "black",
-        num: 2,
+        number: 2,
       },
       {
         color: "red",
-        num: 3,
+        number: 3,
       },
     ];
 
@@ -314,15 +314,15 @@ describe("isValidCardSuite", () => {
     const cardSuite: CardListDto = [
       {
         color: "red",
-        num: 1,
+        number: 1,
       },
       {
         color: "red",
-        num: 4,
+        number: 4,
       },
       {
         color: "red",
-        num: 3,
+        number: 3,
       },
     ];
 

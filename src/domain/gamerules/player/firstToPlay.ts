@@ -20,7 +20,7 @@ export const indexOfFirstPlayerByDrawedCard = (
 
     const bestCard = cardsDrawedByPlayers[bestCardIndex];
     const newBestCardIndex =
-      card.num > bestCard.num ? cardIndex : bestCardIndex;
+      card.number > bestCard.number ? cardIndex : bestCardIndex;
 
     return findBestCardIndex(newBestCardIndex, cardIndex + 1);
   };

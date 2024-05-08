@@ -11,14 +11,14 @@ describe("cardCombinationPoints", () => {
     ).toBe(0);
   });
 
-  test("should return sum of num of each card", () => {
+  test("should return sum of number of each card", () => {
     expect(
       cardCombinationPoints({
         type: "serie",
         cards: [
-          { color: "black", num: 1 },
-          { color: "black", num: 2 },
-          { color: "black", num: 3 },
+          { color: "black", number: 1 },
+          { color: "black", number: 2 },
+          { color: "black", number: 3 },
         ],
       })
     ).toBe(6);
@@ -29,9 +29,9 @@ describe("cardCombinationPoints", () => {
       cardCombinationPoints({
         type: "serie",
         cards: [
-          { color: "black", num: 1 },
-          { color: "black", num: CARD_JOKER_NUMBER },
-          { color: "black", num: 3 },
+          { color: "black", number: 1 },
+          { color: "black", number: CARD_JOKER_NUMBER },
+          { color: "black", number: 3 },
         ],
       })
     ).toBe(4);
@@ -43,23 +43,23 @@ describe("cardCombinationsPoints", () => {
     expect(cardCombinationsPoints([])).toBe(0);
   });
 
-  test("should return sum of num of each card", () => {
+  test("should return sum of number of each card", () => {
     expect(
       cardCombinationsPoints([
         {
           type: "serie",
           cards: [
-            { color: "black", num: 1 },
-            { color: "black", num: 2 },
-            { color: "black", num: 3 },
+            { color: "black", number: 1 },
+            { color: "black", number: 2 },
+            { color: "black", number: 3 },
           ],
         },
         {
           type: "serie",
           cards: [
-            { color: "black", num: 1 },
-            { color: "black", num: 2 },
-            { color: "black", num: 3 },
+            { color: "black", number: 1 },
+            { color: "black", number: 2 },
+            { color: "black", number: 3 },
           ],
         },
       ])

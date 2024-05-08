@@ -51,14 +51,14 @@ const areColorsSame = (cardSuite: CardListDto): boolean => {
 const findFirstNum = (cardSuite: CardListDto): number => {
   const firstNonJokerIndex = firstIndexOfNonJokerCard(cardSuite);
 
-  return cardSuite[firstNonJokerIndex].num - firstNonJokerIndex;
+  return cardSuite[firstNonJokerIndex].number - firstNonJokerIndex;
 };
 
 const findLastNum = (cardSuite: CardListDto): number => {
   const lastNonJokerIndex = lastIndexOfNonJokerCard(cardSuite);
 
   return (
-    cardSuite[lastNonJokerIndex].num +
+    cardSuite[lastNonJokerIndex].number +
     (cardSuite.length - 1 - lastNonJokerIndex)
   );
 };
@@ -78,7 +78,7 @@ const areNumbersFollowing = (cardSuite: CardListDto): boolean => {
       return isFollowing(currentIndex + 1);
     }
 
-    if (currentCard.num === firstNum + currentIndex) {
+    if (currentCard.number === firstNum + currentIndex) {
       return isFollowing(currentIndex + 1);
     }
 

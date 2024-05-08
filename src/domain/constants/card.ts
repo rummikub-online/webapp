@@ -1,4 +1,4 @@
-import { CardColor, CardDto, CardNum } from "../dtos/card";
+import { CardColor, CardDto, CardNumber } from "../dtos/card";
 
 export const CARD_COLORS: Readonly<Array<CardColor>> = Object.freeze([
   "red",
@@ -7,22 +7,25 @@ export const CARD_COLORS: Readonly<Array<CardColor>> = Object.freeze([
   "yellow",
 ] as const);
 
-export const CARD_NUMBERS: Readonly<Array<CardNum>> = Object.freeze([
+export const CARD_NUMBERS: Readonly<Array<CardNumber>> = Object.freeze([
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
 ] as const);
 
 export const CARD_JOKER_NUMBER = 0;
 
-const makeCard = (color: CardColor, num: CardNum): CardDto =>
+const makeCard = (color: CardColor, number: CardNumber): CardDto =>
   Object.freeze({
     color,
-    num,
+    number,
   });
 const makeJokerCard = (color: CardColor) => makeCard(color, CARD_JOKER_NUMBER);
 
 export const CARDS = Object.freeze([
   ...CARD_COLORS.flatMap((color) =>
-    CARD_NUMBERS.flatMap((num) => [makeCard(color, num), makeCard(color, num)])
+    CARD_NUMBERS.flatMap((number) => [
+      makeCard(color, number),
+      makeCard(color, number),
+    ])
   ),
   makeJokerCard("red"),
   makeJokerCard("black"),

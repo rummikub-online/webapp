@@ -7,7 +7,7 @@ describe("GameBoard", () => {
       const gameBoard = new GameBoard({});
 
       gameBoard.backup();
-      gameBoard.createCombination([{ color: "black", num: 7 }]);
+      gameBoard.createCombination([{ color: "black", number: 7 }]);
       gameBoard.restoreBackup();
 
       expect(gameBoard.toDto()).toStrictEqual({
@@ -21,13 +21,13 @@ describe("GameBoard", () => {
     test("create combination", () => {
       const gameBoard = new GameBoard({});
 
-      gameBoard.createCombination([{ color: "black", num: 7 }]);
+      gameBoard.createCombination([{ color: "black", number: 7 }]);
 
       expect(gameBoard.toDto()).toStrictEqual({
         combinations: [
           {
             type: "invalid",
-            cards: [{ color: "black", num: 7 }],
+            cards: [{ color: "black", number: 7 }],
           },
         ],
         isValid: false,
@@ -41,8 +41,8 @@ describe("GameBoard", () => {
         combinations: [
           new CardCombination({
             cards: [
-              { color: "blue", num: 7 },
-              { color: "blue", num: 8 },
+              { color: "blue", number: 7 },
+              { color: "blue", number: 8 },
             ],
           }),
         ],
@@ -53,8 +53,8 @@ describe("GameBoard", () => {
           {
             type: "invalid",
             cards: [
-              { color: "blue", num: 7 },
-              { color: "blue", num: 8 },
+              { color: "blue", number: 7 },
+              { color: "blue", number: 8 },
             ],
           },
         ],

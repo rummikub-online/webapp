@@ -1,9 +1,9 @@
 export type CardColor = "red" | "blue" | "black" | "yellow";
 
-export type CardJokerNum = 0;
+export type CardJokerNumber = 0;
 
-export type CardNum =
-  | CardJokerNum
+export type CardNumber =
+  | CardJokerNumber
   | 1
   | 2
   | 3
@@ -20,5 +20,5 @@ export type CardNum =
 
 export type CardDto = Readonly<{
   color: CardColor;
-  num: CardNum;
+  number: CardNumber;
 }>;
