@@ -105,7 +105,9 @@ describe("Player", () => {
       });
 
       player.beginTurn();
-      player.createCombinationWithItsCards(0, 1, 2);
+      const combinationIndex = player.placeCardAlone(0);
+      player.placeCardInCombination(0, { combinationIndex, cardIndex: 1 });
+      player.placeCardInCombination(0, { combinationIndex, cardIndex: 2 });
       expect(() => player.endTurn()).toThrow("Not enough points to start");
     });
   });

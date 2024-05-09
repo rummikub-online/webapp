@@ -4,13 +4,14 @@ import { CombinationDto, CombinationType } from "../../domain/dtos/combination";
 import { isValidCardSuite } from "../../domain/gamerules/cardSuite/isValid";
 
 export interface ICombination {
-  toDto(): CombinationDto;
   isValid(): boolean;
   type(): CombinationType;
   addCardAt(card: CardDto, index: number): void;
   pickCardFrom(index: number): CardDto;
   explode(): Array<CardDto>;
   splitAfter(index: number): [ICombination, ICombination];
+  isNotEmpty(): boolean;
+  toDto(): CombinationDto;
 }
 
 type CombinationProps = {
@@ -82,6 +83,10 @@ export class Combination implements ICombination {
       new Combination({ cards: this.cards.slice(0, sliceIndex) }),
       new Combination({ cards: this.cards.slice(sliceIndex) }),
     ];
+  }
+
+  isNotEmpty(): boolean {
+    return this.cards.length > 0;
   }
 
   toDto(): CombinationDto {
