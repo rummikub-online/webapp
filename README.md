@@ -6,8 +6,10 @@
   - [**application/**](src/application)
     > Code qui permet de faire tourner une partie, on y gère le déroulement des tours etc tout en applicant les règles du jeu.
     > Le code est ici en "Programmation Orienté Object"
-    - [**utils/**](src/domain/utils)
-      > Des fonctions globales et utilitaires. Elles ne doivent avoir aucun lien avec les règles du jeu
+    - [**entities/**](src/application/entities)
+      > Les entités qui existent dans le jeu : Joueur, Combinaison de Carte. Ces entités ont des comportements qui sont régis par les règles du jeu (dans /domain/)
+    - [**utils/**](src/application/utils)
+      > Des fonctions globales et utilitaires. Elles ne doivent avoir aucun lien avec le jeu. Par exemple toShuffled() permet de mélanger un tableau.
   - [**domain/**](src/domain)
     > Code relatif au règles Rummikub, c'est le centre de notre application. De ce code dépend le reste (affichage, entrées, IAs, etc.)
     > Le code est ici écrit en "Programmation fonctionnelle" : tout est immuable, les fonctions sont pures et sans effet de bord.

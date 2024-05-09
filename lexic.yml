@@ -26,11 +26,11 @@
   description: >
     Tour durant lequel un joueur peut jouer s'il a démarré ou piocher une carte.
     Si le joueur ne peut pas démarrer, il pioche et termine son tour.
-- name: Combinasion of cards
+- name: Combination
   frName: Combinaison de cartes
   description: >
     Groupe de cartes, peut être une suite ou une série.
-- name: Serie of cards
+- name: Card serie
   frName: Série de cartes
   description: >
     Liste de minimum 3 cartes et de maximum 4 cartes du même nombre mais de couleurs différentes.
@@ -39,7 +39,7 @@
     - 3 rouge, 3 bleu
     - 3 rouge, 3 rouge, 3 jaune
     - 3 rouge, 3 jaune, 4 bleu
-- name: Suite of cards
+- name: Card suite
   frName: Suite de cartes
   description: >
     Liste de de minimum 3 cartes et de maximum 13 cartes de la même couleur et de nombres se suivant.
