@@ -1,6 +1,6 @@
-import { CardCombinationDto } from "./cardCombination";
+import { CombinationDto } from "./combination";
 
 export type GameBoardDto = {
   isValid: boolean;
-  combinations: Array<CardCombinationDto>;
+  combinations: Array<CombinationDto>;
 };

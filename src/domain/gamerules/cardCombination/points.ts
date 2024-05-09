@@ -1,11 +1,9 @@
-import { CardCombinationDto } from "../../dtos/cardCombination";
+import { CombinationDto } from "../../dtos/combination";
 
-export const cardCombinationPoints = (combination: CardCombinationDto) =>
+export const cardCombinationPoints = (combination: CombinationDto) =>
   combination.cards.reduce((points, card) => points + card.number, 0);
 
-export const cardCombinationsPoints = (
-  combinations: Array<CardCombinationDto>
-) =>
+export const cardCombinationsPoints = (combinations: Array<CombinationDto>) =>
   combinations.reduce(
     (points, combination) => points + cardCombinationPoints(combination),
     0

@@ -1,9 +1,9 @@
-import { CardCombination } from "./CardCombination";
+import { Combination } from "./Combination";
 
-describe("CardCombination", () => {
+describe("Combination", () => {
   describe("type", () => {
     test("guess Suite", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -15,7 +15,7 @@ describe("CardCombination", () => {
     });
 
     test.skip("guess Serie", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "red", number: 2 },
@@ -27,7 +27,7 @@ describe("CardCombination", () => {
     });
 
     test("fallback to Invalid type if not a Suite nor a Serie", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -41,7 +41,7 @@ describe("CardCombination", () => {
 
   describe("explode", () => {
     test("should return all cards", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -59,7 +59,7 @@ describe("CardCombination", () => {
 
   describe("isValid", () => {
     test("should return true when type is Suite", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -71,7 +71,7 @@ describe("CardCombination", () => {
     });
 
     test.skip("should return true when type is Serie", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "blue", number: 2 },
@@ -83,7 +83,7 @@ describe("CardCombination", () => {
     });
 
     test("should return false when type is invalid", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -97,7 +97,7 @@ describe("CardCombination", () => {
 
   describe("splitAfter", () => {
     test("return two combinations", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -120,7 +120,7 @@ describe("CardCombination", () => {
     });
 
     test("return empty combi if index is at end", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -142,7 +142,7 @@ describe("CardCombination", () => {
     });
 
     test("throw error if index is out of range", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -158,7 +158,7 @@ describe("CardCombination", () => {
 
   describe("addCardAt", () => {
     test("add card", () => {
-      const combi1 = new CardCombination({
+      const combi1 = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -166,7 +166,7 @@ describe("CardCombination", () => {
           { color: "black", number: 5 },
         ],
       });
-      const combi2 = new CardCombination({
+      const combi2 = new Combination({
         cards: [],
       });
 
@@ -184,7 +184,7 @@ describe("CardCombination", () => {
     });
 
     test("throw error if index is out of range", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -204,7 +204,7 @@ describe("CardCombination", () => {
 
   describe("pickCardFrom", () => {
     test("return the card", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -219,7 +219,7 @@ describe("CardCombination", () => {
     });
 
     test("remove the card from combination", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -238,7 +238,7 @@ describe("CardCombination", () => {
     });
 
     test("throw error if index is out of range", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 3 },
@@ -254,7 +254,7 @@ describe("CardCombination", () => {
 
   describe("toDto", () => {
     test("return corresponding dto", () => {
-      const combi = new CardCombination({
+      const combi = new Combination({
         cards: [
           { color: "blue", number: 7 },
           { color: "blue", number: 8 },

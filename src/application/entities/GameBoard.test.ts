@@ -1,4 +1,4 @@
-import { CardCombination } from "./CardCombination";
+import { Combination } from "./Combination";
 import { GameBoard } from "./GameBoard";
 
 describe("GameBoard", () => {
@@ -70,7 +70,7 @@ describe("GameBoard", () => {
     test("return corresponding dto", () => {
       const gameBoard = new GameBoard({
         combinations: [
-          new CardCombination({
+          new Combination({
             cards: [
               { color: "blue", number: 7 },
               { color: "blue", number: 8 },

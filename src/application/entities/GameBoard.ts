@@ -1,7 +1,7 @@
 import { CardListDto } from "../../domain/dtos/cardList";
 import { GameBoardDto } from "../../domain/dtos/gameBoard";
 import { cardCombinationsPoints } from "../../domain/gamerules/cardCombination/points";
-import { CardCombination, ICardCombination } from "./CardCombination";
+import { Combination, ICombination } from "./Combination";
 
 export interface IGameBoard {
   createCombination(cards: CardListDto): void;
@@ -15,11 +15,11 @@ export interface IGameBoard {
 }
 
 type GameBoardProps = {
-  combinations?: Array<ICardCombination>;
+  combinations?: Array<ICombination>;
 };
 
 export class GameBoard implements IGameBoard {
-  private combinations: Array<ICardCombination>;
+  private combinations: Array<ICombination>;
   private previousTurn: GameBoardDto | null = null;
 
   constructor(props: GameBoardProps) {
@@ -31,7 +31,7 @@ export class GameBoard implements IGameBoard {
   }
 
   createCombination(cards: CardListDto): void {
-    this.combinations.push(new CardCombination({ cards }));
+    this.combinations.push(new Combination({ cards }));
   }
 
   isValid(): boolean {
@@ -47,7 +47,7 @@ export class GameBoard implements IGameBoard {
 
     this.combinations = this.previousTurn!.combinations.map(
       (combinationDto) =>
-        new CardCombination({
+        new Combination({
           cards: combinationDto.cards,
         })
     );

@@ -1,33 +1,30 @@
 import { CardDto } from "../../domain/dtos/card";
-import {
-  CardCombinationDto,
-  CardCombinationType,
-} from "../../domain/dtos/cardCombination";
 import { CardListDto } from "../../domain/dtos/cardList";
+import { CombinationDto, CombinationType } from "../../domain/dtos/combination";
 import { isValidCardSuite } from "../../domain/gamerules/cardSuite/isValid";
 
-export interface ICardCombination {
-  toDto(): CardCombinationDto;
+export interface ICombination {
+  toDto(): CombinationDto;
   isValid(): boolean;
-  type(): CardCombinationType;
+  type(): CombinationType;
   addCardAt(card: CardDto, index: number): void;
   pickCardFrom(index: number): CardDto;
   explode(): Array<CardDto>;
-  splitAfter(index: number): [ICardCombination, ICardCombination];
+  splitAfter(index: number): [ICombination, ICombination];
 }
 
-type CardCombinationProps = {
+type CombinationProps = {
   cards?: CardListDto;
 };
 
-export class CardCombination implements ICardCombination {
+export class Combination implements ICombination {
   private cards: CardListDto;
 
-  constructor(props: CardCombinationProps) {
+  constructor(props: CombinationProps) {
     this.cards = props.cards ?? [];
   }
 
-  type(): CardCombinationType {
+  type(): CombinationType {
     if (isValidCardSuite(this.cards)) {
       return "suite";
     }
@@ -74,7 +71,7 @@ export class CardCombination implements ICardCombination {
     return pickedCard;
   }
 
-  splitAfter(index: number): [ICardCombination, ICardCombination] {
+  splitAfter(index: number): [ICombination, ICombination] {
     if (index < 0 || this.cards.length - 1 < index) {
       throw new Error("Index is out of range");
     }
@@ -82,12 +79,12 @@ export class CardCombination implements ICardCombination {
     const sliceIndex = index + 1;
 
     return [
-      new CardCombination({ cards: this.cards.slice(0, sliceIndex) }),
-      new CardCombination({ cards: this.cards.slice(sliceIndex) }),
+      new Combination({ cards: this.cards.slice(0, sliceIndex) }),
+      new Combination({ cards: this.cards.slice(sliceIndex) }),
     ];
   }
 
-  toDto(): CardCombinationDto {
+  toDto(): CombinationDto {
     return {
       type: this.type(),
       cards: [...this.cards],
