@@ -66,6 +66,7 @@ describe("Player", () => {
         cards: [{ color: "black", number: 2 }],
       });
 
+      player.beginTurn();
       player.drawCard();
 
       expect(player.toDto().cards).toStrictEqual([
@@ -76,22 +77,36 @@ describe("Player", () => {
   });
 
   describe("endTurn", () => {
-    test("throw error ", () => {
+    test("throw error if started player has not played points", () => {
       const player = new Player({
         id: "player",
-        drawStack: new DrawStack({
-          cards: [{ color: "black", number: 1 }],
-        }),
+        hasStarted: true,
+        drawStack: new DrawStack({}),
         gameBoard: new GameBoard({}),
         cards: [{ color: "black", number: 2 }],
       });
 
-      player.drawCard();
+      player.beginTurn();
+      expect(() => player.endTurn()).toThrow("No points played");
+    });
 
-      expect(player.toDto().cards).toStrictEqual([
-        { color: "black", number: 2 },
-        { color: "black", number: 1 },
-      ]);
+    test("throw error if unstarted player has not played enough points to start", () => {
+      const gameBoard = new GameBoard({});
+      const player = new Player({
+        id: "player",
+        hasStarted: false,
+        drawStack: new DrawStack({}),
+        gameBoard,
+        cards: [
+          { color: "black", number: 1 },
+          { color: "black", number: 2 },
+          { color: "black", number: 3 },
+        ],
+      });
+
+      player.beginTurn();
+      player.createCombinationWithItsCards(0, 1, 2);
+      expect(() => player.endTurn()).toThrow("Not enough points to start");
     });
   });
 

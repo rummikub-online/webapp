@@ -1,17 +1,18 @@
+import { CardDto } from "../../domain/dtos/card";
 import { CardListDto } from "../../domain/dtos/cardList";
 import { PlayerDto } from "../../domain/dtos/player";
-import { ICardCombination } from "./CardCombination";
+import { canStartWithPoints } from "../../domain/gamerules/cardCombination/canStartWith";
 import { IDrawStack } from "./DrawStack";
 import { IGameBoard } from "./GameBoard";
 
 export interface IPlayer {
   id: string;
   drawStartupCards(): void;
-  startWithCombinations(...combinations: Array<ICardCombination>): void;
-  startTurn(): void;
+  beginTurn(): void;
   cancelTurnModifactions(): void;
   drawCard(): void;
-  createCombinationWithItsCards(...cardIndexes: Array<Number>): void;
+  placeCard(cardIndex: number): void;
+  createCombinationWithItsCards(...cardIndexes: Array<number>): void;
   endTurn(): void;
   toDto(): PlayerDto;
 }
@@ -34,6 +35,8 @@ export class Player implements IPlayer {
   private hasDrewStartupCards: boolean;
   private hasStarted: boolean;
 
+  private hasDrawThisTurn: boolean = false;
+
   constructor(props: PlayerProps) {
     this.gameBoard = props.gameBoard;
     this.drawStack = props.drawStack;
@@ -42,25 +45,52 @@ export class Player implements IPlayer {
     this.hasDrewStartupCards = props.hasDrewStartupCards ?? false;
     this.hasStarted = props.hasStarted ?? false;
   }
-  startWithCombinations(...combinations: ICardCombination[]): void {
-    throw new Error("Method not implemented.");
+
+  beginTurn(): void {
+    this.gameBoard.beginTurn();
+    this.hasDrawThisTurn = false;
   }
 
-  startTurn(): void {
-    this.gameBoard.backup();
-  }
+  createCombinationWithItsCards(...cardIndexes: Array<number>): void {
+    this.gameBoard.createCombination(
+      cardIndexes.map((index) => this.cards[index])
+    );
 
-  createCombinationWithItsCards(): void {
-    throw new Error("Method not implemented.");
+    cardIndexes.map((index) => this.placeCard(index));
   }
 
   cancelTurnModifactions(): void {
-    this.gameBoard.restoreBackup();
+    this.gameBoard.cancelTurnModications();
+  }
+
+  private canStart(): boolean {
+    return canStartWithPoints(this.gameBoard.turnPoints());
   }
 
   endTurn(): void {
-    if (!this.gameBoard.isValid()) {
-      throw new Error("GameBoard is not valid");
+    if (this.hasDrawThisTurn) {
+      this.gameBoard.endTurn();
+
+      return;
+    }
+
+    if (!this.hasStarted) {
+      this.throwIfNotEnoughtPointsToStart();
+    }
+
+    this.throwIfNoPointsPlayed();
+    this.gameBoard.endTurn();
+  }
+
+  private throwIfNoPointsPlayed() {
+    if (this.gameBoard.turnPoints() === 0) {
+      throw new Error("No points played");
+    }
+  }
+
+  private throwIfNotEnoughtPointsToStart() {
+    if (!this.canStart()) {
+      throw new Error("Not enough points to start");
     }
   }
 
@@ -75,7 +105,19 @@ export class Player implements IPlayer {
 
   drawCard(): void {
     this.cards = [...this.cards, this.drawStack.drawCard()];
+    this.hasDrawThisTurn = true;
+
     this.endTurn();
+  }
+
+  placeCard(cardIndex: number): CardDto {
+    const cards = [...this.cards];
+
+    const [placedCard] = cards.splice(cardIndex, 1);
+
+    this.cards = Object.freeze(cards);
+
+    return placedCard;
   }
 
   toDto(): PlayerDto {
