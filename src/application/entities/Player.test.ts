@@ -77,6 +77,27 @@ describe("Player", () => {
   });
 
   describe("endTurn", () => {
+    test("throw error if game board is not valid", () => {
+      const player = new Player({
+        id: "player",
+        hasStarted: true,
+        drawStack: new DrawStack({}),
+        gameBoard: new GameBoard({}),
+        cards: [
+          { color: "black", number: 10 },
+          { color: "black", number: 11 },
+          { color: "red", number: 12 },
+        ],
+      });
+
+      player.beginTurn();
+      const combinationIndex = player.placeCardAlone(0);
+      player.placeCardInCombination(0, { combinationIndex, cardIndex: 1 });
+      player.placeCardInCombination(0, { combinationIndex, cardIndex: 2 });
+
+      expect(() => player.endTurn()).toThrow("Game board is not valid");
+    });
+
     test("throw error if started player has not played points", () => {
       const player = new Player({
         id: "player",
