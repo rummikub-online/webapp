@@ -172,6 +172,41 @@ describe("Player", () => {
     });
   });
 
+  describe("cancelTurnModifications", () => {
+    test("remove cards from gameBoard", () => {
+      const gameBoard = new GameBoard({});
+      const player = new Player({
+        id: "player",
+        hasDrewStartupCards: true,
+        gameBoard,
+        drawStack: new DrawStack({}),
+        cards: [{ color: "black", number: 7 }],
+      });
+      player.beginTurn();
+      player.placeCardAlone(0);
+
+      player.cancelTurnModifications();
+
+      expect(gameBoard.toDto().combinations).toHaveLength(0);
+    });
+    test("put back placed cards", () => {
+      const gameBoard = new GameBoard({});
+      const player = new Player({
+        id: "player",
+        hasDrewStartupCards: true,
+        gameBoard,
+        drawStack: new DrawStack({}),
+        cards: [{ color: "black", number: 7 }],
+      });
+      player.beginTurn();
+      player.placeCardAlone(0);
+
+      player.cancelTurnModifications();
+
+      expect(player.toDto().cards).toHaveLength(1);
+    });
+  });
+
   describe("toDto", () => {
     test("return corresponding dto", () => {
       const player = new Player({

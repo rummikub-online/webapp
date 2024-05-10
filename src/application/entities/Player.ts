@@ -55,6 +55,8 @@ export class Player implements IPlayer {
   public readonly username?: string;
 
   private cards: CardListDto;
+  private previousTurnCards: CardListDto = [];
+
   private hasDrawnStartupCards: boolean;
   private hasStarted: boolean;
 
@@ -70,6 +72,12 @@ export class Player implements IPlayer {
     this.hasDrawnStartupCards = props.hasDrewStartupCards ?? false;
     this.hasStarted = props.hasStarted ?? false;
     this.username = props.username;
+
+    this.saveTurnCards();
+  }
+
+  private saveTurnCards() {
+    this.previousTurnCards = Object.freeze([...this.cards]);
   }
 
   drawStartupCards(): void {
@@ -82,6 +90,7 @@ export class Player implements IPlayer {
   }
 
   beginTurn(): void {
+    this.saveTurnCards();
     this.gameBoard.beginTurn();
     this._isPlaying = true;
     this.hasDrawnThisTurn = false;
@@ -113,6 +122,10 @@ export class Player implements IPlayer {
   }
 
   cancelTurnModifications(): void {
+    this.cards = Object.freeze([...this.previousTurnCards]);
+
+    this.saveTurnCards();
+
     this.gameBoard.cancelTurnModications();
   }
 

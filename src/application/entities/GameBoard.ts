@@ -36,7 +36,7 @@ type GameBoardProps = {
 
 export class GameBoard implements IGameBoard {
   private combinations: Array<ICombination>;
-  private previousTurnCombinations: Array<CombinationDto> = [];
+  private previousTurnCombinations: ReadonlyArray<CombinationDto> = [];
 
   constructor(props: GameBoardProps) {
     this.combinations = props.combinations ?? [];
@@ -48,7 +48,9 @@ export class GameBoard implements IGameBoard {
   }
 
   private saveTurnCombinations() {
-    this.previousTurnCombinations = this.toDto().combinations;
+    this.previousTurnCombinations = Object.freeze([
+      ...this.toDto().combinations,
+    ]);
   }
 
   placeCardAlone(card: CardDto): CombinationPositionOnBoard {
@@ -128,7 +130,7 @@ export class GameBoard implements IGameBoard {
     this.throwIfTurnHasNotStarted();
 
     const previousTurnPoints = cardCombinationsPoints(
-      this.previousTurnCombinations!
+      [...this.previousTurnCombinations]!
     );
 
     return this.points() - previousTurnPoints;
