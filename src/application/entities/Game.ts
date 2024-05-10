@@ -30,6 +30,7 @@ export interface IGame {
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer;
   isFull(): boolean;
   currentPlayer(): IPlayer;
+  winner(): IPlayer;
   isEnded(): boolean;
   toDto(): GameDto;
 }
@@ -138,6 +139,20 @@ export class Game implements IGame {
 
     if (!player) {
       throw new Error("No current player");
+    }
+
+    return player;
+  }
+
+  winner(): IPlayer {
+    if (this.state !== "ended") {
+      throw new Error("Game has not ended");
+    }
+
+    const player = this.players.find((player) => player.hasWon());
+
+    if (!player) {
+      throw new Error("No winner");
     }
 
     return player;
