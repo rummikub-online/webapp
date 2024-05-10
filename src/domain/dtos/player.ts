@@ -6,4 +6,5 @@ export type PlayerDto = {
   hasDrawnStartupCards: boolean;
   hasStarted: boolean;
   hasDrawnThisTurn: boolean;
+  canEndTurn: boolean;
 };

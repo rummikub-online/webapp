@@ -193,6 +193,7 @@ describe("Player", () => {
         hasDrawnStartupCards: false,
         hasStarted: false,
         hasDrawnThisTurn: false,
+        canEndTurn: false,
       });
     });
   });

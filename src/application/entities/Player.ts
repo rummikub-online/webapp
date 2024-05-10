@@ -28,6 +28,7 @@ export interface IPlayer {
     destination: CardPositionOnBoard
   ): void;
   cancelTurnModifications(): void;
+  canEndTurn(): boolean;
   endTurn(): void;
   isPlaying(): boolean;
   hasWon(): boolean;
@@ -136,6 +137,14 @@ export class Player implements IPlayer {
     return placedCard;
   }
 
+  canEndTurn(): boolean {
+    return (
+      this.gameBoard.isValid() &&
+      (this.hasStarted || this.canStart()) &&
+      this.gameBoard.turnPoints() > 0
+    );
+  }
+
   endTurn(): void {
     if (!this.hasDrawnThisTurn) {
       this.throwIfNotEnoughPointsToStart();
@@ -186,6 +195,7 @@ export class Player implements IPlayer {
       hasDrawnStartupCards: this.hasDrawnStartupCards,
       hasStarted: this.hasStarted,
       hasDrawnThisTurn: this.hasDrawnThisTurn,
+      canEndTurn: this.canEndTurn(),
     };
   }
 }
