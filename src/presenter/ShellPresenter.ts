@@ -3,12 +3,57 @@ import { prompt } from "enquirer";
 import { IGame } from "../application/entities/Game";
 import { IPlayer } from "../application/entities/Player";
 import { IPresenter } from "../application/rummikub";
+import { CARD_JOKER_NUMBER } from "../domain/constants/card";
 import { CardDto } from "../domain/dtos/card";
 import { CombinationDto } from "../domain/dtos/combination";
 
-const formatCard = (card: CardDto): string => chalk[card.color](card.number);
+const formatCard = (card: CardDto): string =>
+  chalk[card.color](card.number === CARD_JOKER_NUMBER ? "J" : card.number);
 const formatCombination = (combination: CombinationDto): string =>
   `(${combination.cards.map(formatCard).join(" ")})`;
+
+const groupByColor = <T extends CardDto>(cards: Array<T>) => {
+  const groupedCards: { [key: string]: Array<T> } = {};
+
+  cards.forEach((card) => {
+    if (!groupedCards[card.color]) {
+      groupedCards[card.color] = [];
+    }
+
+    groupedCards[card.color].push(card);
+  });
+
+  return Object.values(groupedCards);
+};
+
+const groupByNumber = <T extends CardDto>(cards: Array<T>) => {
+  const groupedCards: { [key: string]: Array<T> } = {};
+
+  cards.forEach((card) => {
+    if (!groupedCards[card.number]) {
+      groupedCards[card.number] = [];
+    }
+
+    groupedCards[card.number].push(card);
+  });
+
+  return Object.values(groupedCards);
+};
+
+const sortByColor = <T extends CardDto>(a: T, b: T) => {
+  const nameA = a.color.toUpperCase(); // ignore upper and lowercase
+  const nameB = b.color.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
+
+  // names must be equal
+  return 0;
+};
+const sortByNumber = <T extends CardDto>(a: T, b: T) => a.number - b.number;
 
 type EnquirerChoice<T> = {
   message: string;
@@ -16,7 +61,13 @@ type EnquirerChoice<T> = {
 };
 type EnquirerResponse<T> = { action: T };
 
+type OrderCardsBy = "orderCardsByColor" | "orderCardsByNumber";
+type OrderedCardDto = CardDto & {
+  initialIndex: number;
+};
+
 type TurnAction =
+  | OrderCardsBy
   | "drawCard"
   | "placeCardAlone"
   | "placeCardInCombination"
@@ -26,6 +77,27 @@ type TurnAction =
   | "endTurn";
 
 export class ShellPresenter implements IPresenter {
+  private orderCardsBy: OrderCardsBy = "orderCardsByColor";
+
+  private orderedCards(player: IPlayer): Array<OrderedCardDto> {
+    const cards = player.toDto().cards.map((card, index) =>
+      Object.freeze({
+        ...card,
+        initialIndex: index,
+      })
+    );
+
+    if (this.orderCardsBy === "orderCardsByColor") {
+      return groupByColor(cards)
+        .map((group) => group.sort(sortByNumber))
+        .flat();
+    }
+
+    return groupByNumber(cards)
+      .map((group) => group.sort(sortByColor))
+      .flat();
+  }
+
   private displayGame(game: IGame) {
     const gameDto = game.toDto();
 
@@ -39,7 +111,7 @@ export class ShellPresenter implements IPresenter {
   private displayCards(player: IPlayer) {
     console.log(
       "Your cards :\n",
-      player.toDto().cards.map(formatCard).join(" "),
+      this.orderedCards(player).map(formatCard).join(" "),
       "\n"
     );
   }
@@ -49,6 +121,16 @@ export class ShellPresenter implements IPresenter {
     this.displayCards(player);
 
     const turnAction = await this.askTurnAction(game, player);
+
+    if (turnAction === "orderCardsByColor") {
+      this.orderCardsBy = "orderCardsByColor";
+      return this.handlePlayerTurn(game, player);
+    }
+
+    if (turnAction === "orderCardsByNumber") {
+      this.orderCardsBy = "orderCardsByNumber";
+      return this.handlePlayerTurn(game, player);
+    }
 
     if (turnAction === "drawCard") {
       player.drawCard();
@@ -100,6 +182,18 @@ export class ShellPresenter implements IPresenter {
   async askTurnAction(game: IGame, player: IPlayer): Promise<TurnAction> {
     const choices: Array<EnquirerChoice<TurnAction>> = [];
 
+    if (this.orderCardsBy === "orderCardsByColor") {
+      choices.push({
+        message: "Order cards by number",
+        name: "orderCardsByNumber",
+      });
+    } else {
+      choices.push({
+        message: "Order cards by color",
+        name: "orderCardsByColor",
+      });
+    }
+
     if (!game.toDto().gameBoard.hasModifications) {
       choices.push({
         message: "Draw card and terminate the turn",
@@ -135,7 +229,7 @@ export class ShellPresenter implements IPresenter {
         name: "cancelTurnModifications",
       });
 
-      if (game.toDto().gameBoard.isValid) {
+      if (player.canEndTurn()) {
         choices.push({
           message: "End turn",
           name: "endTurn",
@@ -154,12 +248,12 @@ export class ShellPresenter implements IPresenter {
   }
 
   async askCardToMove(player: IPlayer): Promise<number> {
-    const choices: Array<EnquirerChoice<string>> = player
-      .toDto()
-      .cards.map((card, index) => ({
-        message: formatCard(card),
-        name: index.toString(),
-      }));
+    const choices: Array<EnquirerChoice<string>> = this.orderedCards(
+      player
+    ).map((card) => ({
+      message: formatCard(card),
+      name: card.initialIndex.toString(),
+    }));
 
     const { action } = (await prompt({
       type: "select",
