@@ -25,6 +25,7 @@ export interface IGame {
   end(): void;
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer;
   isFull(): boolean;
+  currentPlayer(): IPlayer;
   toDto(): GameDto;
 }
 
@@ -41,7 +42,6 @@ export class Game implements IGame {
   private drawStack: IDrawStack;
   private gameBoard: IGameBoard;
   private players: Array<IPlayer> = [];
-  private currentPlayerIndex: number | null = null;
   private state: GameState;
   private generateUserId: GenerateUserIdFn;
 
@@ -121,6 +121,20 @@ export class Game implements IGame {
     }
 
     return this.players[playerIndex + 1];
+  }
+
+  currentPlayer(): IPlayer {
+    if (this.state !== "started") {
+      throw new Error("Game has not started");
+    }
+
+    const player = this.players.find((player) => player.isPlaying());
+
+    if (!player) {
+      throw new Error("No current player");
+    }
+
+    return player;
   }
 
   end(): void {

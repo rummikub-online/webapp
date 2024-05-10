@@ -82,6 +82,19 @@ describe("Game", () => {
     });
   });
 
+  describe("currentPlayer", () => {
+    test("return the player that is playing", () => {
+      const game = new Game({});
+      const playerA = game.addPlayer();
+      const playerB = game.addPlayer();
+      game.start();
+
+      const playingPlayer = playerA.isPlaying() ? playerA : playerB;
+
+      expect(game.currentPlayer()).toBe(playingPlayer);
+    });
+  });
+
   describe("end", () => {
     test("should have been start to be ended", () => {
       const game = new Game({});
