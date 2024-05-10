@@ -11,7 +11,7 @@ import { IPlayer, Player } from "./Player";
 
 type GenerateUserIdFn = () => string;
 
-type GameDto = {
+export type GameDto = {
   drawStack: DrawStackDto;
   gameBoard: GameBoardDto;
   state: GameState;
@@ -26,6 +26,7 @@ export interface IGame {
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer;
   isFull(): boolean;
   currentPlayer(): IPlayer;
+  isEnded(): boolean;
   toDto(): GameDto;
 }
 
@@ -143,6 +144,10 @@ export class Game implements IGame {
     }
 
     this.state = "ended";
+  }
+
+  isEnded(): boolean {
+    return this.state === "ended";
   }
 
   toDto(): GameDto {
