@@ -13,6 +13,7 @@ import {
 
 export interface IPlayer {
   id: string;
+  username?: string;
   drawStartupCards(): void;
   beginTurn(): void;
   drawCard(): void;
@@ -41,6 +42,7 @@ export type PlayerProps = {
   cards?: CardListDto;
   hasDrewStartupCards?: boolean;
   hasStarted?: boolean;
+  username?: string;
 };
 
 export class Player implements IPlayer {
@@ -49,6 +51,8 @@ export class Player implements IPlayer {
   private readonly drawStack: IDrawStack;
 
   public readonly id: string;
+  public readonly username?: string;
+
   private cards: CardListDto;
   private hasDrewStartupCards: boolean;
   private hasStarted: boolean;
@@ -64,6 +68,7 @@ export class Player implements IPlayer {
     this.cards = props.cards ?? [];
     this.hasDrewStartupCards = props.hasDrewStartupCards ?? false;
     this.hasStarted = props.hasStarted ?? false;
+    this.username = props.username;
   }
 
   drawStartupCards(): void {

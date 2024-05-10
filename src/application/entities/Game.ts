@@ -19,8 +19,12 @@ export type GameDto = {
   isFull: boolean;
 };
 
+type AddPlayerProps = {
+  username?: string;
+};
+
 export interface IGame {
-  addPlayer(): IPlayer;
+  addPlayer(props: AddPlayerProps): IPlayer;
   start(): void;
   end(): void;
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer;
@@ -57,7 +61,7 @@ export class Game implements IGame {
     return this.players.length >= MAX_PLAYERS;
   }
 
-  addPlayer(): IPlayer {
+  addPlayer(props?: AddPlayerProps): IPlayer {
     if (this.state !== "created") {
       throw new Error("Game has started");
     }
@@ -71,6 +75,7 @@ export class Game implements IGame {
       drawStack: this.drawStack,
       gameBoard: this.gameBoard,
       id: this.generateUserId(),
+      ...props,
     });
 
     this.players.push(player);
