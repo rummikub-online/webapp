@@ -77,26 +77,6 @@ describe("Player", () => {
   });
 
   describe("endTurn", () => {
-    test("ask the game to begin turn of next player", () => {
-      const player = new Player({
-        id: "player",
-        hasStarted: true,
-        gameBoard: new GameBoard({}),
-        drawStack: new DrawStack({}),
-        cards: [
-          { color: "black", number: 1 },
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-        ],
-      });
-
-      player.beginTurn();
-      const combinationIndex = player.placeCardAlone(0);
-      player.placeCardInCombination(0, { combinationIndex, cardIndex: 1 });
-      player.placeCardInCombination(0, { combinationIndex, cardIndex: 2 });
-      player.endTurn();
-    });
-
     test("throw error if game board is not valid", () => {
       const player = new Player({
         id: "player",
@@ -176,6 +156,19 @@ describe("Player", () => {
       player.drawCard();
 
       expect(player.isPlaying()).toBeFalsy();
+    });
+  });
+
+  describe("hasWon", () => {
+    test("return true when player has drawn startup cards and has placed everything", () => {
+      const player = new Player({
+        id: "player",
+        hasDrewStartupCards: true,
+        gameBoard: new GameBoard({}),
+        drawStack: new DrawStack({}),
+      });
+
+      expect(player.hasWon()).toBeTruthy();
     });
   });
 

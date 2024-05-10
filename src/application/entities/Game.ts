@@ -22,6 +22,7 @@ type GameDto = {
 export interface IGame {
   addPlayer(): IPlayer;
   start(): void;
+  end(): void;
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer;
   isFull(): boolean;
   toDto(): GameDto;
@@ -120,6 +121,14 @@ export class Game implements IGame {
     }
 
     return this.players[playerIndex + 1];
+  }
+
+  end(): void {
+    if (this.state !== "started") {
+      throw new Error("Game has not started");
+    }
+
+    this.state = "ended";
   }
 
   toDto(): GameDto {

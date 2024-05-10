@@ -82,6 +82,22 @@ describe("Game", () => {
     });
   });
 
+  describe("end", () => {
+    test("should have been start to be ended", () => {
+      const game = new Game({});
+
+      expect(() => game.end()).toThrow("Game has not started");
+    });
+
+    test("change state to ended", () => {
+      const game = new Game({ state: "started" });
+
+      game.end();
+
+      expect(game.toDto().state).toBe("ended");
+    });
+  });
+
   describe("toDto", () => {
     test("return corresponding dto", () => {
       const game = new Game({});
