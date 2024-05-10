@@ -3,6 +3,7 @@ import { CardListDto } from "../../domain/dtos/cardList";
 import { PlayerDto } from "../../domain/dtos/player";
 import { canStartWithPoints } from "../../domain/gamerules/cardCombination/canStartWith";
 import { IDrawStack } from "./DrawStack";
+import { IGame } from "./Game";
 import {
   CardPositionOnBoard,
   CombinationPositionOnBoard,
@@ -26,6 +27,7 @@ export interface IPlayer {
   ): void;
   cancelTurnModifactions(): void;
   endTurn(): void;
+  isPlaying(): boolean;
   toDto(): PlayerDto;
 }
 
@@ -33,12 +35,14 @@ export type PlayerProps = {
   gameBoard: IGameBoard;
   drawStack: IDrawStack;
   id: string;
+  game?: IGame;
   cards?: CardListDto;
   hasDrewStartupCards?: boolean;
   hasStarted?: boolean;
 };
 
 export class Player implements IPlayer {
+  private readonly game?: IGame;
   private readonly gameBoard: IGameBoard;
   private readonly drawStack: IDrawStack;
 
@@ -48,8 +52,10 @@ export class Player implements IPlayer {
   private hasStarted: boolean;
 
   private hasDrawThisTurn: boolean = false;
+  private _isPlaying: boolean = false;
 
   constructor(props: PlayerProps) {
+    this.game = props.game;
     this.gameBoard = props.gameBoard;
     this.drawStack = props.drawStack;
     this.id = props.id;
@@ -69,6 +75,7 @@ export class Player implements IPlayer {
 
   beginTurn(): void {
     this.gameBoard.beginTurn();
+    this._isPlaying = true;
     this.hasDrawThisTurn = false;
   }
 
@@ -123,18 +130,18 @@ export class Player implements IPlayer {
   }
 
   endTurn(): void {
-    if (this.hasDrawThisTurn) {
-      this.gameBoard.endTurn();
+    if (!this.hasDrawThisTurn) {
+      if (!this.hasStarted) {
+        this.throwIfNotEnoughPointsToStart();
+      }
 
-      return;
+      this.throwIfNoPointsPlayed();
     }
 
-    if (!this.hasStarted) {
-      this.throwIfNotEnoughtPointsToStart();
-    }
-
-    this.throwIfNoPointsPlayed();
+    this._isPlaying = false;
     this.gameBoard.endTurn();
+
+    this.game?.nextPlayerAfter(this).beginTurn();
   }
 
   private throwIfNoPointsPlayed() {
@@ -143,10 +150,14 @@ export class Player implements IPlayer {
     }
   }
 
-  private throwIfNotEnoughtPointsToStart() {
+  private throwIfNotEnoughPointsToStart() {
     if (!this.canStart()) {
       throw new Error("Not enough points to start");
     }
+  }
+
+  isPlaying(): boolean {
+    return this._isPlaying;
   }
 
   toDto(): PlayerDto {

@@ -1,21 +1,39 @@
+import { randomUUID } from "crypto";
+import { MAX_PLAYERS } from "../../domain/constants/player";
+import { DrawStackDto } from "../../domain/dtos/drawStack";
+import { GameBoardDto } from "../../domain/dtos/gameBoard";
+import { PlayerDto } from "../../domain/dtos/player";
 import { indexOfFirstPlayerByDrawedCard } from "../../domain/gamerules/player/firstToPlay";
 import { isPlayerCountValid } from "../../domain/gamerules/player/isCountValid";
 import { DrawStack, IDrawStack } from "./DrawStack";
 import { GameBoard, IGameBoard } from "./GameBoard";
 import { IPlayer, Player } from "./Player";
 
+type GenerateUserIdFn = () => string;
+
+type GameDto = {
+  drawStack: DrawStackDto;
+  gameBoard: GameBoardDto;
+  state: GameState;
+  players: Array<PlayerDto>;
+  isFull: boolean;
+};
+
 export interface IGame {
-  addPlayer(): void;
+  addPlayer(): IPlayer;
   start(): void;
+  nextPlayerAfter(currentPlayer: IPlayer): IPlayer;
+  isFull(): boolean;
+  toDto(): GameDto;
 }
 
 type GameState = "created" | "started" | "ended";
 
 type GameProps = {
-  playerCount: number;
   drawStack?: IDrawStack;
   gameBoard?: IGameBoard;
   state?: GameState;
+  generateUserId?: GenerateUserIdFn;
 };
 
 export class Game implements IGame {
@@ -24,29 +42,38 @@ export class Game implements IGame {
   private players: Array<IPlayer> = [];
   private currentPlayerIndex: number | null = null;
   private state: GameState;
+  private generateUserId: GenerateUserIdFn;
 
   constructor(props: GameProps) {
     this.drawStack = props.drawStack ?? new DrawStack({});
     this.gameBoard = props.gameBoard ?? new GameBoard({});
     this.state = props.state ?? "created";
+    this.generateUserId = props.generateUserId ?? (() => randomUUID());
   }
 
-  addPlayer(): void {
+  isFull(): boolean {
+    return this.players.length >= MAX_PLAYERS;
+  }
+
+  addPlayer(): IPlayer {
     if (this.state !== "created") {
-      throw new Error("Game already started");
+      throw new Error("Game has started");
+    }
+
+    if (this.isFull()) {
+      throw new Error("Max players limit reached");
     }
 
     const player = new Player({
+      game: this,
       drawStack: this.drawStack,
       gameBoard: this.gameBoard,
       id: this.generateUserId(),
     });
 
     this.players.push(player);
-  }
 
-  private generateUserId(): string {
-    return crypto.randomUUID();
+    return player;
   }
 
   start() {
@@ -64,27 +91,44 @@ export class Game implements IGame {
 
     this.players.forEach((player) => player.drawStartupCards());
 
-    this.determineFirstPlayer();
+    this.determineFirstPlayer().beginTurn();
   }
 
-  private determineFirstPlayer(): void {
-    const drawedCardsByPLayers = this.players.map(() =>
-      this.drawStack.drawCard()
+  private determineFirstPlayer(): IPlayer {
+    const cards = this.players.map(() => this.drawStack.drawCard());
+
+    const firstPlayerIndex = indexOfFirstPlayerByDrawedCard(cards);
+
+    cards.forEach((card) => this.drawStack.putBack(card));
+
+    this.drawStack.shuffle();
+
+    return this.players[firstPlayerIndex];
+  }
+
+  nextPlayerAfter(currentPlayer: IPlayer): IPlayer {
+    const playerIndex = this.players.findIndex(
+      (player) => player.id === currentPlayer.id
     );
 
-    const firstPlayerIndex =
-      indexOfFirstPlayerByDrawedCard(drawedCardsByPLayers);
-
-    this.currentPlayerIndex = firstPlayerIndex;
-
-    drawedCardsByPLayers.forEach((card) => this.drawStack.putBack(card));
-  }
-
-  private currentPlayer(): IPlayer {
-    if (this.currentPlayerIndex === null) {
-      throw new Error("No current player");
+    if (playerIndex >= this.players.length - 1) {
+      return this.players[0];
     }
 
-    return this.players[this.currentPlayerIndex];
+    if (playerIndex < 0) {
+      throw new Error("Index out of range");
+    }
+
+    return this.players[playerIndex + 1];
+  }
+
+  toDto(): GameDto {
+    return {
+      drawStack: this.drawStack.toDto(),
+      gameBoard: this.gameBoard.toDto(),
+      players: this.players.map((player) => player.toDto()),
+      state: this.state,
+      isFull: this.isFull(),
+    };
   }
 }

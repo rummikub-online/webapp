@@ -77,6 +77,26 @@ describe("Player", () => {
   });
 
   describe("endTurn", () => {
+    test("ask the game to begin turn of next player", () => {
+      const player = new Player({
+        id: "player",
+        hasStarted: true,
+        gameBoard: new GameBoard({}),
+        drawStack: new DrawStack({}),
+        cards: [
+          { color: "black", number: 1 },
+          { color: "black", number: 2 },
+          { color: "black", number: 3 },
+        ],
+      });
+
+      player.beginTurn();
+      const combinationIndex = player.placeCardAlone(0);
+      player.placeCardInCombination(0, { combinationIndex, cardIndex: 1 });
+      player.placeCardInCombination(0, { combinationIndex, cardIndex: 2 });
+      player.endTurn();
+    });
+
     test("throw error if game board is not valid", () => {
       const player = new Player({
         id: "player",
@@ -112,12 +132,11 @@ describe("Player", () => {
     });
 
     test("throw error if unstarted player has not played enough points to start", () => {
-      const gameBoard = new GameBoard({});
       const player = new Player({
         id: "player",
         hasStarted: false,
+        gameBoard: new GameBoard({}),
         drawStack: new DrawStack({}),
-        gameBoard,
         cards: [
           { color: "black", number: 1 },
           { color: "black", number: 2 },
@@ -130,6 +149,33 @@ describe("Player", () => {
       player.placeCardInCombination(0, { combinationIndex, cardIndex: 1 });
       player.placeCardInCombination(0, { combinationIndex, cardIndex: 2 });
       expect(() => player.endTurn()).toThrow("Not enough points to start");
+    });
+  });
+
+  describe("isPlaying", () => {
+    test("return true when player turn began", () => {
+      const player = new Player({
+        id: "player",
+        drawStack: new DrawStack({}),
+        gameBoard: new GameBoard({}),
+      });
+
+      player.beginTurn();
+
+      expect(player.isPlaying()).toBeTruthy();
+    });
+
+    test("return true when player turn ended", () => {
+      const player = new Player({
+        id: "player",
+        drawStack: new DrawStack({}),
+        gameBoard: new GameBoard({}),
+      });
+
+      player.beginTurn();
+      player.drawCard();
+
+      expect(player.isPlaying()).toBeFalsy();
     });
   });
 
