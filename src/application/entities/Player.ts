@@ -54,10 +54,10 @@ export class Player implements IPlayer {
   public readonly username?: string;
 
   private cards: CardListDto;
-  private hasDrewStartupCards: boolean;
+  private hasDrawnStartupCards: boolean;
   private hasStarted: boolean;
 
-  private hasDrawThisTurn: boolean = false;
+  private hasDrawnThisTurn: boolean = false;
   private _isPlaying: boolean = false;
 
   constructor(props: PlayerProps) {
@@ -66,24 +66,24 @@ export class Player implements IPlayer {
     this.drawStack = props.drawStack;
     this.id = props.id;
     this.cards = props.cards ?? [];
-    this.hasDrewStartupCards = props.hasDrewStartupCards ?? false;
+    this.hasDrawnStartupCards = props.hasDrewStartupCards ?? false;
     this.hasStarted = props.hasStarted ?? false;
     this.username = props.username;
   }
 
   drawStartupCards(): void {
-    if (this.hasDrewStartupCards) {
+    if (this.hasDrawnStartupCards) {
       throw new Error("Player has already draw startup cards");
     }
 
-    this.hasDrewStartupCards = true;
+    this.hasDrawnStartupCards = true;
     this.cards = [...this.cards, ...this.drawStack.drawStartupCards()];
   }
 
   beginTurn(): void {
     this.gameBoard.beginTurn();
     this._isPlaying = true;
-    this.hasDrawThisTurn = false;
+    this.hasDrawnThisTurn = false;
   }
 
   placeCardAlone(cardIndex: number): CombinationPositionOnBoard {
@@ -121,7 +121,7 @@ export class Player implements IPlayer {
 
   drawCard(): void {
     this.cards = [...this.cards, this.drawStack.drawCard()];
-    this.hasDrawThisTurn = true;
+    this.hasDrawnThisTurn = true;
 
     this.endTurn();
   }
@@ -137,7 +137,7 @@ export class Player implements IPlayer {
   }
 
   endTurn(): void {
-    if (!this.hasDrawThisTurn) {
+    if (!this.hasDrawnThisTurn) {
       this.throwIfNotEnoughPointsToStart();
       this.throwIfNoPointsPlayed();
     }
@@ -183,8 +183,9 @@ export class Player implements IPlayer {
     return {
       id: this.id,
       cards: this.cards,
-      hasDrewStartupCards: this.hasDrewStartupCards,
+      hasDrawnStartupCards: this.hasDrawnStartupCards,
       hasStarted: this.hasStarted,
+      hasDrawnThisTurn: this.hasDrawnThisTurn,
     };
   }
 }

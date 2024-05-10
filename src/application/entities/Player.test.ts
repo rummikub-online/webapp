@@ -190,8 +190,9 @@ describe("Player", () => {
           { color: "black", number: 2 },
           { color: "black", number: 1 },
         ],
-        hasDrewStartupCards: false,
+        hasDrawnStartupCards: false,
         hasStarted: false,
+        hasDrawnThisTurn: false,
       });
     });
   });
