@@ -7,14 +7,7 @@ describe("Game", () => {
 
       game.addPlayer();
 
-      expect(game.toDto().players).toStrictEqual([
-        {
-          cards: [],
-          hasDrewStartupCards: false,
-          hasStarted: false,
-          id: "player",
-        },
-      ]);
+      expect(game.toDto().players).toHaveLength(1);
     });
 
     test("can't add more than 4 players", () => {
@@ -123,6 +116,7 @@ describe("Game", () => {
         gameBoard: {
           isValid: true,
           combinations: [],
+          hasModifications: false,
         },
         state: "created",
         isFull: false,

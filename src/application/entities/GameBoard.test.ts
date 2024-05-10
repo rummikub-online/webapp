@@ -13,6 +13,7 @@ describe("GameBoard", () => {
       expect(gameBoard.toDto()).toStrictEqual({
         combinations: [],
         isValid: true,
+        hasModifications: false,
       });
     });
 
@@ -206,6 +207,46 @@ describe("GameBoard", () => {
     });
   });
 
+  describe("hasModifications", () => {
+    test("should return true when combination has changed", () => {
+      const gameBoard = new GameBoard({
+        combinations: [
+          new Combination({
+            cards: [
+              { color: "black", number: 4 },
+              { color: "black", number: 4 },
+            ],
+          }),
+        ],
+      });
+
+      gameBoard.beginTurn();
+      gameBoard.moveCardAlone({
+        combinationIndex: 0,
+        cardIndex: 0,
+      });
+
+      expect(gameBoard.hasModifications()).toBe(true);
+    });
+
+    test("should return false when no changes", () => {
+      const gameBoard = new GameBoard({
+        combinations: [
+          new Combination({
+            cards: [
+              { color: "black", number: 4 },
+              { color: "black", number: 4 },
+            ],
+          }),
+        ],
+      });
+
+      gameBoard.beginTurn();
+
+      expect(gameBoard.hasModifications()).toBe(false);
+    });
+  });
+
   describe("toDto", () => {
     test("return corresponding dto", () => {
       const gameBoard = new GameBoard({
@@ -230,6 +271,7 @@ describe("GameBoard", () => {
           },
         ],
         isValid: false,
+        hasModifications: false,
       });
     });
   });

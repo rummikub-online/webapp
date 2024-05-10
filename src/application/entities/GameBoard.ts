@@ -1,4 +1,5 @@
 import { CardDto } from "../../domain/dtos/card";
+import { CombinationDto } from "../../domain/dtos/combination";
 import { GameBoardDto } from "../../domain/dtos/gameBoard";
 import { cardCombinationsPoints } from "../../domain/gamerules/cardCombination/points";
 import { Combination, ICombination } from "./Combination";
@@ -21,6 +22,7 @@ export interface IGameBoard {
   ): void;
   deleteEmptyCombinations(): void;
   cancelTurnModications(): void;
+  hasModifications(): boolean;
   isValid(): boolean;
   turnPoints(): number;
   endTurn(): void;
@@ -34,14 +36,19 @@ type GameBoardProps = {
 
 export class GameBoard implements IGameBoard {
   private combinations: Array<ICombination>;
-  private previousTurn: GameBoardDto | null = null;
+  private previousTurnCombinations: Array<CombinationDto> = [];
 
   constructor(props: GameBoardProps) {
     this.combinations = props.combinations ?? [];
+    this.saveTurnCombinations();
   }
 
   beginTurn(): void {
-    this.previousTurn = this.toDto();
+    this.saveTurnCombinations();
+  }
+
+  private saveTurnCombinations() {
+    this.previousTurnCombinations = this.toDto().combinations;
   }
 
   placeCardAlone(card: CardDto): CombinationPositionOnBoard {
@@ -90,11 +97,22 @@ export class GameBoard implements IGameBoard {
   cancelTurnModications(): void {
     this.throwIfTurnHasNotStarted();
 
-    this.combinations = this.previousTurn!.combinations.map(
+    this.combinations = this.previousTurnCombinations!.map(
       (combinationDto) =>
         new Combination({
           cards: combinationDto.cards,
         })
+    );
+
+    this.saveTurnCombinations();
+  }
+
+  hasModifications(): boolean {
+    return (
+      JSON.stringify(this.previousTurnCombinations) !==
+      JSON.stringify(
+        this.combinations.map((combination) => combination.toDto())
+      )
     );
   }
 
@@ -110,7 +128,7 @@ export class GameBoard implements IGameBoard {
     this.throwIfTurnHasNotStarted();
 
     const previousTurnPoints = cardCombinationsPoints(
-      this.previousTurn!.combinations
+      this.previousTurnCombinations!
     );
 
     return this.points() - previousTurnPoints;
@@ -122,7 +140,7 @@ export class GameBoard implements IGameBoard {
   }
 
   private throwIfTurnHasNotStarted() {
-    if (!this.previousTurn) {
+    if (!this.previousTurnCombinations) {
       throw new Error("Turn has not started");
     }
   }
@@ -143,6 +161,7 @@ export class GameBoard implements IGameBoard {
       combinations: [
         ...this.combinations.map((combination) => combination.toDto()),
       ],
+      hasModifications: this.hasModifications(),
     };
   }
 }

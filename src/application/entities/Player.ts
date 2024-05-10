@@ -27,7 +27,7 @@ export interface IPlayer {
     source: CardPositionOnBoard,
     destination: CardPositionOnBoard
   ): void;
-  cancelTurnModifactions(): void;
+  cancelTurnModifications(): void;
   endTurn(): void;
   isPlaying(): boolean;
   hasWon(): boolean;
@@ -111,7 +111,7 @@ export class Player implements IPlayer {
     this.gameBoard.moveCardToCombination(source, destination);
   }
 
-  cancelTurnModifactions(): void {
+  cancelTurnModifications(): void {
     this.gameBoard.cancelTurnModications();
   }
 
