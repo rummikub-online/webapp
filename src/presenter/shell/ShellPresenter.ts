@@ -1,24 +1,23 @@
-import { prompt } from "enquirer";
 import { IGame } from "../../application/entities/Game";
 import { IPlayer } from "../../application/entities/Player";
 import { IPresenter } from "../../application/rummikub";
-import { CombinationDto } from "../../domain/dtos/combination";
 import {
   OrderedCardDto,
   byColor,
   byNumber,
 } from "../../domain/utils/card/grouping";
+import { ShellTurnActionAsker } from "./ShellAsker";
 import { formatCard, formatCombination } from "./format";
 
-type EnquirerChoice<T> = {
+export type EnquirerChoice<T> = {
   message: string;
   name: T;
 };
-type EnquirerResponse<T> = { action: T };
+export type EnquirerResponse<T> = { action: T };
 
-type OrderCardsBy = "orderCardsByColor" | "orderCardsByNumber";
+export type OrderCardsBy = "orderCardsByColor" | "orderCardsByNumber";
 
-type TurnAction =
+export type TurnAction =
   | OrderCardsBy
   | "drawCard"
   | "placeCardAlone"
@@ -31,7 +30,9 @@ type TurnAction =
 export class ShellPresenter implements IPresenter {
   private orderCardsBy: OrderCardsBy = "orderCardsByColor";
 
-  private orderedCards(player: IPlayer): Array<OrderedCardDto> {
+  private asker: ShellTurnActionAsker = new ShellTurnActionAsker(this);
+
+  orderedCards(player: IPlayer): Array<OrderedCardDto> {
     return this.orderCardsBy === "orderCardsByColor"
       ? byColor(player.toDto().cards)
       : byNumber(player.toDto().cards);
@@ -59,7 +60,10 @@ export class ShellPresenter implements IPresenter {
     this.displayGame(game);
     this.displayCards(player);
 
-    const turnAction = await this.askTurnAction(game, player);
+    const turnAction = await this.asker.askTurnAction(
+      player,
+      this.orderCardsBy
+    );
 
     if (turnAction === "orderCardsByColor") {
       this.orderCardsBy = "orderCardsByColor";
@@ -87,15 +91,15 @@ export class ShellPresenter implements IPresenter {
     }
 
     if (turnAction === "placeCardAlone") {
-      const cardToMove = await this.askCardToMove(player);
+      const cardToMove = await this.asker.askCardToMove(player);
       player.placeCardAlone(cardToMove);
       return await this.handlePlayerTurn(game, player);
     }
 
     if (turnAction === "placeCardInCombination") {
-      const cardToMove = await this.askCardToMove(player);
-      const combinationIndex = await this.askCombination(game);
-      const cardIndex = await this.askPlaceInCombination(
+      const cardToMove = await this.asker.askCardToMove(player);
+      const combinationIndex = await this.asker.askCombination(game);
+      const cardIndex = await this.asker.askPlaceInCombination(
         game.toDto().gameBoard.combinations[combinationIndex]
       );
       player.placeCardInCombination(cardToMove, {
@@ -106,8 +110,8 @@ export class ShellPresenter implements IPresenter {
     }
 
     if (turnAction === "moveCardAlone") {
-      const combinationIndex = await this.askCombination(game);
-      const cardIndex = await this.askPlaceInCombination(
+      const combinationIndex = await this.asker.askCombination(game);
+      const cardIndex = await this.asker.askPlaceInCombination(
         game.toDto().gameBoard.combinations[combinationIndex]
       );
       player.moveCardAlone({
@@ -116,138 +120,6 @@ export class ShellPresenter implements IPresenter {
       });
       return await this.handlePlayerTurn(game, player);
     }
-  }
-
-  async askTurnAction(game: IGame, player: IPlayer): Promise<TurnAction> {
-    const choices: Array<EnquirerChoice<TurnAction>> = [];
-
-    if (this.orderCardsBy === "orderCardsByColor") {
-      choices.push({
-        message: "Order cards by number",
-        name: "orderCardsByNumber",
-      });
-    } else {
-      choices.push({
-        message: "Order cards by color",
-        name: "orderCardsByColor",
-      });
-    }
-
-    if (player.canDrawCard()) {
-      choices.push({
-        message: "Draw card and terminate the turn",
-        name: "drawCard",
-      });
-    }
-
-    if (player.canPlaceCardAlone()) {
-      choices.push({
-        message: "Place card alone",
-        name: "placeCardAlone",
-      });
-    }
-
-    if (player.canMoveCardToCombination()) {
-      choices.push({
-        message: "Place card in combination",
-        name: "placeCardInCombination",
-      });
-    }
-
-    if (player.canMoveCardAlone()) {
-      choices.push({
-        message: "Move card alone",
-        name: "moveCardAlone",
-      });
-    }
-
-    if (player.canMoveCardToCombination()) {
-      choices.push({
-        message: "Move card to combination",
-        name: "moveCardToCombination",
-      });
-    }
-
-    if (player.canCancelTurnModifications()) {
-      choices.push({
-        message: "Cancel modifications",
-        name: "cancelTurnModifications",
-      });
-    }
-
-    if (player.canEndTurn()) {
-      choices.push({
-        message: "End turn",
-        name: "endTurn",
-      });
-    }
-
-    const { action } = (await prompt({
-      type: "select",
-      name: "action",
-      message: `${player.username ?? player.id}, what do you do?`,
-      choices,
-    })) as EnquirerResponse<TurnAction>;
-
-    return action;
-  }
-
-  async askCardToMove(player: IPlayer): Promise<number> {
-    const choices: Array<EnquirerChoice<string>> = this.orderedCards(
-      player
-    ).map((card) => ({
-      message: formatCard(card),
-      name: card.initialIndex.toString(),
-    }));
-
-    const { action } = (await prompt({
-      type: "select",
-      name: "action",
-      message: `What card ?`,
-      choices,
-    })) as EnquirerResponse<string>;
-
-    return parseInt(action);
-  }
-
-  async askCombination(game: IGame): Promise<number> {
-    const choices: Array<EnquirerChoice<string>> = game
-      .toDto()
-      .gameBoard.combinations.map((combination, index) => ({
-        message: formatCombination(combination),
-        name: index.toString(),
-      }));
-
-    const { action } = (await prompt({
-      type: "select",
-      name: "action",
-      message: `What combination ?`,
-      choices,
-    })) as EnquirerResponse<string>;
-
-    return parseInt(action);
-  }
-
-  async askPlaceInCombination(combination: CombinationDto): Promise<number> {
-    const choices: Array<EnquirerChoice<string>> = [
-      ...combination.cards.map((card, index) => ({
-        message: `Before ${formatCard(card)}`,
-        name: index.toString(),
-      })),
-      {
-        message: "At end",
-        name: combination.cards.length.toString(),
-      },
-    ];
-
-    const { action } = (await prompt({
-      type: "select",
-      name: "action",
-      message: `Where ?`,
-      choices,
-    })) as EnquirerResponse<string>;
-
-    return parseInt(action);
   }
 
   async handleWin(winner: IPlayer): Promise<void> {
