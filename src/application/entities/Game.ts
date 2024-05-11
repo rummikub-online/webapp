@@ -205,7 +205,7 @@ export class Game implements IGame {
   }
 
   canStart(): boolean {
-    return isPlayerCountValid(this.players.length);
+    return this.state === "created" && isPlayerCountValid(this.players.length);
   }
 
   canAddPlayer(): boolean {

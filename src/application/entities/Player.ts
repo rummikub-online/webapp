@@ -200,11 +200,13 @@ export class Player implements IPlayer {
       this._isPlaying && !this.hasDrawnThisTurn && !this.gameBoard.isEmpty()
     );
   }
+
   canMoveCardToCombination(): boolean {
     return (
       this._isPlaying && !this.hasDrawnThisTurn && !this.gameBoard.isEmpty()
     );
   }
+
   canCancelTurnModifications(): boolean {
     return (
       this._isPlaying &&
@@ -240,17 +242,32 @@ export class Player implements IPlayer {
   }
 
   hasWon(): boolean {
-    return hasPlayerWon(this.toDto());
+    return hasPlayerWon({
+      hasDrawnStartupCards: this.hasDrawnStartupCards,
+      cards: this.cards,
+    });
+  }
+
+  canStartGame(): boolean {
+    if (!this.game) {
+      return false;
+    }
+
+    return this.game.canStart() && this.admin;
   }
 
   toDto(): PlayerDto {
     return {
       id: this.id,
       username: this.username,
+      admin: this.admin,
       cards: this.cards,
+      isPlaying: this.isPlaying(),
       hasDrawnStartupCards: this.hasDrawnStartupCards,
       hasStarted: this.hasStarted,
       hasDrawnThisTurn: this.hasDrawnThisTurn,
+      hasWon: this.hasWon(),
+      canStartGame: this.canStartGame(),
       canDrawCard: this.canDrawCard(),
       canPlaceCardAlone: this.canPlaceCardAlone(),
       canPlaceCardInCombination: this.canPlaceCardInCombination(),

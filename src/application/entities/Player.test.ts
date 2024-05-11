@@ -223,13 +223,17 @@ describe("Player", () => {
       expect(player.toDto()).toStrictEqual({
         id: "player",
         username: "bob",
+        admin: false,
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 1 },
         ],
+        isPlaying: false,
         hasDrawnStartupCards: false,
         hasStarted: false,
         hasDrawnThisTurn: false,
+        hasWon: false,
+        canStartGame: false,
         canDrawCard: false,
         canPlaceCardAlone: false,
         canPlaceCardInCombination: false,

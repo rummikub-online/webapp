@@ -1,4 +1,9 @@
-import { PlayerDto } from "../../dtos/player";
+import { CardListDto } from "../../dtos/cardList";
 
-export const isWinnerPlayer = (player: PlayerDto) =>
-  player.hasDrawnStartupCards && player.cards.length === 0;
+export const isWinnerPlayer = ({
+  hasDrawnStartupCards,
+  cards,
+}: {
+  hasDrawnStartupCards: boolean;
+  cards: CardListDto;
+}) => hasDrawnStartupCards && cards.length === 0;
