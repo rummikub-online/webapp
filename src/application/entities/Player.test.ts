@@ -228,6 +228,12 @@ describe("Player", () => {
         hasDrawnStartupCards: false,
         hasStarted: false,
         hasDrawnThisTurn: false,
+        canDrawCard: false,
+        canPlaceCardAlone: false,
+        canPlaceCardInCombination: false,
+        canMoveCardAlone: false,
+        canMoveCardToCombination: false,
+        canCancelTurnModifications: false,
         canEndTurn: false,
       });
     });

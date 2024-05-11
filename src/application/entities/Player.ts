@@ -28,8 +28,14 @@ export interface IPlayer {
     destination: CardPositionOnBoard
   ): void;
   cancelTurnModifications(): void;
-  canEndTurn(): boolean;
   endTurn(): void;
+  canDrawCard(): boolean;
+  canPlaceCardAlone(): boolean;
+  canPlaceCardInCombination(): boolean;
+  canMoveCardAlone(): boolean;
+  canMoveCardToCombination(): boolean;
+  canCancelTurnModifications(): boolean;
+  canEndTurn(): boolean;
   isPlaying(): boolean;
   hasWon(): boolean;
   toDto(): PlayerDto;
@@ -140,7 +146,7 @@ export class Player implements IPlayer {
     this.endTurn();
   }
 
-  giveCard(cardIndex: number): CardDto {
+  private giveCard(cardIndex: number): CardDto {
     const cards = [...this.cards];
 
     const [placedCard] = cards.splice(cardIndex, 1);
@@ -148,14 +154,6 @@ export class Player implements IPlayer {
     this.cards = Object.freeze(cards);
 
     return placedCard;
-  }
-
-  canEndTurn(): boolean {
-    return (
-      this.gameBoard.isValid() &&
-      (this.hasStarted || this.canStart()) &&
-      this.gameBoard.turnPoints() > 0
-    );
   }
 
   endTurn(): void {
@@ -177,6 +175,46 @@ export class Player implements IPlayer {
     } else {
       this.game.nextPlayerAfter(this).beginTurn();
     }
+  }
+
+  canDrawCard(): boolean {
+    return this._isPlaying && !this.gameBoard.hasModifications();
+  }
+
+  canPlaceCardAlone(): boolean {
+    return this._isPlaying && !this.hasDrawnThisTurn;
+  }
+
+  canPlaceCardInCombination(): boolean {
+    return (
+      this._isPlaying && !this.hasDrawnThisTurn && !this.gameBoard.isEmpty()
+    );
+  }
+
+  canMoveCardAlone(): boolean {
+    return (
+      this._isPlaying && !this.hasDrawnThisTurn && !this.gameBoard.isEmpty()
+    );
+  }
+  canMoveCardToCombination(): boolean {
+    return (
+      this._isPlaying && !this.hasDrawnThisTurn && !this.gameBoard.isEmpty()
+    );
+  }
+  canCancelTurnModifications(): boolean {
+    return (
+      this._isPlaying &&
+      !this.hasDrawnThisTurn &&
+      this.gameBoard.hasModifications()
+    );
+  }
+
+  canEndTurn(): boolean {
+    return (
+      this.gameBoard.isValid() &&
+      (this.hasStarted || this.canStart()) &&
+      this.gameBoard.turnPoints() > 0
+    );
   }
 
   private throwIfNoPointsPlayed() {
@@ -208,6 +246,12 @@ export class Player implements IPlayer {
       hasDrawnStartupCards: this.hasDrawnStartupCards,
       hasStarted: this.hasStarted,
       hasDrawnThisTurn: this.hasDrawnThisTurn,
+      canDrawCard: this.canDrawCard(),
+      canPlaceCardAlone: this.canPlaceCardAlone(),
+      canPlaceCardInCombination: this.canPlaceCardInCombination(),
+      canMoveCardAlone: this.canMoveCardAlone(),
+      canMoveCardToCombination: this.canMoveCardToCombination(),
+      canCancelTurnModifications: this.canCancelTurnModifications(),
       canEndTurn: this.canEndTurn(),
     };
   }

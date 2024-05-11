@@ -6,5 +6,11 @@ export type PlayerDto = {
   hasDrawnStartupCards: boolean;
   hasStarted: boolean;
   hasDrawnThisTurn: boolean;
+  canDrawCard: boolean;
+  canPlaceCardAlone: boolean;
+  canPlaceCardInCombination: boolean;
+  canMoveCardAlone: boolean;
+  canMoveCardToCombination: boolean;
+  canCancelTurnModifications: boolean;
   canEndTurn: boolean;
 };

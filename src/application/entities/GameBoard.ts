@@ -23,6 +23,7 @@ export interface IGameBoard {
   deleteEmptyCombinations(): void;
   cancelTurnModications(): void;
   hasModifications(): boolean;
+  isEmpty(): boolean;
   isValid(): boolean;
   turnPoints(): number;
   endTurn(): void;
@@ -116,6 +117,10 @@ export class GameBoard implements IGameBoard {
         this.combinations.map((combination) => combination.toDto())
       )
     );
+  }
+
+  isEmpty(): boolean {
+    return this.combinations.length === 0;
   }
 
   isValid(): boolean {
