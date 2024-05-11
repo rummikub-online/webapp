@@ -34,6 +34,32 @@ describe("Game", () => {
     });
   });
 
+  describe("removePlayer", () => {
+    test("throw error if unknown player id", () => {
+      const game = new Game({ id: "game", generateUserId: () => "player" });
+
+      expect(() => game.removePlayer("e")).toThrow("Unknown player id");
+    });
+    test("remove player", () => {
+      const game = new Game({ id: "game", generateUserId: () => "player" });
+      const player = game.addPlayer();
+
+      game.removePlayer(player.id);
+
+      expect(game.toDto().players).toHaveLength(0);
+    });
+
+    test("remove player end the game if started", () => {
+      const game = new Game({ id: "game", state: "created" });
+      const player = game.addPlayer();
+      game.addPlayer();
+      game.start();
+
+      game.removePlayer(player.id);
+      expect(() => game.isEnded()).toBeTruthy();
+    });
+  });
+
   describe("isFull", () => {
     test("return false when lest than 4 players", () => {
       const game = new Game({ id: "game" });

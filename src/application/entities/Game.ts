@@ -26,6 +26,7 @@ type AddPlayerProps = {
 export interface IGame {
   id: string;
   addPlayer(props: AddPlayerProps): IPlayer;
+  removePlayer(id: string): void;
   start(): void;
   end(): void;
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer;
@@ -87,6 +88,22 @@ export class Game implements IGame {
     this.players.push(player);
 
     return player;
+  }
+
+  removePlayer(id: string): void {
+    const playerIndex = this.players.findIndex((player) => player.id === id);
+
+    if (playerIndex === -1) {
+      throw new Error("Unknown player id");
+    }
+
+    const newPlayers = [...this.players];
+    newPlayers.splice(playerIndex, 1);
+    this.players = newPlayers;
+
+    if (this.state === "started") {
+      this.end();
+    }
   }
 
   start() {
