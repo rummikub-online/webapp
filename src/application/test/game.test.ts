@@ -14,6 +14,7 @@ test("A game can be played", () => {
   const gameBoard = new GameBoard({});
   const drawStack = new DrawStack({});
   const game = new Game({
+    id: "game",
     gameBoard,
     drawStack,
   });

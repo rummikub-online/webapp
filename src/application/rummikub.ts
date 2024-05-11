@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { Game, IGame } from "./entities/Game";
 import { IPlayer } from "./entities/Player";
 
@@ -7,19 +8,19 @@ export type RummikubProps = {
 
 export interface IPresenter {
   handlePlayerTurn(game: IGame, player: IPlayer): Promise<void>;
-  handleWin(winner: IPlayer): Promise<void>;
+  handleWin(game: IGame, winner: IPlayer): Promise<void>;
 }
 
 export class Rummikub {
   private readonly presenter: IPresenter;
-  private game: Game = new Game({});
+  private game: Game | undefined;
 
   constructor(props: RummikubProps) {
     this.presenter = props.presenter;
   }
 
   async newGame() {
-    this.game = new Game({});
+    this.game = new Game({ id: randomUUID() });
 
     this.game.addPlayer({ username: "Alice" });
     this.game.addPlayer({ username: "Bob" });
