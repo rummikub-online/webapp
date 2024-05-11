@@ -25,7 +25,7 @@ type AddPlayerProps = {
 
 export interface IGame {
   id: string;
-  addPlayer(props: AddPlayerProps): IPlayer;
+  addPlayer(props?: AddPlayerProps): IPlayer;
   removePlayer(id: string): void;
   start(): void;
   end(): void;
