@@ -11,7 +11,7 @@ import {
 } from "./ShellPresenter";
 import { formatCard, formatCombination } from "./format";
 
-export class ShellTurnActionAsker {
+export class ShellAsker {
   presenter: ShellPresenter;
   constructor(presenter: ShellPresenter) {
     this.presenter = presenter;

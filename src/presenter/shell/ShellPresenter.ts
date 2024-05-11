@@ -6,7 +6,7 @@ import {
   byColor,
   byNumber,
 } from "../../domain/utils/card/grouping";
-import { ShellTurnActionAsker } from "./ShellAsker";
+import { ShellAsker } from "./ShellAsker";
 import { formatCard, formatCombination } from "./format";
 
 export type EnquirerChoice<T> = {
@@ -30,7 +30,7 @@ export type TurnAction =
 export class ShellPresenter implements IPresenter {
   private orderCardsBy: OrderCardsBy = "orderCardsByColor";
 
-  private asker: ShellTurnActionAsker = new ShellTurnActionAsker(this);
+  private asker: ShellAsker = new ShellAsker(this);
 
   orderedCards(player: IPlayer): Array<OrderedCardDto> {
     return this.orderCardsBy === "orderCardsByColor"

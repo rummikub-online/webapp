@@ -8,7 +8,7 @@ export type RummikubProps = {
 
 export interface IPresenter {
   handlePlayerTurn(game: IGame, player: IPlayer): Promise<void>;
-  handleWin(game: IGame, winner: IPlayer): Promise<void>;
+  handleWin(winner: IPlayer): Promise<void>;
 }
 
 export class Rummikub {
