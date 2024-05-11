@@ -130,6 +130,14 @@ describe("Game", () => {
     });
   });
 
+  describe("isStarted", () => {
+    test("return true if state is started", () => {
+      const game = new Game({ id: "game", state: "started" });
+
+      expect(() => game.isStarted()).toBeTruthy();
+    });
+  });
+
   describe("isEnded", () => {
     test("return true if state is ended", () => {
       const game = new Game({ id: "game", state: "ended" });
