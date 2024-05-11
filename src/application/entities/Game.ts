@@ -33,6 +33,7 @@ export interface IGame {
   isFull(): boolean;
   currentPlayer(): IPlayer;
   winner(): IPlayer;
+  canStart(): boolean;
   canAddPlayer(): boolean;
   isStarted(): boolean;
   isEnded(): boolean;
@@ -52,6 +53,7 @@ type GameProps = {
 export class Game implements IGame {
   public readonly id: string;
 
+  private readonly usernames = ["Alice", "Bob", "Carol", "Dave"];
   private drawStack: IDrawStack;
   private gameBoard: IGameBoard;
   private players: Array<IPlayer> = [];
@@ -70,6 +72,12 @@ export class Game implements IGame {
     return this.players.length >= MAX_PLAYERS;
   }
 
+  private firstUnusedUsername(): string | undefined {
+    const usedUsernames = this.players.map((player) => player.username);
+
+    return this.usernames.find((username) => !usedUsernames.includes(username));
+  }
+
   addPlayer(props?: AddPlayerProps): IPlayer {
     if (this.state !== "created") {
       throw new Error("Game has started");
@@ -79,12 +87,14 @@ export class Game implements IGame {
       throw new Error("Max players limit reached");
     }
 
+    const admin = this.players.length === 0;
     const player = new Player({
       game: this,
       drawStack: this.drawStack,
       gameBoard: this.gameBoard,
       id: this.generateUserId(),
-      ...props,
+      admin,
+      username: props?.username ?? this.firstUnusedUsername(),
     });
 
     this.players.push(player);
@@ -100,8 +110,12 @@ export class Game implements IGame {
     }
 
     const newPlayers = [...this.players];
-    newPlayers.splice(playerIndex, 1);
+    const [removedPlayer] = newPlayers.splice(playerIndex, 1);
     this.players = newPlayers;
+
+    if (removedPlayer.admin && this.players[0]) {
+      this.players[0].admin = true;
+    }
 
     if (this.state === "started") {
       this.end();
@@ -188,6 +202,10 @@ export class Game implements IGame {
     }
 
     this.state = "ended";
+  }
+
+  canStart(): boolean {
+    return isPlayerCountValid(this.players.length);
   }
 
   canAddPlayer(): boolean {

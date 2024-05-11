@@ -10,6 +10,16 @@ describe("Game", () => {
       expect(game.toDto().players).toHaveLength(1);
     });
 
+    test("first player is admin", () => {
+      const game = new Game({ id: "game" });
+
+      const firstPlayer = game.addPlayer();
+      const secondPlayer = game.addPlayer();
+
+      expect(firstPlayer.admin).toBe(true);
+      expect(secondPlayer.admin).toBe(false);
+    });
+
     test("can't add more than 4 players", () => {
       const game = new Game({ id: "game" });
 
@@ -47,6 +57,16 @@ describe("Game", () => {
       game.removePlayer(player.id);
 
       expect(game.toDto().players).toHaveLength(0);
+    });
+
+    test("make admin player after if admin leave game", () => {
+      const game = new Game({ id: "game", generateUserId: () => "player" });
+      const admin = game.addPlayer();
+      const guest = game.addPlayer();
+
+      game.removePlayer(admin.id);
+
+      expect(guest.admin).toBe(true);
     });
 
     test("remove player end the game if started", () => {

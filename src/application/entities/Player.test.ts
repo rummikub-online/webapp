@@ -211,6 +211,7 @@ describe("Player", () => {
     test("return corresponding dto", () => {
       const player = new Player({
         id: "player",
+        username: "bob",
         drawStack: new DrawStack({}),
         gameBoard: new GameBoard({}),
         cards: [
@@ -221,6 +222,7 @@ describe("Player", () => {
 
       expect(player.toDto()).toStrictEqual({
         id: "player",
+        username: "bob",
         cards: [
           { color: "black", number: 2 },
           { color: "black", number: 1 },

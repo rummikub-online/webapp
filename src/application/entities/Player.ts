@@ -12,6 +12,7 @@ import {
 } from "./GameBoard";
 
 export interface IPlayer {
+  admin: boolean;
   id: string;
   username?: string;
   drawStartupCards(): void;
@@ -50,6 +51,7 @@ export type PlayerProps = {
   hasDrewStartupCards?: boolean;
   hasStarted?: boolean;
   username?: string;
+  admin?: boolean;
 };
 
 export class Player implements IPlayer {
@@ -59,6 +61,7 @@ export class Player implements IPlayer {
 
   public readonly id: string;
   public readonly username?: string;
+  public admin: boolean;
 
   private cards: CardListDto;
   private previousTurnCards: CardListDto = [];
@@ -78,6 +81,7 @@ export class Player implements IPlayer {
     this.hasDrawnStartupCards = props.hasDrewStartupCards ?? false;
     this.hasStarted = props.hasStarted ?? false;
     this.username = props.username;
+    this.admin = props.admin ?? false;
 
     this.saveTurnCards();
   }
@@ -242,6 +246,7 @@ export class Player implements IPlayer {
   toDto(): PlayerDto {
     return {
       id: this.id,
+      username: this.username,
       cards: this.cards,
       hasDrawnStartupCards: this.hasDrawnStartupCards,
       hasStarted: this.hasStarted,
