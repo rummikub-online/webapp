@@ -36,5 +36,6 @@ test("A game can be played", () => {
   firstPlayer.endTurn();
 
   expect(firstPlayer.hasWon()).toBe(true);
-  expect(game.toDto().state).toBe("ended");
+  expect(game.winner().id).toBe(firstPlayer.id);
+  expect(game.isEnded()).toBeTruthy();
 });

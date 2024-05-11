@@ -104,6 +104,14 @@ describe("Game", () => {
     });
   });
 
+  describe("isEnded", () => {
+    test("return true if state is ended", () => {
+      const game = new Game({ state: "ended" });
+
+      expect(() => game.isEnded()).toBeTruthy();
+    });
+  });
+
   describe("toDto", () => {
     test("return corresponding dto", () => {
       const game = new Game({});
