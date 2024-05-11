@@ -1,59 +1,14 @@
-import chalk from "chalk";
 import { prompt } from "enquirer";
-import { IGame } from "../application/entities/Game";
-import { IPlayer } from "../application/entities/Player";
-import { IPresenter } from "../application/rummikub";
-import { CARD_JOKER_NUMBER } from "../domain/constants/card";
-import { CardDto } from "../domain/dtos/card";
-import { CombinationDto } from "../domain/dtos/combination";
-
-const formatCard = (card: CardDto): string =>
-  chalk[card.color](card.number === CARD_JOKER_NUMBER ? "J" : card.number);
-const formatCombination = (combination: CombinationDto): string =>
-  `(${combination.cards.map(formatCard).join(" ")})`;
-
-const groupByColor = <T extends CardDto>(cards: Array<T>) => {
-  const groupedCards: { [key: string]: Array<T> } = {};
-
-  cards.forEach((card) => {
-    if (!groupedCards[card.color]) {
-      groupedCards[card.color] = [];
-    }
-
-    groupedCards[card.color].push(card);
-  });
-
-  return Object.values(groupedCards);
-};
-
-const groupByNumber = <T extends CardDto>(cards: Array<T>) => {
-  const groupedCards: { [key: string]: Array<T> } = {};
-
-  cards.forEach((card) => {
-    if (!groupedCards[card.number]) {
-      groupedCards[card.number] = [];
-    }
-
-    groupedCards[card.number].push(card);
-  });
-
-  return Object.values(groupedCards);
-};
-
-const sortByColor = <T extends CardDto>(a: T, b: T) => {
-  const nameA = a.color.toUpperCase(); // ignore upper and lowercase
-  const nameB = b.color.toUpperCase(); // ignore upper and lowercase
-  if (nameA < nameB) {
-    return -1;
-  }
-  if (nameA > nameB) {
-    return 1;
-  }
-
-  // names must be equal
-  return 0;
-};
-const sortByNumber = <T extends CardDto>(a: T, b: T) => a.number - b.number;
+import { IGame } from "../../application/entities/Game";
+import { IPlayer } from "../../application/entities/Player";
+import { IPresenter } from "../../application/rummikub";
+import { CombinationDto } from "../../domain/dtos/combination";
+import {
+  OrderedCardDto,
+  byColor,
+  byNumber,
+} from "../../domain/utils/card/grouping";
+import { formatCard, formatCombination } from "./format";
 
 type EnquirerChoice<T> = {
   message: string;
@@ -62,9 +17,6 @@ type EnquirerChoice<T> = {
 type EnquirerResponse<T> = { action: T };
 
 type OrderCardsBy = "orderCardsByColor" | "orderCardsByNumber";
-type OrderedCardDto = CardDto & {
-  initialIndex: number;
-};
 
 type TurnAction =
   | OrderCardsBy
@@ -80,22 +32,9 @@ export class ShellPresenter implements IPresenter {
   private orderCardsBy: OrderCardsBy = "orderCardsByColor";
 
   private orderedCards(player: IPlayer): Array<OrderedCardDto> {
-    const cards = player.toDto().cards.map((card, index) =>
-      Object.freeze({
-        ...card,
-        initialIndex: index,
-      })
-    );
-
-    if (this.orderCardsBy === "orderCardsByColor") {
-      return groupByColor(cards)
-        .map((group) => group.sort(sortByNumber))
-        .flat();
-    }
-
-    return groupByNumber(cards)
-      .map((group) => group.sort(sortByColor))
-      .flat();
+    return this.orderCardsBy === "orderCardsByColor"
+      ? byColor(player.toDto().cards)
+      : byNumber(player.toDto().cards);
   }
 
   private displayGame(game: IGame) {
@@ -194,53 +133,59 @@ export class ShellPresenter implements IPresenter {
       });
     }
 
-    if (!game.toDto().gameBoard.hasModifications) {
+    if (player.canDrawCard()) {
       choices.push({
         message: "Draw card and terminate the turn",
         name: "drawCard",
       });
     }
 
-    choices.push({
-      message: "Place card alone",
-      name: "placeCardAlone",
-    });
-
-    if (game.toDto().gameBoard.combinations.length > 0) {
-      choices.push(
-        {
-          message: "Place card in combination",
-          name: "placeCardInCombination",
-        },
-        {
-          message: "Move card alone",
-          name: "moveCardAlone",
-        },
-        {
-          message: "Move card to combination",
-          name: "moveCardToCombination",
-        }
-      );
+    if (player.canPlaceCardAlone()) {
+      choices.push({
+        message: "Place card alone",
+        name: "placeCardAlone",
+      });
     }
 
-    if (game.toDto().gameBoard.hasModifications) {
+    if (player.canMoveCardToCombination()) {
+      choices.push({
+        message: "Place card in combination",
+        name: "placeCardInCombination",
+      });
+    }
+
+    if (player.canMoveCardAlone()) {
+      choices.push({
+        message: "Move card alone",
+        name: "moveCardAlone",
+      });
+    }
+
+    if (player.canMoveCardToCombination()) {
+      choices.push({
+        message: "Move card to combination",
+        name: "moveCardToCombination",
+      });
+    }
+
+    if (player.canCancelTurnModifications()) {
       choices.push({
         message: "Cancel modifications",
         name: "cancelTurnModifications",
       });
+    }
 
-      if (player.canEndTurn()) {
-        choices.push({
-          message: "End turn",
-          name: "endTurn",
-        });
-      }
+    if (player.canEndTurn()) {
+      choices.push({
+        message: "End turn",
+        name: "endTurn",
+      });
     }
 
     const { action } = (await prompt({
       type: "select",
       name: "action",
-      message: `Turn of user ${player.username ?? player.id}, what you do?`,
+      message: `${player.username ?? player.id}, what do you do?`,
       choices,
     })) as EnquirerResponse<TurnAction>;
 

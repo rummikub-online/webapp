@@ -5,7 +5,7 @@ import {
   SUITE_MIN_START_NUM,
 } from "../../constants/cardSuite";
 import { CardListDto } from "../../dtos/cardList";
-import { isJoker } from "../../utils/card";
+import { isJoker } from "../../utils/card/isJoker";
 
 const hasValidLength = (cardSuite: CardListDto): boolean =>
   SUITE_MIN_CARDS_COUNT <= cardSuite.length &&

@@ -1,5 +1,5 @@
 import { CardListDto } from "../../dtos/cardList";
-import { isJoker } from "../../utils/card";
+import { isJoker } from "../../utils/card/isJoker";
 
 export const indexOfFirstPlayerByDrawedCard = (
   cardsDrawedByPlayers: CardListDto
