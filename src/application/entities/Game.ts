@@ -33,6 +33,7 @@ export interface IGame {
   isFull(): boolean;
   currentPlayer(): IPlayer;
   winner(): IPlayer;
+  canAddPlayer(): boolean;
   isStarted(): boolean;
   isEnded(): boolean;
   toDto(): GameDto;
@@ -187,6 +188,10 @@ export class Game implements IGame {
     }
 
     this.state = "ended";
+  }
+
+  canAddPlayer(): boolean {
+    return this.state === "created" && !this.isFull();
   }
 
   isStarted(): boolean {

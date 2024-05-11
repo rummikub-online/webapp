@@ -130,6 +130,37 @@ describe("Game", () => {
     });
   });
 
+  describe("canAddPlayer", () => {
+    test("return true if state is created", () => {
+      const game = new Game({ id: "game", state: "created" });
+
+      expect(game.canAddPlayer()).toBeTruthy();
+    });
+
+    test("return false if state is started", () => {
+      const game = new Game({ id: "game", state: "started" });
+
+      expect(game.canAddPlayer()).toBeFalsy();
+    });
+
+    test("return false if state is ended", () => {
+      const game = new Game({ id: "game", state: "ended" });
+
+      expect(game.canAddPlayer()).toBeFalsy();
+    });
+
+    test("return false if already full", () => {
+      const game = new Game({ id: "game", state: "created" });
+
+      game.addPlayer();
+      game.addPlayer();
+      game.addPlayer();
+      game.addPlayer();
+
+      expect(game.canAddPlayer()).toBeFalsy();
+    });
+  });
+
   describe("isStarted", () => {
     test("return true if state is started", () => {
       const game = new Game({ id: "game", state: "started" });
