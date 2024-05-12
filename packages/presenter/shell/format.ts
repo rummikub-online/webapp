@@ -1,7 +1,7 @@
+import { CARD_JOKER_NUMBER } from "@rummikub-ma/domain/constants/card";
+import { CardDto } from "@rummikub-ma/domain/dtos/card";
+import { CombinationDto } from "@rummikub-ma/domain/dtos/combination";
 import chalk from "chalk";
-import { CARD_JOKER_NUMBER } from "../../domain/constants/card";
-import { CardDto } from "../../domain/dtos/card";
-import { CombinationDto } from "../../domain/dtos/combination";
 
 export const formatCard = (card: CardDto): string =>
   chalk[card.color](card.number === CARD_JOKER_NUMBER ? "J" : card.number);

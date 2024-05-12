@@ -1,7 +1,10 @@
-import { CardDto } from "../../domain/dtos/card";
-import { CardListDto } from "../../domain/dtos/cardList";
-import { CombinationDto, CombinationType } from "../../domain/dtos/combination";
-import { isValidCardSuite } from "../../domain/gamerules/cardSuite/isValid";
+import { CardDto } from "@rummikub-ma/domain/dtos/card";
+import { CardListDto } from "@rummikub-ma/domain/dtos/cardList";
+import {
+  CombinationDto,
+  CombinationType,
+} from "@rummikub-ma/domain/dtos/combination";
+import { isValidCardSuite } from "@rummikub-ma/domain/gamerules/cardSuite/isValid";
 
 export interface ICombination {
   isValid(): boolean;

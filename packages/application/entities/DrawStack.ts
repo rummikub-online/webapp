@@ -1,7 +1,10 @@
-import { CARDS, PLAYER_STARTUP_CARD_COUNT } from "../../domain/constants/card";
-import { CardDto } from "../../domain/dtos/card";
-import { CardListDto } from "../../domain/dtos/cardList";
-import { DrawStackDto } from "../../domain/dtos/drawStack";
+import {
+  CARDS,
+  PLAYER_STARTUP_CARD_COUNT,
+} from "@rummikub-ma/domain/constants/card";
+import { CardDto } from "@rummikub-ma/domain/dtos/card";
+import { CardListDto } from "@rummikub-ma/domain/dtos/cardList";
+import { DrawStackDto } from "@rummikub-ma/domain/dtos/drawStack";
 import { toShuffled } from "../utils/array";
 
 export interface IDrawStack {

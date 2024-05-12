@@ -1,11 +1,11 @@
-import { IGame } from "../../application/entities/Game";
-import { IPlayer } from "../../application/entities/Player";
-import { IPresenter } from "../../application/rummikub";
+import { IGame } from "@rummikub-ma/application/entities/Game";
+import { IPlayer } from "@rummikub-ma/application/entities/Player";
+import { IPresenter } from "@rummikub-ma/application/rummikub";
 import {
   OrderedCardDto,
   byColor,
   byNumber,
-} from "../../domain/utils/card/grouping";
+} from "@rummikub-ma/domain/utils/card/grouping";
 import { ShellAsker } from "./ShellAsker";
 import { formatCard, formatCombination } from "./format";
 

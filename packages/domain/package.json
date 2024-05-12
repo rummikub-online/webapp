@@ -1,0 +1,6 @@
+{
+  "name": "@rummikub-ma/domain",
+  "scripts": {
+    "test": "jest"
+  }
+}

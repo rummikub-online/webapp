@@ -1,0 +1,6 @@
+{
+  "name": "@rummikub-ma/application",
+  "scripts": {
+    "test": "jest"
+  }
+}

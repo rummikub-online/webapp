@@ -1,7 +1,7 @@
+import { IGame } from "@rummikub-ma/application/entities/Game";
+import { IPlayer } from "@rummikub-ma/application/entities/Player";
+import { CombinationDto } from "@rummikub-ma/domain/dtos/combination";
 import { prompt } from "enquirer";
-import { IGame } from "../../application/entities/Game";
-import { IPlayer } from "../../application/entities/Player";
-import { CombinationDto } from "../../domain/dtos/combination";
 import {
   EnquirerChoice,
   EnquirerResponse,

@@ -1,7 +1,7 @@
-import { CardDto } from "../../domain/dtos/card";
-import { CombinationDto } from "../../domain/dtos/combination";
-import { GameBoardDto } from "../../domain/dtos/gameBoard";
-import { cardCombinationsPoints } from "../../domain/gamerules/cardCombination/points";
+import { CardDto } from "@rummikub-ma/domain/dtos/card";
+import { CombinationDto } from "@rummikub-ma/domain/dtos/combination";
+import { GameBoardDto } from "@rummikub-ma/domain/dtos/gameBoard";
+import { cardCombinationsPoints } from "@rummikub-ma/domain/gamerules/cardCombination/points";
 import { Combination, ICombination } from "./Combination";
 
 export type CardPositionInCombination = number;

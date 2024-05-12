@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "paths": {
+      "@rummikub-ma/*": ["./packages/*"]
+    },
+    "rootDir": "./"
+  },
+  "extends": "../../tsconfig.json"
+}

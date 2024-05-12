@@ -1,8 +1,8 @@
-import { CardDto } from "../../domain/dtos/card";
-import { CardListDto } from "../../domain/dtos/cardList";
-import { PlayerDto } from "../../domain/dtos/player";
-import { canStartWithPoints } from "../../domain/gamerules/cardCombination/canStartWith";
-import { isWinnerPlayer as hasPlayerWon } from "../../domain/gamerules/player/hasWon";
+import { CardDto } from "@rummikub-ma/domain/dtos/card";
+import { CardListDto } from "@rummikub-ma/domain/dtos/cardList";
+import { PlayerDto } from "@rummikub-ma/domain/dtos/player";
+import { canStartWithPoints } from "@rummikub-ma/domain/gamerules/cardCombination/canStartWith";
+import { isWinnerPlayer as hasPlayerWon } from "@rummikub-ma/domain/gamerules/player/hasWon";
 import { IDrawStack } from "./DrawStack";
 import { IGame } from "./Game";
 import {

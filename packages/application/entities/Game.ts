@@ -1,10 +1,10 @@
+import { MAX_PLAYERS } from "@rummikub-ma/domain/constants/player";
+import { DrawStackDto } from "@rummikub-ma/domain/dtos/drawStack";
+import { GameBoardDto } from "@rummikub-ma/domain/dtos/gameBoard";
+import { PlayerDto } from "@rummikub-ma/domain/dtos/player";
+import { indexOfFirstPlayerByDrawedCard } from "@rummikub-ma/domain/gamerules/player/firstToPlay";
+import { isPlayerCountValid } from "@rummikub-ma/domain/gamerules/player/isCountValid";
 import { randomUUID } from "crypto";
-import { MAX_PLAYERS } from "../../domain/constants/player";
-import { DrawStackDto } from "../../domain/dtos/drawStack";
-import { GameBoardDto } from "../../domain/dtos/gameBoard";
-import { PlayerDto } from "../../domain/dtos/player";
-import { indexOfFirstPlayerByDrawedCard } from "../../domain/gamerules/player/firstToPlay";
-import { isPlayerCountValid } from "../../domain/gamerules/player/isCountValid";
 import { DrawStack, IDrawStack } from "./DrawStack";
 import { GameBoard, IGameBoard } from "./GameBoard";
 import { IPlayer, Player } from "./Player";

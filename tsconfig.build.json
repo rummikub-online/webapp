@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "packages/application"
+    },
+    {
+      "path": "packages/domain"
+    },
+    {
+      "path": "packages/presenter"
+    }
+  ]
+}
