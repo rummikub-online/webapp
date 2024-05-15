@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "@storybook/addon-a11y": "^8.0.10",
+    "@storybook/addon-essentials": "^8.0.10",
+    "@storybook/addon-interactions": "^8.0.10",
+    "@storybook/addon-links": "^8.0.10",
+    "@storybook/blocks": "^8.0.10",
+    "@storybook/test": "^8.0.10",
+    "@storybook/vue3": "^8.0.10",
+    "@storybook/vue3-vite": "^8.0.10",
+    "storybook": "^8.0.10",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
@@ -12,15 +21,18 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "vite": "^5.2.8",
+    "vite-svg-loader": "^5.1.0",
     "vue-tsc": "^2.0.11"
   },
-  "name": "@rummikub-ma/front",
+  "name": "@rumi/front",
   "private": true,
   "scripts": {
     "build": "run-p type-check \"build-only {@}\" --",
     "build-only": "vite build",
-    "dev": "vite",
+    "build-storybook": "storybook build",
+    "dev": "concurrently --names \"FRONT,STORYBOOK\" -c \"bgMagenta.bold,bgGreen.bold\" \"vite\" \"npm run storybook\"",
     "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
     "type-check": "vue-tsc --build --force"
   },
   "type": "module"
