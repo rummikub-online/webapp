@@ -1,5 +1,5 @@
 {
-  "name": "@rummikub-ma/application",
+  "name": "@rumi/application",
   "scripts": {
     "test": "jest"
   }

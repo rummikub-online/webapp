@@ -1,5 +1,5 @@
 {
-  "name": "rummikub-ma",
+  "name": "rumi",
   "private": true,
   "main": "main.js",
   "devDependencies": {

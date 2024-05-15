@@ -1,5 +1,5 @@
 {
-  "name": "@rummikub-ma/domain",
+  "name": "@rumi/domain",
   "scripts": {
     "test": "jest"
   }

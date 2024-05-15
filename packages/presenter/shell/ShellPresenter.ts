@@ -1,11 +1,11 @@
-import { IGame } from "@rummikub-ma/application/entities/Game";
-import { IPlayer } from "@rummikub-ma/application/entities/Player";
-import { IPresenter } from "@rummikub-ma/application/rummikub";
+import { IGame } from "@rumi/application/entities/Game";
+import { IPlayer } from "@rumi/application/entities/Player";
+import { IPresenter } from "@rumi/application/rummikub";
 import {
   OrderedCardDto,
   byColor,
   byNumber,
-} from "@rummikub-ma/domain/utils/card/grouping";
+} from "@rumi/domain/utils/card/grouping";
 import { ShellAsker } from "./ShellAsker";
 import { formatCard, formatCombination } from "./format";
 
@@ -44,7 +44,7 @@ export class ShellPresenter implements IPresenter {
     console.log(
       "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGame board :\n",
       gameDto.gameBoard.combinations.map(formatCombination).join("   "),
-      "\n"
+      "\n",
     );
   }
 
@@ -52,7 +52,7 @@ export class ShellPresenter implements IPresenter {
     console.log(
       "Your cards :\n",
       this.orderedCards(player).map(formatCard).join(" "),
-      "\n"
+      "\n",
     );
   }
 
@@ -62,7 +62,7 @@ export class ShellPresenter implements IPresenter {
 
     const turnAction = await this.asker.askTurnAction(
       player,
-      this.orderCardsBy
+      this.orderCardsBy,
     );
 
     if (turnAction === "orderCardsByColor") {
@@ -100,7 +100,7 @@ export class ShellPresenter implements IPresenter {
       const cardToMove = await this.asker.askCardToMove(player);
       const combinationIndex = await this.asker.askCombination(game);
       const cardIndex = await this.asker.askPlaceInCombination(
-        game.toDto().gameBoard.combinations[combinationIndex]
+        game.toDto().gameBoard.combinations[combinationIndex],
       );
       player.placeCardInCombination(cardToMove, {
         combinationIndex,
@@ -112,7 +112,7 @@ export class ShellPresenter implements IPresenter {
     if (turnAction === "moveCardAlone") {
       const combinationIndex = await this.asker.askCombination(game);
       const cardIndex = await this.asker.askPlaceInCombination(
-        game.toDto().gameBoard.combinations[combinationIndex]
+        game.toDto().gameBoard.combinations[combinationIndex],
       );
       player.moveCardAlone({
         combinationIndex,

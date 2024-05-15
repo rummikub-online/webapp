@@ -1,6 +1,6 @@
-import { CARD_JOKER_NUMBER } from "@rummikub-ma/domain/constants/card";
-import { CardDto } from "@rummikub-ma/domain/dtos/card";
-import { CombinationDto } from "@rummikub-ma/domain/dtos/combination";
+import { CARD_JOKER_NUMBER } from "@rumi/domain/constants/card";
+import { CardDto } from "@rumi/domain/dtos/card";
+import { CombinationDto } from "@rumi/domain/dtos/combination";
 import chalk from "chalk";
 
 export const formatCard = (card: CardDto): string =>

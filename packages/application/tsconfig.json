@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "paths": {
-      "@rummikub-ma/*": ["./packages/*"]
+      "@rumi/*": ["./packages/*"]
     },
     "rootDir": "./"
   },

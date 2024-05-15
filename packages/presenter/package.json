@@ -4,7 +4,7 @@
     "enquirer": "^2.4.1"
   },
   "devDependencies": {},
-  "name": "@rummikub-ma/presenter",
+  "name": "@rumi/presenter",
   "scripts": {
     "test": "jest"
   }

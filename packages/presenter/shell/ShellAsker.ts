@@ -1,6 +1,6 @@
-import { IGame } from "@rummikub-ma/application/entities/Game";
-import { IPlayer } from "@rummikub-ma/application/entities/Player";
-import { CombinationDto } from "@rummikub-ma/domain/dtos/combination";
+import { IGame } from "@rumi/application/entities/Game";
+import { IPlayer } from "@rumi/application/entities/Player";
+import { CombinationDto } from "@rumi/domain/dtos/combination";
 import { prompt } from "enquirer";
 import {
   EnquirerChoice,
@@ -19,7 +19,7 @@ export class ShellAsker {
 
   async askTurnAction(
     player: IPlayer,
-    orderCardsBy: OrderCardsBy
+    orderCardsBy: OrderCardsBy,
   ): Promise<TurnAction> {
     const choices: Array<EnquirerChoice<TurnAction>> = [];
 

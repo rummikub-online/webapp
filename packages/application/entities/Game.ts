@@ -1,9 +1,9 @@
-import { MAX_PLAYERS } from "@rummikub-ma/domain/constants/player";
-import { DrawStackDto } from "@rummikub-ma/domain/dtos/drawStack";
-import { GameBoardDto } from "@rummikub-ma/domain/dtos/gameBoard";
-import { PlayerDto } from "@rummikub-ma/domain/dtos/player";
-import { indexOfFirstPlayerByDrawedCard } from "@rummikub-ma/domain/gamerules/player/firstToPlay";
-import { isPlayerCountValid } from "@rummikub-ma/domain/gamerules/player/isCountValid";
+import { MAX_PLAYERS } from "@rumi/domain/constants/player";
+import { DrawStackDto } from "@rumi/domain/dtos/drawStack";
+import { GameBoardDto } from "@rumi/domain/dtos/gameBoard";
+import { PlayerDto } from "@rumi/domain/dtos/player";
+import { indexOfFirstPlayerByDrawedCard } from "@rumi/domain/gamerules/player/firstToPlay";
+import { isPlayerCountValid } from "@rumi/domain/gamerules/player/isCountValid";
 import { randomUUID } from "crypto";
 import { DrawStack, IDrawStack } from "./DrawStack";
 import { GameBoard, IGameBoard } from "./GameBoard";
@@ -154,7 +154,7 @@ export class Game implements IGame {
 
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer {
     const playerIndex = this.players.findIndex(
-      (player) => player.id === currentPlayer.id
+      (player) => player.id === currentPlayer.id,
     );
 
     if (playerIndex >= this.players.length - 1) {

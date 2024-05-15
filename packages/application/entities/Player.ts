@@ -1,8 +1,8 @@
-import { CardDto } from "@rummikub-ma/domain/dtos/card";
-import { CardListDto } from "@rummikub-ma/domain/dtos/cardList";
-import { PlayerDto } from "@rummikub-ma/domain/dtos/player";
-import { canStartWithPoints } from "@rummikub-ma/domain/gamerules/cardCombination/canStartWith";
-import { isWinnerPlayer as hasPlayerWon } from "@rummikub-ma/domain/gamerules/player/hasWon";
+import { CardDto } from "@rumi/domain/dtos/card";
+import { CardListDto } from "@rumi/domain/dtos/cardList";
+import { PlayerDto } from "@rumi/domain/dtos/player";
+import { canStartWithPoints } from "@rumi/domain/gamerules/cardCombination/canStartWith";
+import { isWinnerPlayer as hasPlayerWon } from "@rumi/domain/gamerules/player/hasWon";
 import { IDrawStack } from "./DrawStack";
 import { IGame } from "./Game";
 import {
@@ -21,12 +21,12 @@ export interface IPlayer {
   placeCardAlone(cardIndex: number): CombinationPositionOnBoard;
   placeCardInCombination(
     cardIndex: number,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void;
   moveCardAlone(source: CardPositionOnBoard): CombinationPositionOnBoard;
   moveCardToCombination(
     source: CardPositionOnBoard,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void;
   cancelTurnModifications(): void;
   endTurn(): void;
@@ -112,11 +112,11 @@ export class Player implements IPlayer {
 
   placeCardInCombination(
     cardIndex: number,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void {
     this.gameBoard.placeCardInCombination(
       this.giveCard(cardIndex),
-      destination
+      destination,
     );
   }
 
@@ -126,7 +126,7 @@ export class Player implements IPlayer {
 
   moveCardToCombination(
     source: CardPositionOnBoard,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void {
     this.gameBoard.moveCardToCombination(source, destination);
   }
