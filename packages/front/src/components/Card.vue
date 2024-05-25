@@ -12,10 +12,10 @@ defineProps<{
 </script>
 <template>
   <div
-    class="w-8 h-11 lg:w-10 lg:h-14 bg-white rounded flex-col justify-center items-center gap-1 inline-flex"
+    class="select-none w-9 h-11 md:w-12 md:h-16 bg-white hover:shadow-lg rounded flex-col justify-center items-center gap-1 inline-flex"
   >
     <span
-      class="text-sm lg:text-base font-black font-sans"
+      class="text-sm md:text-xl font-black font-sans"
       :class="{
         'text-card-red': color === 'red',
         'text-card-blue': color === 'blue',
@@ -25,9 +25,9 @@ defineProps<{
     >
       {{ number }}
     </span>
-    <RedCardSymbol class="size-2 lg:size-3" v-if="color === 'red'" />
-    <BlueCardSymbol class="size-2 lg:size-3" v-if="color === 'blue'" />
-    <YellowCardSymbol class="size-2 lg:size-3" v-if="color === 'yellow'" />
-    <BlackCardSymbol class="size-2 lg:size-3" v-if="color === 'black'" />
+    <RedCardSymbol class="size-2 md:size-3" v-if="color === 'red'" />
+    <BlueCardSymbol class="size-2 md:size-3" v-if="color === 'blue'" />
+    <YellowCardSymbol class="size-2 md:size-3" v-if="color === 'yellow'" />
+    <BlackCardSymbol class="size-2 md:size-3" v-if="color === 'black'" />
   </div>
 </template>
