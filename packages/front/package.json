@@ -10,10 +10,12 @@
     "@storybook/vue3-vite": "^8.0.10",
     "storybook": "^8.0.10",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
+    "@types/jest": "^29.5.12",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/tsconfig": "^0.5.1",
     "autoprefixer": "^10.4.19",
