@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   type: "primary" | "secondary" | "danger" | "success";
-  text: string;
+  text?: string;
 }>();
 </script>
 <template>
@@ -17,7 +17,10 @@ defineProps<{
     }"
   >
     <slot name="prefix"></slot>
-    <div class="text-sm font-bold font-sans">{{ text }}</div>
+    <div class="text-sm font-bold font-sans">
+      <template v-if="text">{{ text }}</template>
+      <slot v-else></slot>
+    </div>
     <slot name="suffix"></slot>
   </button>
 </template>
