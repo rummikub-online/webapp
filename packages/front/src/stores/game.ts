@@ -1,3 +1,4 @@
+import { makeCardDraggingHandler } from "@/logic/cardDragging";
 import { setupSocket } from "@/logic/socket";
 import type { GameBoardDto } from "@rumi/domain/dtos/gameBoard";
 import type { PlayerDto } from "@rumi/domain/dtos/player";
@@ -26,6 +27,13 @@ export const useGameStore = defineStore("game", () => {
     },
   });
 
+  const cardDraggingHandler = makeCardDraggingHandler({
+    placeCardAlone,
+    placeCardInCombination,
+    moveCardAlone,
+    moveCardToCombination,
+  });
+
   return {
     player,
     gameBoard,
@@ -33,9 +41,6 @@ export const useGameStore = defineStore("game", () => {
     cancelTurnModications,
     drawCard,
     endTurn,
-    moveCardAlone,
-    moveCardToCombination,
-    placeCardAlone,
-    placeCardInCombination,
+    cardDraggingHandler,
   };
 });
