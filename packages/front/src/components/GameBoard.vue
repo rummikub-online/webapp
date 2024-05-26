@@ -1,31 +1,51 @@
 <script setup lang="ts">
-import type { CardDto } from "@rumi/domain/dtos/card";
+import { useGameStore } from "@/stores/game";
 import type { GameBoardDto } from "@rumi/domain/dtos/gameBoard";
 import Combination from "./Combination.vue";
+import CreateCombinationDragZone from "./CreateCombinationDragZone.vue";
+
+const gameStore = useGameStore();
+
 defineProps<{
   gameBoard: GameBoardDto;
 }>();
 
-const handleCardMoved = (card: CardDto, oldIndex: number, newIndex: number) => {
-  console.log(card);
+const handleCardMoved = (
+  oldCardIndex: number,
+  newCardIndex: number,
+  combinationIndex: number,
+) => {
+  gameStore.cardDraggingHandler.to(newCardIndex, combinationIndex);
+  gameStore.cardDraggingHandler.from(oldCardIndex, combinationIndex);
 };
-const handleCardAdded = (card: CardDto, newIndex: number) => {
-  console.log(card);
+const handleCardRemoved = (cardIndex: number, combinationIndex: number) => {
+  gameStore.cardDraggingHandler.from(cardIndex, combinationIndex);
 };
-
-const handleCardRemoved = (card: CardDto, oldIndex: number) => {
-  console.log(card);
+const handleCardAdded = (cardIndex: number, combinationIndex: number) => {
+  gameStore.cardDraggingHandler.to(cardIndex, combinationIndex);
 };
 </script>
 <template>
-  <div class="px-2 py-4 bg-background flex justify-start items-start gap-3">
+  <div
+    class="relative z-0 px-2 py-4 bg-background flex justify-start items-start gap-3"
+  >
     <Combination
-      v-for="(combination, index) in gameBoard.combinations"
-      :key="index"
+      v-for="(combination, combinationIndex) in gameBoard.combinations"
+      :key="combinationIndex"
       :combination="combination"
-      @moved="handleCardMoved"
-      @added="handleCardAdded"
-      @removed="handleCardRemoved"
+      @moved="
+        (_, oldIndex: number, newIndex: number) =>
+          handleCardMoved(oldIndex, newIndex, combinationIndex)
+      "
+      @added="
+        (_, oldIndex: number) => handleCardAdded(oldIndex, combinationIndex)
+      "
+      @removed="
+        (_, newIndex: number) => handleCardRemoved(newIndex, combinationIndex)
+      "
+      class="z-10"
     />
+
+    <CreateCombinationDragZone class="" />
   </div>
 </template>
