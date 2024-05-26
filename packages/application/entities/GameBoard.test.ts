@@ -7,7 +7,7 @@ describe("GameBoard", () => {
       const gameBoard = new GameBoard({});
 
       gameBoard.beginTurn();
-      gameBoard.placeCardAlone({ color: "black", number: 7 });
+      gameBoard.placeCardAlone({ color: "black", number: 7, duplicata: 1 });
       gameBoard.cancelTurnModications();
 
       expect(gameBoard.toDto()).toStrictEqual({
@@ -21,7 +21,7 @@ describe("GameBoard", () => {
       const gameBoard = new GameBoard({});
 
       gameBoard.beginTurn();
-      gameBoard.placeCardAlone({ color: "yellow", number: 10 });
+      gameBoard.placeCardAlone({ color: "yellow", number: 10, duplicata: 1 });
 
       expect(gameBoard.turnPoints()).toBe(10);
     });
@@ -30,7 +30,7 @@ describe("GameBoard", () => {
       const gameBoard = new GameBoard({});
 
       gameBoard.beginTurn();
-      gameBoard.placeCardAlone({ color: "yellow", number: 10 });
+      gameBoard.placeCardAlone({ color: "yellow", number: 10, duplicata: 1 });
 
       expect(() => gameBoard.endTurn()).toThrow(Error);
     });
@@ -47,12 +47,12 @@ describe("GameBoard", () => {
     test("create combination of one card", () => {
       const gameBoard = new GameBoard({});
 
-      gameBoard.placeCardAlone({ color: "black", number: 7 });
+      gameBoard.placeCardAlone({ color: "black", number: 7, duplicata: 1 });
 
       expect(gameBoard.toDto().combinations).toStrictEqual([
         {
           type: "invalid",
-          cards: [{ color: "black", number: 7 }],
+          cards: [{ color: "black", number: 7, duplicata: 1 }],
         },
       ]);
     });
@@ -62,21 +62,23 @@ describe("GameBoard", () => {
     test("add card at specified position of combination", () => {
       const gameBoard = new GameBoard({
         combinations: [
-          new Combination({ cards: [{ color: "black", number: 6 }] }),
+          new Combination({
+            cards: [{ color: "black", number: 6, duplicata: 1 }],
+          }),
         ],
       });
 
       gameBoard.placeCardInCombination(
-        { color: "black", number: 7 },
-        { combinationIndex: 0, cardIndex: 1 }
+        { color: "black", number: 7, duplicata: 1 },
+        { combinationIndex: 0, cardIndex: 1 },
       );
 
       expect(gameBoard.toDto().combinations).toStrictEqual([
         {
           type: "invalid",
           cards: [
-            { color: "black", number: 6 },
-            { color: "black", number: 7 },
+            { color: "black", number: 6, duplicata: 1 },
+            { color: "black", number: 7, duplicata: 1 },
           ],
         },
       ]);
@@ -89,29 +91,31 @@ describe("GameBoard", () => {
         combinations: [
           new Combination({
             cards: [
-              { color: "black", number: 5 },
-              { color: "blue", number: 5 },
+              { color: "black", number: 5, duplicata: 1 },
+              { color: "blue", number: 5, duplicata: 1 },
             ],
           }),
-          new Combination({ cards: [{ color: "black", number: 6 }] }),
+          new Combination({
+            cards: [{ color: "black", number: 6, duplicata: 1 }],
+          }),
         ],
       });
 
       gameBoard.moveCardToCombination(
         { combinationIndex: 0, cardIndex: 0 },
-        { combinationIndex: 1, cardIndex: 0 }
+        { combinationIndex: 1, cardIndex: 0 },
       );
 
       expect(gameBoard.toDto().combinations).toStrictEqual([
         {
           type: "invalid",
-          cards: [{ color: "blue", number: 5 }],
+          cards: [{ color: "blue", number: 5, duplicata: 1 }],
         },
         {
           type: "invalid",
           cards: [
-            { color: "black", number: 5 },
-            { color: "black", number: 6 },
+            { color: "black", number: 5, duplicata: 1 },
+            { color: "black", number: 6, duplicata: 1 },
           ],
         },
       ]);
@@ -121,23 +125,25 @@ describe("GameBoard", () => {
       const gameBoard = new GameBoard({
         combinations: [
           new Combination({
-            cards: [{ color: "black", number: 5 }],
+            cards: [{ color: "black", number: 5, duplicata: 1 }],
           }),
-          new Combination({ cards: [{ color: "black", number: 6 }] }),
+          new Combination({
+            cards: [{ color: "black", number: 6, duplicata: 1 }],
+          }),
         ],
       });
 
       gameBoard.moveCardToCombination(
         { combinationIndex: 0, cardIndex: 0 },
-        { combinationIndex: 1, cardIndex: 0 }
+        { combinationIndex: 1, cardIndex: 0 },
       );
 
       expect(gameBoard.toDto().combinations).toStrictEqual([
         {
           type: "invalid",
           cards: [
-            { color: "black", number: 5 },
-            { color: "black", number: 6 },
+            { color: "black", number: 5, duplicata: 1 },
+            { color: "black", number: 6, duplicata: 1 },
           ],
         },
       ]);
@@ -150,8 +156,8 @@ describe("GameBoard", () => {
         combinations: [
           new Combination({
             cards: [
-              { color: "black", number: 6 },
-              { color: "black", number: 7 },
+              { color: "black", number: 6, duplicata: 1 },
+              { color: "black", number: 7, duplicata: 1 },
             ],
           }),
         ],
@@ -162,11 +168,11 @@ describe("GameBoard", () => {
       expect(gameBoard.toDto().combinations).toStrictEqual([
         {
           type: "invalid",
-          cards: [{ color: "black", number: 7 }],
+          cards: [{ color: "black", number: 7, duplicata: 1 }],
         },
         {
           type: "invalid",
-          cards: [{ color: "black", number: 6 }],
+          cards: [{ color: "black", number: 6, duplicata: 1 }],
         },
       ]);
     });
@@ -175,7 +181,7 @@ describe("GameBoard", () => {
       const gameBoard = new GameBoard({
         combinations: [
           new Combination({
-            cards: [{ color: "black", number: 6 }],
+            cards: [{ color: "black", number: 6, duplicata: 1 }],
           }),
         ],
       });
@@ -185,7 +191,7 @@ describe("GameBoard", () => {
       expect(gameBoard.toDto().combinations).toStrictEqual([
         {
           type: "invalid",
-          cards: [{ color: "black", number: 6 }],
+          cards: [{ color: "black", number: 6, duplicata: 1 }],
         },
       ]);
     });
@@ -213,8 +219,8 @@ describe("GameBoard", () => {
         combinations: [
           new Combination({
             cards: [
-              { color: "black", number: 4 },
-              { color: "black", number: 4 },
+              { color: "black", number: 4, duplicata: 1 },
+              { color: "black", number: 4, duplicata: 1 },
             ],
           }),
         ],
@@ -234,8 +240,8 @@ describe("GameBoard", () => {
         combinations: [
           new Combination({
             cards: [
-              { color: "black", number: 4 },
-              { color: "black", number: 4 },
+              { color: "black", number: 4, duplicata: 1 },
+              { color: "black", number: 4, duplicata: 1 },
             ],
           }),
         ],
@@ -253,8 +259,8 @@ describe("GameBoard", () => {
         combinations: [
           new Combination({
             cards: [
-              { color: "blue", number: 7 },
-              { color: "blue", number: 8 },
+              { color: "blue", number: 7, duplicata: 1 },
+              { color: "blue", number: 8, duplicata: 1 },
             ],
           }),
         ],
@@ -265,8 +271,8 @@ describe("GameBoard", () => {
           {
             type: "invalid",
             cards: [
-              { color: "blue", number: 7 },
-              { color: "blue", number: 8 },
+              { color: "blue", number: 7, duplicata: 1 },
+              { color: "blue", number: 8, duplicata: 1 },
             ],
           },
         ],

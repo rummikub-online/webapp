@@ -18,7 +18,10 @@ export type CardNumber =
   | 12
   | 13;
 
+export type CardDuplicata = 1 | 2;
+
 export type CardDto = Readonly<{
   color: CardColor;
   number: CardNumber;
+  duplicata: CardDuplicata;
 }>;

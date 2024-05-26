@@ -5,9 +5,9 @@ describe("Combination", () => {
     test("guess Suite", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
         ],
       });
 
@@ -17,9 +17,9 @@ describe("Combination", () => {
     test.skip("guess Serie", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "red", number: 2 },
-          { color: "blue", number: 2 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "red", number: 2, duplicata: 1 },
+          { color: "blue", number: 2, duplicata: 1 },
         ],
       });
 
@@ -29,9 +29,9 @@ describe("Combination", () => {
     test("fallback to Invalid type if not a Suite nor a Serie", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "red", number: 4 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "red", number: 4, duplicata: 1 },
         ],
       });
 
@@ -43,16 +43,16 @@ describe("Combination", () => {
     test("should return all cards", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
         ],
       });
 
       expect(combi.explode()).toStrictEqual([
-        { color: "black", number: 2 },
-        { color: "black", number: 3 },
-        { color: "black", number: 4 },
+        { color: "black", number: 2, duplicata: 1 },
+        { color: "black", number: 3, duplicata: 1 },
+        { color: "black", number: 4, duplicata: 1 },
       ]);
     });
   });
@@ -61,9 +61,9 @@ describe("Combination", () => {
     test("should return true when type is Suite", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
         ],
       });
 
@@ -73,9 +73,9 @@ describe("Combination", () => {
     test.skip("should return true when type is Serie", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "blue", number: 2 },
-          { color: "yellow", number: 2 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "blue", number: 2, duplicata: 1 },
+          { color: "yellow", number: 2, duplicata: 1 },
         ],
       });
 
@@ -85,9 +85,9 @@ describe("Combination", () => {
     test("should return false when type is invalid", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "red", number: 4 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "red", number: 4, duplicata: 1 },
         ],
       });
 
@@ -99,10 +99,10 @@ describe("Combination", () => {
     test("return two combinations", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
-          { color: "black", number: 5 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
+          { color: "black", number: 5, duplicata: 1 },
         ],
       });
 
@@ -110,22 +110,22 @@ describe("Combination", () => {
 
       expect(splitted).toHaveLength(2);
       expect(splitted[0].explode()).toStrictEqual([
-        { color: "black", number: 2 },
-        { color: "black", number: 3 },
+        { color: "black", number: 2, duplicata: 1 },
+        { color: "black", number: 3, duplicata: 1 },
       ]);
       expect(splitted[1].explode()).toStrictEqual([
-        { color: "black", number: 4 },
-        { color: "black", number: 5 },
+        { color: "black", number: 4, duplicata: 1 },
+        { color: "black", number: 5, duplicata: 1 },
       ]);
     });
 
     test("return empty combi if index is at end", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
-          { color: "black", number: 5 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
+          { color: "black", number: 5, duplicata: 1 },
         ],
       });
 
@@ -133,10 +133,10 @@ describe("Combination", () => {
 
       expect(splitted).toHaveLength(2);
       expect(splitted[0].explode()).toStrictEqual([
-        { color: "black", number: 2 },
-        { color: "black", number: 3 },
-        { color: "black", number: 4 },
-        { color: "black", number: 5 },
+        { color: "black", number: 2, duplicata: 1 },
+        { color: "black", number: 3, duplicata: 1 },
+        { color: "black", number: 4, duplicata: 1 },
+        { color: "black", number: 5, duplicata: 1 },
       ]);
       expect(splitted[1].explode()).toStrictEqual([]);
     });
@@ -144,10 +144,10 @@ describe("Combination", () => {
     test("throw error if index is out of range", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
-          { color: "black", number: 5 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
+          { color: "black", number: 5, duplicata: 1 },
         ],
       });
 
@@ -160,45 +160,47 @@ describe("Combination", () => {
     test("add card", () => {
       const combi1 = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
-          { color: "black", number: 5 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
+          { color: "black", number: 5, duplicata: 1 },
         ],
       });
       const combi2 = new Combination({
         cards: [],
       });
 
-      combi1.addCardAt({ color: "black", number: 6 }, 4);
-      combi2.addCardAt({ color: "black", number: 6 }, 0);
+      combi1.addCardAt({ color: "black", number: 6, duplicata: 1 }, 4);
+      combi2.addCardAt({ color: "black", number: 6, duplicata: 1 }, 0);
 
       expect(combi1.explode()).toStrictEqual([
-        { color: "black", number: 2 },
-        { color: "black", number: 3 },
-        { color: "black", number: 4 },
-        { color: "black", number: 5 },
-        { color: "black", number: 6 },
+        { color: "black", number: 2, duplicata: 1 },
+        { color: "black", number: 3, duplicata: 1 },
+        { color: "black", number: 4, duplicata: 1 },
+        { color: "black", number: 5, duplicata: 1 },
+        { color: "black", number: 6, duplicata: 1 },
       ]);
-      expect(combi2.explode()).toStrictEqual([{ color: "black", number: 6 }]);
+      expect(combi2.explode()).toStrictEqual([
+        { color: "black", number: 6, duplicata: 1 },
+      ]);
     });
 
     test("throw error if index is out of range", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
-          { color: "black", number: 5 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
+          { color: "black", number: 5, duplicata: 1 },
         ],
       });
 
-      expect(() => combi.addCardAt({ color: "black", number: 5 }, -1)).toThrow(
-        Error
-      );
-      expect(() => combi.addCardAt({ color: "black", number: 5 }, 5)).toThrow(
-        Error
-      );
+      expect(() =>
+        combi.addCardAt({ color: "black", number: 5, duplicata: 1 }, -1),
+      ).toThrow(Error);
+      expect(() =>
+        combi.addCardAt({ color: "black", number: 5, duplicata: 1 }, 5),
+      ).toThrow(Error);
     });
   });
 
@@ -206,44 +208,48 @@ describe("Combination", () => {
     test("return the card", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
-          { color: "black", number: 5 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
+          { color: "black", number: 5, duplicata: 1 },
         ],
       });
 
       const pickedCard = combi.pickCardFrom(1);
 
-      expect(pickedCard).toStrictEqual({ color: "black", number: 3 });
+      expect(pickedCard).toStrictEqual({
+        color: "black",
+        number: 3,
+        duplicata: 1,
+      });
     });
 
     test("remove the card from combination", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
-          { color: "black", number: 5 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
+          { color: "black", number: 5, duplicata: 1 },
         ],
       });
 
       combi.pickCardFrom(1);
 
       expect(combi.explode()).toStrictEqual([
-        { color: "black", number: 2 },
-        { color: "black", number: 4 },
-        { color: "black", number: 5 },
+        { color: "black", number: 2, duplicata: 1 },
+        { color: "black", number: 4, duplicata: 1 },
+        { color: "black", number: 5, duplicata: 1 },
       ]);
     });
 
     test("throw error if index is out of range", () => {
       const combi = new Combination({
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
-          { color: "black", number: 4 },
-          { color: "black", number: 5 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
+          { color: "black", number: 4, duplicata: 1 },
+          { color: "black", number: 5, duplicata: 1 },
         ],
       });
 
@@ -256,16 +262,16 @@ describe("Combination", () => {
     test("return corresponding dto", () => {
       const combi = new Combination({
         cards: [
-          { color: "blue", number: 7 },
-          { color: "blue", number: 8 },
+          { color: "blue", number: 7, duplicata: 1 },
+          { color: "blue", number: 8, duplicata: 1 },
         ],
       });
 
       expect(combi.toDto()).toStrictEqual({
         type: "invalid",
         cards: [
-          { color: "blue", number: 7 },
-          { color: "blue", number: 8 },
+          { color: "blue", number: 7, duplicata: 1 },
+          { color: "blue", number: 8, duplicata: 1 },
         ],
       });
     });

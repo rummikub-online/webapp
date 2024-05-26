@@ -7,7 +7,7 @@ describe("cardCombinationPoints", () => {
       cardCombinationPoints({
         type: "invalid",
         cards: [],
-      })
+      }),
     ).toBe(0);
   });
 
@@ -16,11 +16,11 @@ describe("cardCombinationPoints", () => {
       cardCombinationPoints({
         type: "serie",
         cards: [
-          { color: "black", number: 1 },
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
+          { color: "black", number: 1, duplicata: 1 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
         ],
-      })
+      }),
     ).toBe(6);
   });
 
@@ -29,11 +29,11 @@ describe("cardCombinationPoints", () => {
       cardCombinationPoints({
         type: "serie",
         cards: [
-          { color: "black", number: 1 },
-          { color: "black", number: CARD_JOKER_NUMBER },
-          { color: "black", number: 3 },
+          { color: "black", number: 1, duplicata: 1 },
+          { color: "black", number: CARD_JOKER_NUMBER, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
         ],
-      })
+      }),
     ).toBe(4);
   });
 });
@@ -49,20 +49,20 @@ describe("cardCombinationsPoints", () => {
         {
           type: "serie",
           cards: [
-            { color: "black", number: 1 },
-            { color: "black", number: 2 },
-            { color: "black", number: 3 },
+            { color: "black", number: 1, duplicata: 1 },
+            { color: "black", number: 2, duplicata: 1 },
+            { color: "black", number: 3, duplicata: 1 },
           ],
         },
         {
           type: "serie",
           cards: [
-            { color: "black", number: 1 },
-            { color: "black", number: 2 },
-            { color: "black", number: 3 },
+            { color: "black", number: 1, duplicata: 1 },
+            { color: "black", number: 2, duplicata: 1 },
+            { color: "black", number: 3, duplicata: 1 },
           ],
         },
-      ])
+      ]),
     ).toBe(12);
   });
 });

@@ -7,14 +7,17 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 1,
+        duplicata: 1,
       },
       {
         color: "black",
         number: 0,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 3,
+        duplicata: 1,
       },
     ];
 
@@ -28,18 +31,22 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 1,
+        duplicata: 1,
       },
       {
         color: "black",
         number: 0,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 0,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 4,
+        duplicata: 1,
       },
     ];
 
@@ -53,18 +60,22 @@ describe("isValidCardSuite", () => {
       {
         color: "black",
         number: 0,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 8,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 9,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 10,
+        duplicata: 1,
       },
     ];
 
@@ -78,18 +89,22 @@ describe("isValidCardSuite", () => {
       {
         color: "black",
         number: 0,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 0,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 9,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 10,
+        duplicata: 1,
       },
     ];
 
@@ -103,18 +118,22 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 8,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 9,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 10,
+        duplicata: 1,
       },
       {
         color: "black",
         number: 0,
+        duplicata: 1,
       },
     ];
 
@@ -128,18 +147,22 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 9,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 10,
+        duplicata: 1,
       },
       {
         color: "black",
         number: 0,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 0,
+        duplicata: 1,
       },
     ];
 
@@ -153,14 +176,17 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 1,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 2,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 3,
+        duplicata: 1,
       },
     ];
 
@@ -174,54 +200,67 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 1,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 2,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 3,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 4,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 5,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 6,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 7,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 8,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 9,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 10,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 11,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 12,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 13,
+        duplicata: 1,
       },
     ];
 
@@ -235,10 +274,12 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 1,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 2,
+        duplicata: 1,
       },
     ];
 
@@ -252,14 +293,17 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 0,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 1,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 2,
+        duplicata: 1,
       },
     ];
 
@@ -273,14 +317,17 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 12,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 13,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 0,
+        duplicata: 1,
       },
     ];
 
@@ -294,14 +341,17 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 1,
+        duplicata: 1,
       },
       {
         color: "black",
         number: 2,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 3,
+        duplicata: 1,
       },
     ];
 
@@ -315,14 +365,17 @@ describe("isValidCardSuite", () => {
       {
         color: "red",
         number: 1,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 4,
+        duplicata: 1,
       },
       {
         color: "red",
         number: 3,
+        duplicata: 1,
       },
     ];
 

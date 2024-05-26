@@ -3,20 +3,20 @@ import { GameBoard } from "./GameBoard";
 import { Player } from "./Player";
 
 const startupCards = Object.freeze([
-  Object.freeze({ color: "black", number: 0 }),
-  Object.freeze({ color: "black", number: 1 }),
-  Object.freeze({ color: "black", number: 2 }),
-  Object.freeze({ color: "black", number: 3 }),
-  Object.freeze({ color: "black", number: 4 }),
-  Object.freeze({ color: "black", number: 5 }),
-  Object.freeze({ color: "black", number: 6 }),
-  Object.freeze({ color: "black", number: 7 }),
-  Object.freeze({ color: "black", number: 8 }),
-  Object.freeze({ color: "black", number: 9 }),
-  Object.freeze({ color: "black", number: 10 }),
-  Object.freeze({ color: "black", number: 11 }),
-  Object.freeze({ color: "black", number: 12 }),
-  Object.freeze({ color: "black", number: 13 }),
+  Object.freeze({ color: "black", number: 0, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 1, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 2, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 3, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 4, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 5, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 6, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 7, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 8, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 9, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 10, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 11, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 12, duplicata: 1 }),
+  Object.freeze({ color: "black", number: 13, duplicata: 1 }),
 ]);
 
 describe("Player", () => {
@@ -28,13 +28,13 @@ describe("Player", () => {
           cards: [...startupCards],
         }),
         gameBoard: new GameBoard({}),
-        cards: [{ color: "black", number: 2 }],
+        cards: [{ color: "black", number: 2, duplicata: 1 }],
       });
 
       player.drawStartupCards();
 
       expect(player.toDto().cards).toStrictEqual([
-        { color: "black", number: 2 },
+        { color: "black", number: 2, duplicata: 1 },
         ...startupCards,
       ]);
     });
@@ -46,7 +46,7 @@ describe("Player", () => {
           cards: [...startupCards],
         }),
         gameBoard: new GameBoard({}),
-        cards: [{ color: "black", number: 2 }],
+        cards: [{ color: "black", number: 2, duplicata: 1 }],
       });
 
       player.drawStartupCards();
@@ -60,18 +60,18 @@ describe("Player", () => {
       const player = new Player({
         id: "player",
         drawStack: new DrawStack({
-          cards: [{ color: "black", number: 1 }],
+          cards: [{ color: "black", number: 1, duplicata: 1 }],
         }),
         gameBoard: new GameBoard({}),
-        cards: [{ color: "black", number: 2 }],
+        cards: [{ color: "black", number: 2, duplicata: 1 }],
       });
 
       player.beginTurn();
       player.drawCard();
 
       expect(player.toDto().cards).toStrictEqual([
-        { color: "black", number: 2 },
-        { color: "black", number: 1 },
+        { color: "black", number: 2, duplicata: 1 },
+        { color: "black", number: 1, duplicata: 1 },
       ]);
     });
   });
@@ -84,9 +84,9 @@ describe("Player", () => {
         drawStack: new DrawStack({}),
         gameBoard: new GameBoard({}),
         cards: [
-          { color: "black", number: 10 },
-          { color: "black", number: 11 },
-          { color: "red", number: 12 },
+          { color: "black", number: 10, duplicata: 1 },
+          { color: "black", number: 11, duplicata: 1 },
+          { color: "red", number: 12, duplicata: 1 },
         ],
       });
 
@@ -104,7 +104,7 @@ describe("Player", () => {
         hasStarted: true,
         drawStack: new DrawStack({}),
         gameBoard: new GameBoard({}),
-        cards: [{ color: "black", number: 2 }],
+        cards: [{ color: "black", number: 2, duplicata: 1 }],
       });
 
       player.beginTurn();
@@ -118,9 +118,9 @@ describe("Player", () => {
         gameBoard: new GameBoard({}),
         drawStack: new DrawStack({}),
         cards: [
-          { color: "black", number: 1 },
-          { color: "black", number: 2 },
-          { color: "black", number: 3 },
+          { color: "black", number: 1, duplicata: 1 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 3, duplicata: 1 },
         ],
       });
 
@@ -180,7 +180,7 @@ describe("Player", () => {
         hasDrewStartupCards: true,
         gameBoard,
         drawStack: new DrawStack({}),
-        cards: [{ color: "black", number: 7 }],
+        cards: [{ color: "black", number: 7, duplicata: 1 }],
       });
       player.beginTurn();
       player.placeCardAlone(0);
@@ -196,7 +196,7 @@ describe("Player", () => {
         hasDrewStartupCards: true,
         gameBoard,
         drawStack: new DrawStack({}),
-        cards: [{ color: "black", number: 7 }],
+        cards: [{ color: "black", number: 7, duplicata: 1 }],
       });
       player.beginTurn();
       player.placeCardAlone(0);
@@ -215,8 +215,8 @@ describe("Player", () => {
         drawStack: new DrawStack({}),
         gameBoard: new GameBoard({}),
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 1 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 1, duplicata: 1 },
         ],
       });
 
@@ -225,8 +225,8 @@ describe("Player", () => {
         username: "bob",
         admin: false,
         cards: [
-          { color: "black", number: 2 },
-          { color: "black", number: 1 },
+          { color: "black", number: 2, duplicata: 1 },
+          { color: "black", number: 1, duplicata: 1 },
         ],
         isPlaying: false,
         hasDrawnStartupCards: false,

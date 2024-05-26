@@ -5,9 +5,9 @@ import { GameBoard } from "../entities/GameBoard";
 const drawStackMockedToGiveWinningStartupCards = jest
   .spyOn(DrawStack.prototype, "drawStartupCards")
   .mockImplementation(() => [
-    { color: "blue", number: 11 },
-    { color: "blue", number: 12 },
-    { color: "blue", number: 13 },
+    { color: "blue", number: 11, duplicata: 1 },
+    { color: "blue", number: 12, duplicata: 1 },
+    { color: "blue", number: 13, duplicata: 1 },
   ]);
 
 test("A game can be played", () => {
