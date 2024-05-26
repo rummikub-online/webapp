@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import type { ChangeEvent } from "@/lib/vueDraggable";
 import { toKey } from "@/logic/card";
+import { useGameStore } from "@/stores/game";
 import { ExclamationTriangleIcon } from "@heroicons/vue/16/solid";
 import type { CardDto } from "@rumi/domain/dtos/card";
 import type { CombinationDto } from "@rumi/domain/dtos/combination";
 import { ref, watch } from "vue";
 import draggable from "vuedraggable";
 import Card from "./Card.vue";
+
+const gameStore = useGameStore();
 
 const props = defineProps<{
   combination: CombinationDto;
@@ -42,6 +45,7 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
 <template>
   <div class="w-min min-w-10 flex flex-col items-center gap-1">
     <draggable
+      :disabled="!gameStore.player.isPlaying"
       v-model="cards"
       group="combinations"
       tag="div"
