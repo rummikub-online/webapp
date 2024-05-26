@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ChangeEvent } from "@/lib/vueDraggable";
 import { toKey } from "@/logic/card";
 import { ExclamationTriangleIcon } from "@heroicons/vue/16/solid";
 import type { CardDto } from "@rumi/domain/dtos/card";
@@ -26,33 +27,15 @@ watch(
   },
 );
 
-type ChangeEvent<T> = {
-  moved?: {
-    element: T;
-    newIndex: number;
-    oldIndex: number;
-  };
-  added?: {
-    element: T;
-    newIndex: number;
-  };
-  removed?: {
-    element: T;
-    oldIndex: number;
-  };
-};
 const handleChange = (e: ChangeEvent<CardDto>) => {
   if (e.moved) {
-    emit("moved", e.moved.element, e.moved.oldIndex, e.moved.newIndex);
-    return;
+    return emit("moved", e.moved.element, e.moved.oldIndex, e.moved.newIndex);
   }
   if (e.added) {
-    emit("added", e.added.element, e.added.newIndex);
-    return;
+    return emit("added", e.added.element, e.added.newIndex);
   }
   if (e.removed) {
-    emit("removed", e.removed.element, e.removed.oldIndex);
-    return;
+    return emit("removed", e.removed.element, e.removed.oldIndex);
   }
 };
 </script>
@@ -60,9 +43,9 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
   <div class="w-min min-w-10 flex flex-col items-center gap-1">
     <draggable
       v-model="cards"
-      group="compositions"
+      group="combinations"
       tag="div"
-      class="justify-start items-start gap-0.5 inline-flex"
+      class="justify-start items-start gap-0.5 inline-flex p-2 -m-2"
       :item-key="(card: CardDto) => toKey(card)"
       @change="handleChange"
     >
