@@ -25,16 +25,18 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
 };
 </script>
 <template>
-  <draggable
-    v-model="cards"
-    group="combinations"
-    tag="div"
-    class="justify-start items-start gap-0.5 inline-flex p-2 rounded-lg border-dashed border min-w-9 min-h-11 md:min-w-12 md:min-h-16"
-    :item-key="(card: CardDto) => toKey(card)"
-    @change="handleChange"
-  >
-    <template #item="{ element: card }">
-      <Card :color="card.color" :number="card.number" />
-    </template>
-  </draggable>
+  <div class="p-2">
+    <draggable
+      v-model="cards"
+      group="combinations"
+      tag="div"
+      class="w-full h-full justify-start items-start gap-0.5 inline-flex p-2 rounded-lg border-dashed border min-w-9 min-h-11 md:min-w-12 md:min-h-16"
+      :item-key="(card: CardDto) => toKey(card)"
+      @change="handleChange"
+    >
+      <template #item="{ element: card }">
+        <Card :color="card.color" :number="card.number" />
+      </template>
+    </draggable>
+  </div>
 </template>

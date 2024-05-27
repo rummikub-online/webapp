@@ -43,9 +43,9 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
 };
 </script>
 <template>
-  <div class="w-min min-w-10 flex flex-col items-center gap-1">
+  <div class="w-min flex flex-col items-center gap-1 p-2">
     <draggable
-      :disabled="!gameStore.player.isPlaying"
+      :disabled="!gameStore.player?.isPlaying"
       v-model="cards"
       group="combinations"
       tag="div"

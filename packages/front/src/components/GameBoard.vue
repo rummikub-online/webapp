@@ -27,7 +27,7 @@ const handleCardAdded = (cardIndex: number, combinationIndex: number) => {
 </script>
 <template>
   <div
-    class="relative z-0 px-2 py-4 bg-background flex justify-start items-start gap-3"
+    class="px-2 py-4 bg-background flex flex-wrap justify-start items-start flex-1"
   >
     <Combination
       v-for="(combination, combinationIndex) in gameBoard.combinations"
@@ -43,9 +43,8 @@ const handleCardAdded = (cardIndex: number, combinationIndex: number) => {
       @removed="
         (_, newIndex: number) => handleCardRemoved(newIndex, combinationIndex)
       "
-      class="z-10"
     />
 
-    <CreateCombinationDragZone class="" />
+    <CreateCombinationDragZone />
   </div>
 </template>
