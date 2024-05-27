@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import Button from "@/components/Button.vue";
 import { useGameStore } from "@/stores/game";
+import { useOrderedCardsStore } from "@/stores/orderedCards";
+import { computed } from "vue";
+
 const gameStore = useGameStore();
+const orderedCardsStore = useOrderedCardsStore();
+
+const canChangeCardOrder = computed(() => gameStore.player?.isPlaying);
 </script>
 <template>
   <div v-if="gameStore.player" class="flex gap-3">
@@ -12,6 +18,22 @@ const gameStore = useGameStore();
     >
       Commencer
     </Button>
+
+    <Button
+      type="primary"
+      v-if="canChangeCardOrder && orderedCardsStore.isOrderedByNumber"
+      @click="orderedCardsStore.orderByColor"
+    >
+      Par couleur
+    </Button>
+    <Button
+      type="primary"
+      v-if="canChangeCardOrder && orderedCardsStore.isOrderedByColor"
+      @click="orderedCardsStore.orderByNumber"
+    >
+      Par numéro
+    </Button>
+
     <Button
       type="primary"
       v-if="gameStore.player.canDrawCard"
