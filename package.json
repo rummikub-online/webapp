@@ -12,7 +12,7 @@
   "scripts": {
     "install:all": "npm install; npm install --workspaces",
     "build": "tsc --build --verbose tsconfig.build.json",
-    "dev": "node --watch -r ts-node/register main.ts",
+    "dev:back": "node --watch -r ts-node/register main.ts",
     "dev:front": "npm run dev -w @rumi/front",
     "test": "jest"
   },
