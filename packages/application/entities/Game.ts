@@ -24,7 +24,7 @@ type AddPlayerProps = {
 };
 
 export interface IGame {
-  id: string;
+  id: GameId;
   addPlayer(props?: AddPlayerProps): IPlayer;
   removePlayer(id: string): void;
   start(): void;
@@ -41,9 +41,10 @@ export interface IGame {
 }
 
 type GameState = "created" | "started" | "ended";
+export type GameId = string;
 
 type GameProps = {
-  id: string;
+  id: GameId;
   drawStack?: IDrawStack;
   gameBoard?: IGameBoard;
   state?: GameState;
@@ -51,7 +52,7 @@ type GameProps = {
 };
 
 export class Game implements IGame {
-  public readonly id: string;
+  public readonly id: GameId;
 
   private readonly usernames = ["Alice", "Bob", "Carol", "Dave"];
   private drawStack: IDrawStack;
