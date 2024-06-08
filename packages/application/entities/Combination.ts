@@ -2,6 +2,7 @@ import { CardDto } from "@rumi/domain/dtos/card";
 import { CardListDto } from "@rumi/domain/dtos/cardList";
 import { CombinationDto, CombinationType } from "@rumi/domain/dtos/combination";
 import { isValidCardSuite } from "@rumi/domain/gamerules/cardSuite/isValid";
+import { isValidCardSerie } from "@rumi/domain/gamerules/cardSerie/isValid";
 
 export interface ICombination {
   isValid(): boolean;
@@ -30,10 +31,9 @@ export class Combination implements ICombination {
       return "suite";
     }
 
-    // todo @matthieu: ajouter cette condition quand la fonction est dispo
-    // if (isValidCardSerie(this.cards)) {
-    //   return "serie";
-    // }
+    if (isValidCardSerie(this.cards)) {
+      return "serie";
+    }
 
     return "invalid";
   }

@@ -14,7 +14,7 @@ describe("Combination", () => {
       expect(combi.type()).toBe("suite");
     });
 
-    test.skip("guess Serie", () => {
+    test("guess Serie", () => {
       const combi = new Combination({
         cards: [
           { color: "black", number: 2, duplicata: 1 },
@@ -70,7 +70,7 @@ describe("Combination", () => {
       expect(combi.isValid()).toBeTruthy();
     });
 
-    test.skip("should return true when type is Serie", () => {
+    test("should return true when type is Serie", () => {
       const combi = new Combination({
         cards: [
           { color: "black", number: 2, duplicata: 1 },
