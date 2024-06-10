@@ -12,10 +12,17 @@ import { IPlayer, Player } from "./Player";
 type GenerateUserIdFn = () => string;
 
 export type GameDto = {
+  id: GameId;
   drawStack: DrawStackDto;
   gameBoard: GameBoardDto;
   state: GameState;
   players: Array<PlayerDto>;
+  isFull: boolean;
+};
+
+export type GameInfosDto = {
+  id: GameId;
+  state: GameState;
   isFull: boolean;
 };
 
@@ -38,6 +45,7 @@ export interface IGame {
   isStarted(): boolean;
   isEnded(): boolean;
   toDto(): GameDto;
+  toInfosDto(): GameInfosDto;
 }
 
 type GameState = "created" | "started" | "ended";
@@ -223,9 +231,18 @@ export class Game implements IGame {
 
   toDto(): GameDto {
     return {
+      id: this.id,
       drawStack: this.drawStack.toDto(),
       gameBoard: this.gameBoard.toDto(),
       players: this.players.map((player) => player.toDto()),
+      state: this.state,
+      isFull: this.isFull(),
+    };
+  }
+
+  toInfosDto(): GameInfosDto {
+    return {
+      id: this.id,
       state: this.state,
       isFull: this.isFull(),
     };

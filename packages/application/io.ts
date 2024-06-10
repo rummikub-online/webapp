@@ -1,15 +1,16 @@
-import { IGame } from "@rumi/application/entities/Game";
 import { IPlayer } from "@rumi/application/entities/Player";
 import { GameBoardDto } from "@rumi/domain/dtos/gameBoard";
 import { PlayerDto } from "@rumi/domain/dtos/player";
 import { Server } from "node:http";
 import { Socket, Server as SocketServer } from "socket.io";
+import { GameInfosDto, IGame } from "./entities/Game";
 import { CardPositionOnBoard } from "./entities/GameBoard";
+import { IGameRepository } from "./entities/GameRepository";
 
 export interface ServerToClientEvents {
   "player.update": (player: PlayerDto) => void;
   "gameBoard.update": (gameBoard: GameBoardDto) => void;
-  // withAck: (d: string, callback: (e: number) => void) => void;
+  "game.infos.update": (game: GameInfosDto) => void;
 }
 
 export interface ClientToServerEvents {
@@ -44,50 +45,65 @@ type GameSocket = Socket<
   SocketData
 >;
 
-export const createIo = (server: Server, game: IGame) => {
-  const io = new SocketServer<
-    ClientToServerEvents,
-    ServerToClientEvents,
-    InterServerEvents,
-    SocketData
-  >(server, {
+type GameSocketServer = SocketServer<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>;
+
+const gameRoom = (game: IGame) => `${game.id}`;
+const playerRoom = (game: IGame, player: IPlayer | PlayerDto) =>
+  `${game.id}-${player.id}`;
+
+export const registerSocketEvents = (
+  server: Server,
+  gameRepository: IGameRepository,
+) => {
+  const io: GameSocketServer = new SocketServer(server, {
     cors: {
       origin: "*",
       methods: ["GET", "POST"],
     },
   });
 
-  const playerSockets: { [key: string]: GameSocket } = {};
-  const playerSocket = (player: IPlayer) => playerSockets[player.id];
+  const emitGameUpdate = (game: IGame) => {
+    const gameDto = game.toDto();
 
-  const emitGameUpdate = () =>
-    Object.values(playerSockets).forEach((socket) => {
-      socket.emit("player.update", socket.data.player.toDto());
-      socket.emit("gameBoard.update", game.toDto().gameBoard);
+    io.to(gameRoom(game)).emit("gameBoard.update", gameDto.gameBoard);
+
+    gameDto.players.forEach((player) => {
+      io.to(playerRoom(game, player)).emit("player.update", player);
     });
+  };
 
-  io.on("connection", (socket): void => {
-    console.log("A player connected");
-    if (!game.canAddPlayer()) {
-      console.log("but game don't accept new players");
-      return;
-    }
+  const bindEventsToSocket = ({
+    socket,
+    game,
+    player,
+  }: {
+    socket: GameSocket;
+    game: IGame;
+    player: IPlayer;
+  }) => {
+    console.log(`game ${game.id}`);
 
-    const player = game.addPlayer();
+    socket.join(gameRoom(game));
+    socket.join(playerRoom(game, player));
+
     socket.data.player = player;
-    playerSockets[player.id] = socket;
 
     console.log(`${game.toDto().players.length} players`);
 
-    emitGameUpdate();
+    emitGameUpdate(game);
+    socket.emit("game.infos.update", game.toInfosDto());
 
     socket.on("disconnect", () => {
       game.removePlayer(player.id);
-      delete playerSockets[player.id];
       console.log("A player disconnected");
       console.log(`${game.toDto().players.length} players`);
 
-      emitGameUpdate();
+      emitGameUpdate(game);
     });
 
     socket.on("game.start", () => {
@@ -98,7 +114,7 @@ export const createIo = (server: Server, game: IGame) => {
       console.log("Start game");
 
       game.start();
-      emitGameUpdate();
+      emitGameUpdate(game);
     });
 
     socket.on("player.cancelTurnModifications", () => {
@@ -107,7 +123,7 @@ export const createIo = (server: Server, game: IGame) => {
       }
 
       player.cancelTurnModifications();
-      emitGameUpdate();
+      emitGameUpdate(game);
     });
 
     socket.on("player.drawCard", () => {
@@ -116,7 +132,7 @@ export const createIo = (server: Server, game: IGame) => {
       }
 
       player.drawCard();
-      emitGameUpdate();
+      emitGameUpdate(game);
     });
 
     socket.on("player.endTurn", () => {
@@ -125,7 +141,7 @@ export const createIo = (server: Server, game: IGame) => {
       }
 
       player.endTurn();
-      emitGameUpdate();
+      emitGameUpdate(game);
     });
 
     socket.on("player.moveCardAlone", (source) => {
@@ -134,7 +150,7 @@ export const createIo = (server: Server, game: IGame) => {
       }
 
       player.moveCardAlone(source);
-      emitGameUpdate();
+      emitGameUpdate(game);
     });
 
     socket.on("player.moveCardToCombination", (source, destination) => {
@@ -143,7 +159,7 @@ export const createIo = (server: Server, game: IGame) => {
       }
 
       player.moveCardToCombination(source, destination);
-      emitGameUpdate();
+      emitGameUpdate(game);
     });
 
     socket.on("player.placeCardAlone", (cardIndex) => {
@@ -152,7 +168,7 @@ export const createIo = (server: Server, game: IGame) => {
       }
 
       player.placeCardAlone(cardIndex);
-      emitGameUpdate();
+      emitGameUpdate(game);
     });
 
     socket.on("player.placeCardInCombination", (cardIndex, destination) => {
@@ -161,7 +177,20 @@ export const createIo = (server: Server, game: IGame) => {
       }
 
       player.placeCardInCombination(cardIndex, destination);
-      emitGameUpdate();
+      emitGameUpdate(game);
     });
+  };
+
+  io.on("connection", (socket): void => {
+    const gameId = socket.handshake.query.gameId;
+
+    if (typeof gameId !== "string" || !gameRepository.exists(gameId)) {
+      socket.disconnect();
+      return;
+    }
+
+    const { game, player } = gameRepository.join(gameId);
+
+    bindEventsToSocket({ socket, game, player });
   });
 };

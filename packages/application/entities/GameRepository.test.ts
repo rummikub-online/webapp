@@ -3,6 +3,25 @@ import { GameRepository } from "./GameRepository";
 import { Player } from "./Player";
 
 describe("GameRepository", () => {
+  describe("exists", () => {
+    test("return true if game exists", () => {
+      const game = new Game({ id: "1", state: "started" });
+      const gameRepository = new GameRepository({
+        games: [game],
+      });
+
+      expect(gameRepository.exists("1")).toBe(true);
+    });
+
+    test("return false if game do not exists", () => {
+      const gameRepository = new GameRepository({
+        games: [],
+      });
+
+      expect(gameRepository.exists("1")).toBe(false);
+    });
+  });
+
   describe("findById", () => {
     test("return existent game", () => {
       const game = new Game({ id: "1", state: "started" });
@@ -25,10 +44,21 @@ describe("GameRepository", () => {
   });
 
   describe("create", () => {
+    test("create game and return it", () => {
+      const gameRepository = new GameRepository();
+
+      const game = gameRepository.create();
+
+      expect(game).toBeInstanceOf(Game);
+      expect(gameRepository.findById(game.id)).toBe(game);
+    });
+  });
+
+  describe("createWithPlayer", () => {
     test("create game and player and return them", () => {
       const gameRepository = new GameRepository();
 
-      const { game, player } = gameRepository.create();
+      const { game, player } = gameRepository.createWithPlayer();
 
       expect(game).toBeInstanceOf(Game);
       expect(player).toBeInstanceOf(Player);

@@ -1,7 +1,7 @@
-import { Game } from "@rumi/application/entities/Game";
-import { createIo } from "@rumi/application/io";
+import { GameRepository } from "@rumi/application/entities/GameRepository";
+import { registerSocketEvents } from "@rumi/application/io";
+import { registerRoutes } from "@rumi/application/routes";
 import cors from "cors";
-import { randomUUID } from "crypto";
 import express from "express";
 import { createServer } from "node:http";
 
@@ -14,8 +14,10 @@ app.use(
   }),
 );
 
-const game = new Game({ id: randomUUID() });
-createIo(server, game);
+const gameRepository = new GameRepository();
+
+registerSocketEvents(server, gameRepository);
+registerRoutes(app, gameRepository);
 
 server.listen(3000, () => {
   console.log("server running at http://localhost:3000");

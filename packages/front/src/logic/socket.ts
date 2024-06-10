@@ -1,3 +1,4 @@
+import type { GameInfosDto } from "@rumi/application/entities/Game";
 import type { CardPositionOnBoard } from "@rumi/application/entities/GameBoard";
 import type {
   ClientToServerEvents,
@@ -9,14 +10,19 @@ import type { PlayerDto } from "@rumi/domain/dtos/player";
 import { io, Socket } from "socket.io-client";
 
 export const setupSocket = ({
+  gameId,
   onPlayerUpdate,
   onGameBoardUpdate,
+  onGameInfosUpdate,
 }: {
+  gameId: string;
   onPlayerUpdate: (player: PlayerDto) => void;
   onGameBoardUpdate: (gameBoard: GameBoardDto) => void;
+  onGameInfosUpdate: (game: GameInfosDto) => void;
 }) => {
   const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
     "ws://localhost:3000",
+    { query: { gameId } },
   );
 
   socket.on("connect", () => {
@@ -25,6 +31,10 @@ export const setupSocket = ({
 
   socket.on("disconnect", () => {
     console.log("disconnected");
+  });
+
+  socket.on("game.infos.update", (game: GameInfosDto) => {
+    onGameInfosUpdate(game);
   });
 
   socket.on("player.update", (player: PlayerDto) => {

@@ -3,6 +3,7 @@ import { Game, GameId, IGame } from "./Game";
 import { IPlayer } from "./Player";
 
 type GameList = Map<GameId, IGame>;
+
 type GameManagerProps = {
   games?: Array<IGame>;
 };
@@ -12,26 +13,24 @@ type GameAndPlayer = {
   player: IPlayer;
 };
 
-export class GameRepository {
+export interface IGameRepository {
+  exists: (id: GameId) => boolean;
+  findById: (id: GameId) => IGame;
+  create: () => IGame;
+  createWithPlayer: () => GameAndPlayer;
+  join: (id: GameId) => GameAndPlayer;
+  destroy: (id: GameId) => void;
+}
+
+export class GameRepository implements IGameRepository {
   private games: GameList;
 
   constructor(props?: GameManagerProps) {
     this.games = new Map(props?.games?.map((game) => [game.id, game]));
   }
 
-  create(): GameAndPlayer {
-    const game = new Game({
-      id: randomUUID(),
-    });
-
-    const player = game.addPlayer();
-
-    this.games.set(game.id, game);
-
-    return {
-      game,
-      player,
-    };
+  exists(id: string): boolean {
+    return this.games.has(id);
   }
 
   findById(id: GameId): IGame {
@@ -44,7 +43,27 @@ export class GameRepository {
     return game;
   }
 
-  join(id: GameId): any {
+  create(): IGame {
+    const game = new Game({
+      id: randomUUID(),
+    });
+
+    this.games.set(game.id, game);
+
+    return game;
+  }
+
+  createWithPlayer(): GameAndPlayer {
+    const game = this.create();
+    const player = game.addPlayer();
+
+    return {
+      game,
+      player,
+    };
+  }
+
+  join(id: GameId): GameAndPlayer {
     const game = this.findById(id);
 
     const player = game.addPlayer();

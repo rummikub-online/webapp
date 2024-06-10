@@ -202,6 +202,7 @@ describe("Game", () => {
       const game = new Game({ id: "game" });
 
       expect(game.toDto()).toStrictEqual({
+        id: "game",
         players: [],
         drawStack: {
           isEmpty: false,

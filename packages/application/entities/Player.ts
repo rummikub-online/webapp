@@ -1,6 +1,6 @@
 import { CardDto } from "@rumi/domain/dtos/card";
 import { CardListDto } from "@rumi/domain/dtos/cardList";
-import { PlayerDto } from "@rumi/domain/dtos/player";
+import { PlayerDto, PlayerId } from "@rumi/domain/dtos/player";
 import { canStartWithPoints } from "@rumi/domain/gamerules/cardCombination/canStartWith";
 import { isWinnerPlayer as hasPlayerWon } from "@rumi/domain/gamerules/player/hasWon";
 import { IDrawStack } from "./DrawStack";
@@ -13,7 +13,7 @@ import {
 
 export interface IPlayer {
   admin: boolean;
-  id: string;
+  id: PlayerId;
   username?: string;
   drawStartupCards(): void;
   beginTurn(): void;
@@ -59,7 +59,7 @@ export class Player implements IPlayer {
   private readonly gameBoard: IGameBoard;
   private readonly drawStack: IDrawStack;
 
-  public readonly id: string;
+  public readonly id: PlayerId;
   public readonly username?: string;
   public admin: boolean;
 

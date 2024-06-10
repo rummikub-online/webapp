@@ -1,7 +1,8 @@
 import { CardListDto } from "./cardList";
+export type PlayerId = string;
 
 export type PlayerDto = {
-  id: string;
+  id: PlayerId;
   username?: string;
   admin: boolean;
   cards: CardListDto;
