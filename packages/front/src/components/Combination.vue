@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { ChangeEvent } from "@/lib/vueDraggable";
-import { toKey } from "@/logic/card";
-import { useGameStore } from "@/stores/game";
 import { ExclamationTriangleIcon } from "@heroicons/vue/16/solid";
 import type { CardDto } from "@rumi/domain/dtos/card";
 import type { CombinationDto } from "@rumi/domain/dtos/combination";
 import { ref, watch } from "vue";
 import draggable from "vuedraggable";
+import type { ChangeEvent } from "../lib/vueDraggable";
+import { toKey } from "../logic/card";
+import { useGameStore } from "../stores/game";
 import Card from "./Card.vue";
 
 const gameStore = useGameStore();

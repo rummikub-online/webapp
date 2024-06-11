@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Button from "@/components/Button.vue";
-import { useGameStore } from "@/stores/game";
-import { useOrderedCardsStore } from "@/stores/orderedCards";
 import { computed } from "vue";
+import { useGameStore } from "../stores/game";
+import { useOrderedCardsStore } from "../stores/orderedCards";
+import Button from "./Button.vue";
 
 const gameStore = useGameStore();
 const orderedCardsStore = useOrderedCardsStore();

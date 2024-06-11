@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useGameStore } from "@/stores/game";
 import type { GameBoardDto } from "@rumi/domain/dtos/gameBoard";
+import { useGameStore } from "../stores/game";
 import Combination from "./Combination.vue";
 import CreateCombinationDragZone from "./CreateCombinationDragZone.vue";
 

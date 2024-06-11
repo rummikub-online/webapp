@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { ChangeEvent } from "@/lib/vueDraggable";
-import { toKey } from "@/logic/card";
-import { useGameStore } from "@/stores/game";
-import { useOrderedCardsStore } from "@/stores/orderedCards";
 import type { CardDto } from "@rumi/domain/dtos/card";
 import type { OrderedCardDto } from "@rumi/domain/utils/card/grouping";
 import { ref, watch } from "vue";
 import draggable from "vuedraggable";
+import type { ChangeEvent } from "../lib/vueDraggable";
+import { toKey } from "../logic/card";
+import { useGameStore } from "../stores/game";
+import { useOrderedCardsStore } from "../stores/orderedCards";
 import Card from "./Card.vue";
 import PlayerActions from "./PlayerActions.vue";
 

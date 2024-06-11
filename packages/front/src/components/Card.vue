@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import BlackCardSymbol from "@/assets/card/symbol/black.svg?component";
-import BlueCardSymbol from "@/assets/card/symbol/blue.svg?component";
-import RedCardSymbol from "@/assets/card/symbol/red.svg?component";
-import YellowCardSymbol from "@/assets/card/symbol/yellow.svg?component";
 import type { CardColor, CardNumber } from "@rumi/domain/dtos/card";
+import BlackCardSymbol from "../assets/card/symbol/black.svg?component";
+import BlueCardSymbol from "../assets/card/symbol/blue.svg?component";
+import RedCardSymbol from "../assets/card/symbol/red.svg?component";
+import YellowCardSymbol from "../assets/card/symbol/yellow.svg?component";
 
 defineProps<{
   number: CardNumber;

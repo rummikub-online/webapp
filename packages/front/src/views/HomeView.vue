@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import router from "@/router";
 import type { GameInfosDto } from "@rumi/application/entities/Game";
+import router from "../router";
 
 const createGame = async () => {
   const gameInfos = (await (

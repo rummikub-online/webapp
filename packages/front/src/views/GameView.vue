@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import GameBoard from "@/components/GameBoard.vue";
-import PlayerDeck from "@/components/PlayerDeck.vue";
-import { useGameStore } from "@/stores/game";
+import GameBoard from "../components/GameBoard.vue";
+import PlayerDeck from "../components/PlayerDeck.vue";
+import { useGameStore } from "../stores/game";
 
 const gameStore = useGameStore();
 </script>

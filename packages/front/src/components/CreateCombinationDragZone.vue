@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { ChangeEvent } from "@/lib/vueDraggable";
-import { toKey } from "@/logic/card";
-import { useGameStore } from "@/stores/game";
 import type { CardDto } from "@rumi/domain/dtos/card";
 import { ref, watch } from "vue";
 import draggable from "vuedraggable";
+import type { ChangeEvent } from "../lib/vueDraggable";
+import { toKey } from "../logic/card";
+import { useGameStore } from "../stores/game";
 import Card from "./Card.vue";
 
 const gameStore = useGameStore();

@@ -1,11 +1,11 @@
-import { makeCardDraggingHandler } from "@/logic/cardDragging";
-import { setupSocket } from "@/logic/socket";
 import type { GameInfosDto } from "@rumi/application/entities/Game";
 import type { GameBoardDto } from "@rumi/domain/dtos/gameBoard";
 import type { PlayerDto } from "@rumi/domain/dtos/player";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import { makeCardDraggingHandler } from "../logic/cardDragging";
+import { setupSocket } from "../logic/socket";
 
 export const useGameStore = defineStore("game", () => {
   const route = useRoute();
