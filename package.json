@@ -2,6 +2,9 @@
   "name": "rumi",
   "private": true,
   "main": "main.js",
+  "engines": {
+    "node": "22"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
@@ -15,7 +18,9 @@
     "build": "tsc --build --verbose tsconfig.build.json",
     "dev:back": "node --watch -r ts-node/register main.ts",
     "dev:front": "npm run dev -w @rumi/front",
-    "test": "jest"
+    "test": "jest",
+    "deps:validate": "npx depcruise packages",
+    "deps:report": "npx depcruise packages  --output-type dot | dot -T svg > dependency-graph.svg"
   },
   "dependencies": {
     "concurrently": "^8.2.2",
