@@ -36,7 +36,7 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "build-only": "vite build",
     "build-storybook": "storybook build",
-    "dev": "concurrently --names \"FRONT,STORYBOOK\" -c \"bgMagenta.bold,bgGreen.bold\" \"vite\" \"npm run storybook\"",
+    "dev": "concurrently --names \"VITE,STORYBOOK\" -c \"bgGreen.bold,bgGreen.bold\" \"vite\" \"npm run storybook\"",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006 --no-open",
     "type-check": "vue-tsc --build --force"

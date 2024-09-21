@@ -18,6 +18,7 @@
     "build": "tsc --build --verbose tsconfig.build.json",
     "dev:back": "node --watch -r ts-node/register main.ts",
     "dev:front": "npm run dev -w @rumi/front",
+    "dev": "concurrently --names \"BACK,FRONT\" -c \"bgMagenta.bold,bgGreen.bold\"  \"npm run dev:back\" \"npm run dev:front\"",
     "test": "jest",
     "deps:validate": "npx depcruise packages",
     "deps:report": "npx depcruise packages  --output-type dot | dot -T svg > dependency-graph.svg"
