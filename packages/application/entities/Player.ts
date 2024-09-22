@@ -36,6 +36,7 @@ export interface IPlayer {
   canMoveCardAlone(): boolean;
   canMoveCardToCombination(): boolean;
   canCancelTurnModifications(): boolean;
+  canInteractWithCombination(combinationIndex: number): boolean;
   canEndTurn(): boolean;
   isPlaying(): boolean;
   hasWon(): boolean;
@@ -170,6 +171,10 @@ export class Player implements IPlayer {
 
     this._isPlaying = false;
 
+    if (!this.hasDrawnThisTurn && !this.hasStarted) {
+      this.hasStarted = true;
+    }
+
     if (!this.game) {
       return;
     }
@@ -207,6 +212,26 @@ export class Player implements IPlayer {
     );
   }
 
+  canInteractWithCombination(combinationIndex: number): boolean {
+    if (!this._isPlaying) {
+      return false;
+    }
+
+    if (this.hasDrawnThisTurn) {
+      return false;
+    }
+
+    if (this.gameBoard.isEmpty()) {
+      return false;
+    }
+
+    if (!this.hasStarted) {
+      return this.gameBoard.wasCombinationPlacedThisTurn(combinationIndex);
+    }
+
+    return true;
+  }
+
   canCancelTurnModifications(): boolean {
     return (
       this._isPlaying &&
@@ -217,6 +242,7 @@ export class Player implements IPlayer {
 
   canEndTurn(): boolean {
     return (
+      this._isPlaying &&
       this.gameBoard.isValid() &&
       (this.hasStarted || this.canStart()) &&
       this.gameBoard.turnPoints() > 0
@@ -275,6 +301,9 @@ export class Player implements IPlayer {
       canMoveCardToCombination: this.canMoveCardToCombination(),
       canCancelTurnModifications: this.canCancelTurnModifications(),
       canEndTurn: this.canEndTurn(),
+      canInteractWithCombination: this.gameBoard
+        .toDto()
+        .combinations.map((_, index) => this.canInteractWithCombination(index)),
     };
   }
 }

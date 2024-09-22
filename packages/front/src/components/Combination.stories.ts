@@ -5,6 +5,9 @@ export default {
   component: Combination,
   title: "Combination",
   tags: ["autodocs"],
+  args: {
+    disabled: false,
+  },
   argTypes: {
     moved: {
       action: "moved",
@@ -80,6 +83,29 @@ export const Invalid = {
         {
           color: "red",
           number: 13,
+        },
+      ],
+    },
+  },
+};
+
+export const Disabled = {
+  args: {
+    disabled: true,
+    combination: {
+      type: "serie",
+      cards: [
+        {
+          color: "red",
+          number: 11,
+        },
+        {
+          color: "blue",
+          number: 11,
+        },
+        {
+          color: "yellow",
+          number: 11,
         },
       ],
     },

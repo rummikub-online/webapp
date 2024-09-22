@@ -27,12 +27,19 @@ const handleCardAdded = (cardIndex: number, combinationIndex: number) => {
 </script>
 <template>
   <div
-    class="px-2 py-4 bg-background flex flex-wrap justify-start items-start flex-1"
+    class="px-2 py-4 bg-body-bg flex flex-wrap justify-start items-start flex-1"
   >
     <Combination
       v-for="(combination, combinationIndex) in gameBoard.combinations"
       :key="combinationIndex"
       :combination="combination"
+      :disabled="
+        !gameStore.player?.canInteractWithCombination[combinationIndex]
+      "
+      :locked="
+        gameStore.player?.isPlaying &&
+        !gameStore.player?.canInteractWithCombination[combinationIndex]
+      "
       @moved="
         (_, oldIndex: number, newIndex: number) =>
           handleCardMoved(oldIndex, newIndex, combinationIndex)

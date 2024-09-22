@@ -38,7 +38,7 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
 };
 </script>
 <template>
-  <div class="bg-background flex flex-col gap-2 px-2 py-4">
+  <div class="bg-body-bg flex flex-col gap-2 px-2 py-4">
     <PlayerActions />
     <div v-if="gameStore.player" class="flex justify-start items-start gap-3">
       <draggable

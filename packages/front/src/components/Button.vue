@@ -8,11 +8,11 @@ defineProps<{
   <button
     @click="$emit('click')"
     type="button"
-    class="h-8 px-4 rounded-md justify-center items-center gap-2 inline-flex"
+    class="h-8 px-4 rounded-md justify-center items-center gap-2 inline-flex bg-button-bg"
     :class="{
-      'text-button-danger': type === 'danger',
-      'text-button-success': type === 'success',
-      'text-body': type === 'primary' || type === 'secondary',
+      'text-button-text-danger': type === 'danger',
+      'text-button-text-success': type === 'success',
+      'text-body-text': type === 'primary' || type === 'secondary',
       'bg-white': type === 'primary' || type === 'danger' || type === 'success',
     }"
   >

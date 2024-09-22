@@ -19,4 +19,5 @@ export type PlayerDto = {
   canMoveCardToCombination: boolean;
   canCancelTurnModifications: boolean;
   canEndTurn: boolean;
+  canInteractWithCombination: Array<boolean>;
 };

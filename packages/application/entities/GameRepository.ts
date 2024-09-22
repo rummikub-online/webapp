@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import { DrawStack } from "./DrawStack";
 import { Game, GameId, IGame } from "./Game";
 import { IPlayer } from "./Player";
 
@@ -44,8 +45,12 @@ export class GameRepository implements IGameRepository {
   }
 
   create(): IGame {
+    const fakeDrawStack = new DrawStack({});
+    fakeDrawStack.shuffle = () => {};
+
     const game = new Game({
       id: randomUUID(),
+      drawStack: fakeDrawStack,
     });
 
     this.games.set(game.id, game);

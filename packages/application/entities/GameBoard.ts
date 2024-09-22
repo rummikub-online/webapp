@@ -1,6 +1,7 @@
 import { CardDto } from "@rumi/domain/dtos/card";
 import { CombinationDto } from "@rumi/domain/dtos/combination";
 import { GameBoardDto } from "@rumi/domain/dtos/gameBoard";
+import { areEqual } from "@rumi/domain/gamerules/cardCombination/areEqual";
 import { cardCombinationsPoints } from "@rumi/domain/gamerules/cardCombination/points";
 import { Combination, ICombination } from "./Combination";
 
@@ -20,6 +21,7 @@ export interface IGameBoard {
     source: CardPositionOnBoard,
     destination: CardPositionOnBoard,
   ): void;
+  wasCombinationPlacedThisTurn(combinationIndex: number): boolean;
   deleteEmptyCombinations(): void;
   cancelTurnModications(): void;
   hasModifications(): boolean;
@@ -117,6 +119,16 @@ export class GameBoard implements IGameBoard {
         this.combinations.map((combination) => combination.toDto()),
       )
     );
+  }
+
+  wasCombinationPlacedThisTurn(combinationIndex: number): boolean {
+    const combiDto = this.combinations[combinationIndex].toDto();
+
+    const wasCombinationInPreviousTurn = this.previousTurnCombinations.some(
+      (previousTurnCombiDto) => areEqual(combiDto, previousTurnCombiDto),
+    );
+
+    return !wasCombinationInPreviousTurn;
   }
 
   isEmpty(): boolean {

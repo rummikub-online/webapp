@@ -4,6 +4,10 @@ export default {
   component: Card,
   title: "Card",
   tags: ["autodocs"],
+  args: {
+    movable: false,
+    locked: false,
+  },
   argTypes: {
     color: {
       options: ["red", "blue", "black", "yellow"],
@@ -38,6 +42,22 @@ export const Yellow = {
 };
 export const Black = {
   args: {
+    color: "black",
+    number: 11,
+  },
+};
+
+export const Movable = {
+  args: {
+    movable: true,
+    color: "black",
+    number: 11,
+  },
+};
+
+export const Locked = {
+  args: {
+    locked: true,
     color: "black",
     number: 11,
   },

@@ -6,12 +6,11 @@ import { ref, watch } from "vue";
 import draggable from "vuedraggable";
 import type { ChangeEvent } from "../lib/vueDraggable";
 import { toKey } from "../logic/card";
-import { useGameStore } from "../stores/game";
 import Card from "./Card.vue";
 
-const gameStore = useGameStore();
-
 const props = defineProps<{
+  disabled?: boolean;
+  locked?: boolean;
   combination: CombinationDto;
 }>();
 
@@ -45,7 +44,7 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
 <template>
   <div class="w-min flex flex-col items-center gap-1 p-2">
     <draggable
-      :disabled="!gameStore.player?.isPlaying"
+      :disabled="disabled"
       v-model="cards"
       group="combinations"
       tag="div"
@@ -54,7 +53,12 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
       @change="handleChange"
     >
       <template #item="{ element: card }">
-        <Card :color="card.color" :number="card.number" />
+        <Card
+          :movable="!disabled"
+          :locked="locked"
+          :color="card.color"
+          :number="card.number"
+        />
       </template>
     </draggable>
 

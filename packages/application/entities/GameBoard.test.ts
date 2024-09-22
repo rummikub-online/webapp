@@ -197,6 +197,42 @@ describe("GameBoard", () => {
     });
   });
 
+  describe("wasCombinationPlacedThisTurn", () => {
+    test("return true if combination wasn't on board on previous turn", () => {
+      const gameBoard = new GameBoard({
+        combinations: [
+          new Combination({
+            cards: [{ color: "black", number: 6, duplicata: 1 }],
+          }),
+        ],
+      });
+
+      gameBoard.beginTurn();
+
+      const position = gameBoard.placeCardAlone({
+        color: "black",
+        number: 6,
+        duplicata: 2,
+      });
+
+      expect(gameBoard.wasCombinationPlacedThisTurn(position)).toBeTruthy();
+    });
+
+    test("return false if combination was on board on previous turn", () => {
+      const gameBoard = new GameBoard({
+        combinations: [
+          new Combination({
+            cards: [{ color: "black", number: 6, duplicata: 1 }],
+          }),
+        ],
+      });
+
+      gameBoard.beginTurn();
+
+      expect(gameBoard.wasCombinationPlacedThisTurn(0)).toBeFalsy();
+    });
+  });
+
   describe("deleteEmptyCombinations", () => {
     test("remove all combination with no cards", () => {
       const gameBoard = new GameBoard({

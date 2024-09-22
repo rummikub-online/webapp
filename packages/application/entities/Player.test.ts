@@ -1,3 +1,4 @@
+import { Combination } from "./Combination";
 import { DrawStack } from "./DrawStack";
 import { GameBoard } from "./GameBoard";
 import { Player } from "./Player";
@@ -130,6 +131,28 @@ describe("Player", () => {
       player.placeCardInCombination(0, { combinationIndex, cardIndex: 2 });
       expect(() => player.endTurn()).toThrow("Not enough points to start");
     });
+
+    test("mark user as started if it's his first turn", () => {
+      const player = new Player({
+        id: "player",
+        hasStarted: false,
+        gameBoard: new GameBoard({}),
+        drawStack: new DrawStack({}),
+        cards: [
+          { color: "black", number: 10, duplicata: 1 },
+          { color: "black", number: 11, duplicata: 1 },
+          { color: "black", number: 12, duplicata: 1 },
+        ],
+      });
+
+      player.beginTurn();
+      const combinationIndex = player.placeCardAlone(0);
+      player.placeCardInCombination(0, { combinationIndex, cardIndex: 1 });
+      player.placeCardInCombination(0, { combinationIndex, cardIndex: 2 });
+
+      player.endTurn();
+      expect(player.toDto().hasStarted).toBeTruthy();
+    });
   });
 
   describe("isPlaying", () => {
@@ -207,6 +230,121 @@ describe("Player", () => {
     });
   });
 
+  describe("canInteractWithCombination", () => {
+    const makeBoard = () =>
+      new GameBoard({
+        combinations: [
+          new Combination({
+            cards: [
+              { color: "black", number: 7, duplicata: 1 },
+              { color: "black", number: 8, duplicata: 1 },
+              { color: "black", number: 9, duplicata: 1 },
+            ],
+          }),
+        ],
+      });
+
+    test("need player started its turn", () => {
+      const gameBoard = makeBoard();
+      const player = new Player({
+        id: "player",
+        hasDrewStartupCards: true,
+        gameBoard,
+        hasStarted: true,
+        drawStack: new DrawStack({}),
+        cards: [{ color: "black", number: 7, duplicata: 1 }],
+      });
+
+      expect(player.canInteractWithCombination(0)).toBeFalsy();
+    });
+
+    test("need player hasn't draw card this turn", () => {
+      const gameBoard = makeBoard();
+      const player = new Player({
+        id: "player",
+        hasDrewStartupCards: true,
+        gameBoard,
+        hasStarted: true,
+        drawStack: new DrawStack({}),
+        cards: [{ color: "black", number: 7, duplicata: 1 }],
+      });
+
+      player.beginTurn();
+      player.drawCard();
+
+      expect(player.canInteractWithCombination(0)).toBeFalsy();
+    });
+
+    test("need cards on gameboard", () => {
+      const gameBoard = new GameBoard({});
+      const player = new Player({
+        id: "player",
+        hasDrewStartupCards: true,
+        gameBoard,
+        hasStarted: true,
+        drawStack: new DrawStack({}),
+        cards: [{ color: "black", number: 7, duplicata: 1 }],
+      });
+
+      player.beginTurn();
+
+      expect(player.canInteractWithCombination(0)).toBeFalsy();
+    });
+
+    describe("for a combination placed before this turn", () => {
+      test("need to have started", () => {
+        const gameBoard = makeBoard();
+        const player = new Player({
+          id: "player",
+          hasDrewStartupCards: true,
+          gameBoard,
+          hasStarted: false,
+          drawStack: new DrawStack({}),
+          cards: [{ color: "black", number: 7, duplicata: 1 }],
+        });
+
+        player.beginTurn();
+
+        expect(player.canInteractWithCombination(0)).toBeFalsy();
+      });
+
+      test("its possible if have started", () => {
+        const gameBoard = makeBoard();
+        const player = new Player({
+          id: "player",
+          hasDrewStartupCards: true,
+          gameBoard,
+          hasStarted: true,
+          drawStack: new DrawStack({}),
+          cards: [{ color: "black", number: 7, duplicata: 1 }],
+        });
+
+        player.beginTurn();
+
+        expect(player.canInteractWithCombination(0)).toBeTruthy();
+      });
+    });
+
+    describe("for a combination placed during the turn", () => {
+      test("it's possible", () => {
+        const gameBoard = new GameBoard({});
+        const player = new Player({
+          id: "player",
+          hasDrewStartupCards: true,
+          gameBoard,
+          hasStarted: false,
+          drawStack: new DrawStack({}),
+          cards: [{ color: "black", number: 7, duplicata: 1 }],
+        });
+
+        player.beginTurn();
+        player.placeCardAlone(0);
+
+        expect(player.canInteractWithCombination(0)).toBeTruthy();
+      });
+    });
+  });
+
   describe("toDto", () => {
     test("return corresponding dto", () => {
       const player = new Player({
@@ -241,6 +379,7 @@ describe("Player", () => {
         canMoveCardToCombination: false,
         canCancelTurnModifications: false,
         canEndTurn: false,
+        canInteractWithCombination: [],
       });
     });
   });

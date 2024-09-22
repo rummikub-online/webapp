@@ -1,8 +1,8 @@
 import { CardDto } from "@rumi/domain/dtos/card";
 import { CardListDto } from "@rumi/domain/dtos/cardList";
 import { CombinationDto, CombinationType } from "@rumi/domain/dtos/combination";
-import { isValidCardSuite } from "@rumi/domain/gamerules/cardSuite/isValid";
 import { isValidCardSerie } from "@rumi/domain/gamerules/cardSerie/isValid";
+import { isValidCardSuite } from "@rumi/domain/gamerules/cardSuite/isValid";
 
 export interface ICombination {
   isValid(): boolean;
