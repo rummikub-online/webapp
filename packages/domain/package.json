@@ -1,6 +1,0 @@
-{
-  "name": "@rumi/domain",
-  "scripts": {
-    "test": "jest"
-  }
-}

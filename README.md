@@ -3,9 +3,11 @@
 ## Architecture
 
 ### En image
+
 <img src="https://raw.githubusercontent.com/MatthieuMarchand/rummikub/main/dependency-graph.svg"/>
 
 ### Expliquée
+
 - [**src/**](packages)
   - [**front/**](packages/front)
     > L'interface du jeu
