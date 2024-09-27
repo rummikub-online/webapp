@@ -1,45 +1,62 @@
 <script setup lang="ts">
 import type { CardDto } from "@/app/Card/domain/dtos/card";
 import type { OrderedCardDto } from "@/app/Card/domain/gamerules/grouping";
+import type { PlayerDto } from "@/app/Player/domain/dtos/player";
+import { useOrderedCards } from "@/composables/useOrderedCards";
 import type { ChangeEvent } from "@/lib/vueDraggable";
 import { toKey } from "@/logic/card";
-import { useGameStore } from "@/stores/game";
-import { useOrderedCardsStore } from "@/stores/orderedCards";
+import type { CardDraggingHandler } from "@/logic/cardDragging";
 import Draggable from "vuedraggable";
 
-const gameStore = useGameStore();
-const orderedCardsStore = useOrderedCardsStore();
+const props = defineProps<{
+  player: PlayerDto;
+  cardDraggingHandler: CardDraggingHandler;
+}>();
 
 const emit = defineEmits<{
-  removed: [card: CardDto, newIndex: number];
-  added: [card: CardDto, oldIndex: number];
-  moved: [card: CardDto, oldIndex: number, newIndex: number];
+  startGame: [];
+  drawCard: [];
+  cancelTurnModications: [];
+  endTurn: [];
 }>();
+
+const orderedCards = useOrderedCards();
 
 const cards = ref<Array<OrderedCardDto>>([]);
 
 watch(
   () => ({
-    player: gameStore.player,
-    cardOrder: orderedCardsStore.isOrderedByColor,
+    player: props.player,
+    cardOrder: orderedCards.isOrderedByColor.value,
   }),
   ({ player }) => {
-    cards.value = orderedCardsStore.toOrdered(player ? [...player.cards] : []);
+    cards.value = orderedCards.toOrdered([...player.cards]);
   }
 );
 
 const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
   if (e.removed) {
-    gameStore.cardDraggingHandler.from(e.removed.element.initialIndex, null);
+    props.cardDraggingHandler.from(e.removed.element.initialIndex, null);
   }
 };
 </script>
 <template>
   <div class="bg-body-bg flex flex-col gap-2 px-2 py-4">
-    <PlayerActions />
-    <div v-if="gameStore.player" class="flex justify-start items-start gap-3">
+    <PlayerActions
+      :player="player"
+      :is-ordered-by-color="orderedCards.isOrderedByColor.value"
+      :is-ordered-by-number="orderedCards.isOrderedByNumber.value"
+      @cancel-turn-modications="emit('cancelTurnModications')"
+      @draw-card="emit('drawCard')"
+      @end-turn="emit('endTurn')"
+      @order-by-color="orderedCards.orderByColor()"
+      @order-by-number="orderedCards.orderByNumber()"
+      @start-game="emit('startGame')"
+    />
+
+    <div v-if="player" class="flex justify-start items-start gap-3">
       <Draggable
-        :disabled="!gameStore.player.isPlaying"
+        :disabled="!player.isPlaying"
         v-model="cards"
         :group="{
           name: 'combinations',

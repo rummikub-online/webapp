@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [svgLoader()],
   },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/test-utils/module", "@pinia/nuxt"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/test-utils/module"],
   compatibilityDate: "2024-08-24",
   nitro: {
     experimental: {

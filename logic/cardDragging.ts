@@ -103,3 +103,4 @@ export const makeCardDraggingHandler = ({
     to,
   };
 };
+export type CardDraggingHandler = ReturnType<typeof makeCardDraggingHandler>;

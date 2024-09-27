@@ -3,12 +3,8 @@ import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import { makeCardDraggingHandler } from "@/logic/cardDragging";
 import { setupSocket } from "@/logic/socket";
-import { defineStore } from "pinia";
 
-export const useGameStore = defineStore("game", () => {
-  const route = useRoute();
-  const gameId = route.params.id;
-
+export const useGame = (gameId: any) => {
   if (typeof gameId !== "string") {
     throw new Error("Game id is not a string");
   }
@@ -56,4 +52,4 @@ export const useGameStore = defineStore("game", () => {
     endTurn,
     cardDraggingHandler,
   };
-});
+};

@@ -1,17 +1,21 @@
 <script setup lang="ts">
 import type { CardDto } from "@/app/Card/domain/dtos/card";
+import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import type { ChangeEvent } from "@/lib/vueDraggable";
 import { toKey } from "@/logic/card";
-import { useGameStore } from "@/stores/game";
+import type { CardDraggingHandler } from "@/logic/cardDragging";
 import { ref, watch } from "vue";
 import Draggable from "vuedraggable";
 
-const gameStore = useGameStore();
+const props = defineProps<{
+  player: PlayerDto;
+  cardDraggingHandler: CardDraggingHandler;
+}>();
 
 const cards = ref([]);
 
 watch(
-  () => gameStore.player,
+  () => props.player,
   () => {
     cards.value = [];
   }
@@ -19,7 +23,7 @@ watch(
 
 const handleChange = (e: ChangeEvent<CardDto>) => {
   if (e.added) {
-    gameStore.cardDraggingHandler.to(null, null);
+    props.cardDraggingHandler.to(null, null);
   }
 };
 </script>

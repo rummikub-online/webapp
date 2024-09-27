@@ -1,10 +1,9 @@
 import type { CardDto } from "@/app/Card/domain/dtos/card";
 import { byColor, byNumber } from "@/app/Card/domain/gamerules/grouping";
-import { defineStore } from "pinia";
 
 export type CardsCorder = "color" | "number";
 
-export const useOrderedCardsStore = defineStore("orderedCards", () => {
+export const useOrderedCards = () => {
   const order = ref<CardsCorder>("color");
 
   const toOrdered = (cards: Array<CardDto>) =>
@@ -22,4 +21,4 @@ export const useOrderedCardsStore = defineStore("orderedCards", () => {
     isOrderedByColor,
     isOrderedByNumber,
   };
-});
+};

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
-import { useGameStore } from "@/stores/game";
+import type { PlayerDto } from "@/app/Player/domain/dtos/player";
+import type { CardDraggingHandler } from "@/logic/cardDragging";
 
-const gameStore = useGameStore();
-
-defineProps<{
+const props = defineProps<{
+  player: PlayerDto;
   gameBoard: GameBoardDto;
+  cardDraggingHandler: CardDraggingHandler;
 }>();
 
 const handleCardMoved = (
@@ -13,14 +14,14 @@ const handleCardMoved = (
   newCardIndex: number,
   combinationIndex: number
 ) => {
-  gameStore.cardDraggingHandler.to(newCardIndex, combinationIndex);
-  gameStore.cardDraggingHandler.from(oldCardIndex, combinationIndex);
+  props.cardDraggingHandler.to(newCardIndex, combinationIndex);
+  props.cardDraggingHandler.from(oldCardIndex, combinationIndex);
 };
 const handleCardRemoved = (cardIndex: number, combinationIndex: number) => {
-  gameStore.cardDraggingHandler.from(cardIndex, combinationIndex);
+  props.cardDraggingHandler.from(cardIndex, combinationIndex);
 };
 const handleCardAdded = (cardIndex: number, combinationIndex: number) => {
-  gameStore.cardDraggingHandler.to(cardIndex, combinationIndex);
+  props.cardDraggingHandler.to(cardIndex, combinationIndex);
 };
 </script>
 <template>
@@ -31,12 +32,10 @@ const handleCardAdded = (cardIndex: number, combinationIndex: number) => {
       v-for="(combination, combinationIndex) in gameBoard.combinations"
       :key="combinationIndex"
       :combination="combination"
-      :disabled="
-        !gameStore.player?.canInteractWithCombination[combinationIndex]
-      "
+      :disabled="!player?.canInteractWithCombination[combinationIndex]"
       :locked="
-        gameStore.player?.isPlaying &&
-        !gameStore.player?.canInteractWithCombination[combinationIndex]
+        player?.isPlaying &&
+        !player?.canInteractWithCombination[combinationIndex]
       "
       @moved="
         (_, oldIndex: number, newIndex: number) =>
@@ -50,6 +49,9 @@ const handleCardAdded = (cardIndex: number, combinationIndex: number) => {
       "
     />
 
-    <CreateCombinationDragZone />
+    <CreateCombinationDragZone
+      :card-dragging-handler="cardDraggingHandler"
+      :player="player"
+    />
   </div>
 </template>
