@@ -1,5 +1,19 @@
 # Rummikub en TS
 
+## Lancer le projet
+
+1. Installer les dépendances
+
+```bash
+yarn
+```
+
+2. Lancer le serveur (Back+ Front + Storybook)
+
+```bash
+yarn dev
+```
+
 ## Architecture
 
 ### Couches
