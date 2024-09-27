@@ -13,7 +13,6 @@ defineProps<{
       'text-button-text-danger': type === 'danger',
       'text-button-text-success': type === 'success',
       'text-body-text': type === 'primary' || type === 'secondary',
-      'bg-white': type === 'primary' || type === 'danger' || type === 'success',
     }"
   >
     <slot name="prefix"></slot>

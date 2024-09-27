@@ -1,5 +1,5 @@
 import { Preview } from "@storybook/vue3";
-import "../src/assets/main.css";
+import "../assets/tailwind.css";
 
 const preview: Preview = {
   parameters: {

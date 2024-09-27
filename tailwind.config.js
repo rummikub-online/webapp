@@ -2,7 +2,11 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
+  content: [
+    "./index.html",
+    "./components/**/*.{js,ts,jsx,tsx,vue}",
+    "./pages/**/*.{js,ts,jsx,tsx,vue}",
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -24,8 +28,8 @@ export default {
         },
         button: {
           bg: "#FFFFFF",
-          success: "#3F8415",
-          danger: "#AA0505",
+          "text-success": "#3F8415",
+          "text-danger": "#AA0505",
         },
       },
     },

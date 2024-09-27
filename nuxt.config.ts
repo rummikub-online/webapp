@@ -5,9 +5,34 @@ export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: true },
   vite: {
-    plugins: [svgLoader()],
+    plugins: [
+      svgLoader({
+        defaultImport: "component",
+        svgoConfig: {
+          multipass: true,
+          plugins: [
+            {
+              name: "preset-default",
+              params: {
+                overrides: {
+                  // @see https://github.com/svg/svgo/issues/1128
+                  removeViewBox: false,
+                },
+              },
+            },
+          ],
+        },
+      }),
+    ],
+    optimizeDeps: {
+      include: ["jsdoc-type-pratt-parser"],
+    },
   },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/test-utils/module"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxt/test-utils/module",
+    "@nuxtjs/storybook",
+  ],
   compatibilityDate: "2024-08-24",
   nitro: {
     experimental: {

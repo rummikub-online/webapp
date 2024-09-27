@@ -25,7 +25,7 @@ watch(
   () => props.combination,
   (combination) => {
     cards.value = [...combination.cards];
-  }
+  },
 );
 
 const handleChange = (e: ChangeEvent<CardDto>) => {
@@ -63,7 +63,7 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
 
     <span
       v-if="combination.type === 'invalid'"
-      class="flex items-center gap-1 text-button-danger text-xs font-black"
+      class="flex items-center gap-1 text-button-text-danger text-xs font-black"
     >
       <ExclamationTriangleIcon class="w-3.5 h-3.5" />
       Invalid
