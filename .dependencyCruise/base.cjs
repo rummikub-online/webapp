@@ -2,27 +2,14 @@
 module.exports = {
   forbidden: [
     {
-      name: "domain-no-import-from-external-layers",
-      comment:
-        "Don't allow importing files from external layers (application or front) in domain files",
+      name: "domain-no-import-from-application",
+      comment: "Don't allow importing files from application (entities)",
       severity: "error",
       from: {
-        path: "^packages/domain/",
+        path: "^app/*./(contants|dtos|gamerules)",
       },
       to: {
-        path: "^packages/(application|front)",
-      },
-    },
-    {
-      name: "application-no-import-from-external-layers",
-      comment:
-        "Don't allow importing files from external layers (front) in application files",
-      severity: "error",
-      from: {
-        path: "^packages/domain/",
-      },
-      to: {
-        path: "^packages/(front)",
+        path: "^app/*./entities",
       },
     },
     {
@@ -213,7 +200,7 @@ module.exports = {
     /* Which modules to exclude */
     exclude: {
       /* path: an array of regular expressions in strings to match against */
-      path: "(.config.(js|ts))|(env.d.ts)",
+      path: "node_modules|(.config.(js|ts))|(env.d.ts)",
     },
 
     /* Which modules to exclusively include (array of regular expressions in strings)
@@ -269,7 +256,7 @@ module.exports = {
        defaults to './tsconfig.json'.
      */
     tsConfig: {
-      fileName: "tsconfig.json",
+      fileName: "./tsconfig.deps.json",
     },
 
     /* Webpack configuration to use to get resolve options from.
@@ -359,9 +346,9 @@ module.exports = {
         //     /* splines: "ortho" gives straight lines, but is slow on big graphs
         //        splines: "true" gives bezier curves (fast, not as nice as ortho)
         //    */
-        //     splines: "true"
+        //     splines: "ortho",
         //   },
-        // }
+        // },
       },
       archi: {
         /* pattern of modules that can be consolidated in the high level

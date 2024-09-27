@@ -10,7 +10,10 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "storybook": "storybook dev -p 6006 --no-open",
-    "storybook:build": "storybook build"
+    "storybook:build": "storybook build",
+    "deps:check": "npx depcruise app",
+    "deps:overview": "npx depcruise app --config ./.dependencyCruise/overview.cjs --output-type archi | dot -T svg | npx depcruise-wrap-stream-in-html > .dependencyCruise/graphs/overview.html",
+    "deps:full": "npx depcruise app --config ./.dependencyCruise/full.cjs --output-type ddot | dot -T svg | npx depcruise-wrap-stream-in-html > .dependencyCruise/graphs/full.html"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -19,6 +22,7 @@
     "@pinia/nuxt": "^0.5.4",
     "@vue/test-utils": "^2.4.6",
     "autoprefixer": "^10.4.19",
+    "dependency-cruiser": "^16.4.2",
     "nuxt": "^3.12.4",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
