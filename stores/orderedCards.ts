@@ -1,5 +1,5 @@
-import type { CardDto } from "@/app/Card/dtos/card";
-import { byColor, byNumber } from "@/app/Card/gamerules/grouping";
+import type { CardDto } from "@/app/Card/domain/dtos/card";
+import { byColor, byNumber } from "@/app/Card/domain/gamerules/grouping";
 import { defineStore } from "pinia";
 
 export type CardsCorder = "color" | "number";

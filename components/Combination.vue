@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { CardDto } from "@/app/Card/dtos/card";
-import type { CombinationDto } from "@/app/Combination/dtos/combination";
+import type { CardDto } from "@/app/Card/domain/dtos/card";
+import type { CombinationDto } from "@/app/Combination/domain/dtos/combination";
 import type { ChangeEvent } from "@/lib/vueDraggable";
 import { toKey } from "@/logic/card";
 import { ExclamationTriangleIcon } from "@heroicons/vue/16/solid";

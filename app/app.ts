@@ -1,9 +1,9 @@
 import {
   type IGameRepository,
   GameRepository,
-} from "@/app/GameRepository/entities/GameRepository";
-import { registerSocketEvents } from "@/app/WebSocket/events";
-import type { WebSocketServer } from "@/app/WebSocket/types";
+} from "@/app/GameRepository/application/GameRepository";
+import { registerSocketEvents } from "@/app/WebSocket/infrastructure/events";
+import type { WebSocketServer } from "@/app/WebSocket/infrastructure/types";
 
 export class App {
   private gameRepository: IGameRepository;

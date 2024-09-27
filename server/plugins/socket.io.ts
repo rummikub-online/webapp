@@ -1,5 +1,5 @@
 import { App } from "@/app/app";
-import { WebSocketServer } from "@/app/WebSocket/types";
+import type { WebSocketServer } from "@/app/WebSocket/infrastructure/types";
 import { Server as Engine } from "engine.io";
 import { defineEventHandler } from "h3";
 import type { NitroApp } from "nitropack";

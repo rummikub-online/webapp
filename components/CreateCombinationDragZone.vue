@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CardDto } from "@/app/Card/dtos/card";
+import type { CardDto } from "@/app/Card/domain/dtos/card";
 import type { ChangeEvent } from "@/lib/vueDraggable";
 import { toKey } from "@/logic/card";
 import { useGameStore } from "@/stores/game";

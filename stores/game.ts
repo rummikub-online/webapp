@@ -1,6 +1,6 @@
-import type { GameInfosDto } from "@/app/Game/entities/Game";
-import type { GameBoardDto } from "@/app/GameBoard/dtos/gameBoard";
-import type { PlayerDto } from "@/app/Player/dtos/player";
+import type { GameInfosDto } from "@/app/Game/application/Game";
+import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
+import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import { makeCardDraggingHandler } from "@/logic/cardDragging";
 import { setupSocket } from "@/logic/socket";
 import { defineStore } from "pinia";

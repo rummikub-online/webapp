@@ -3,7 +3,7 @@ import type {
   CardDto,
   CardDuplicata,
   CardNumber,
-} from "@/app/Card/dtos/card";
+} from "@/app/Card/domain/dtos/card";
 
 export type CardKey = `${CardNumber}-${CardColor}-${CardDuplicata}`;
 export const toKey = (card: CardDto): CardKey =>

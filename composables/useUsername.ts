@@ -1,4 +1,4 @@
-import { localStorageKey } from "@/app/LocalStorage/constants";
+import { localStorageKey } from "@/app/LocalStorage/infrastructure/constants";
 import { useLocalStorage } from "@vueuse/core";
 
 const USERNAME_LOCAL_STORAGE_KEY = "username";

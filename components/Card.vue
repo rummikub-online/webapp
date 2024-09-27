@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CardColor, CardNumber } from "@/app/Card/dtos/card";
+import type { CardColor, CardNumber } from "@/app/Card/domain/dtos/card";
 import BlackCardSymbol from "@/assets/card/symbol/black.svg?component";
 import BlueCardSymbol from "@/assets/card/symbol/blue.svg?component";
 import RedCardSymbol from "@/assets/card/symbol/red.svg?component";

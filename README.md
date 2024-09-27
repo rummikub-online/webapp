@@ -2,11 +2,9 @@
 
 ## Architecture
 
-### En image
+Nous avons d'abord suivi une architecture séparant le domain, l'application et le presenter (front web)
 
-<img src="https://raw.githubusercontent.com/MatthieuMarchand/rummikub/main/dependency-graph.svg"/>
-
-### Expliquée
+Ensuite, nous avons opté pour une architecture par Domain (User, Card, CardSuite, etc), englobant le domain (constants, dtos) et l'application
 
 - [**src/**](packages)
   - [**front/**](packages/front)

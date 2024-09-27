@@ -1,11 +1,11 @@
-import type { GameInfosDto } from "@/app/Game/entities/Game";
-import type { GameBoardDto } from "@/app/GameBoard/dtos/gameBoard";
-import type { CardPositionOnBoard } from "@/app/GameBoard/entities/GameBoard";
-import type { PlayerDto } from "@/app/Player/dtos/player";
+import type { GameInfosDto } from "@/app/Game/application/Game";
+import type { CardPositionOnBoard } from "@/app/GameBoard/application/GameBoard";
+import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
+import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import type {
   ClientToServerEvents,
   ServerToClientEvents,
-} from "@/app/WebSocket/types";
+} from "@/app/WebSocket/infrastructure/types";
 import { io, Socket } from "socket.io-client";
 
 export const setupSocket = ({

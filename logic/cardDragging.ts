@@ -1,4 +1,4 @@
-import type { CardPositionOnBoard } from "@/app/Rummikub/GameBoard/entities/GameBoard";
+import type { CardPositionOnBoard } from "@/app/GameBoard/application/GameBoard";
 
 type Position = number | null;
 type CardPosition = {

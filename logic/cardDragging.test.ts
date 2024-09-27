@@ -1,4 +1,4 @@
-import type { CardPositionOnBoard } from "@/app/Rummikub/GameBoard/entities/GameBoard";
+import type { CardPositionOnBoard } from "@/app/GameBoard/application/GameBoard";
 import { makeCardDraggingHandler } from "@/logic/cardDragging";
 import { afterEach, describe, expect, test, vi } from "vitest";
 

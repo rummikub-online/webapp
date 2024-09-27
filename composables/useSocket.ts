@@ -1,7 +1,7 @@
 import type {
   ClientToServerEvents,
   ServerToClientEvents,
-} from "@/app/WebSocket/types";
+} from "@/app/WebSocket/infrastructure/types";
 import { io, Socket } from "socket.io-client";
 
 type UseSocketProps = {
@@ -12,7 +12,7 @@ type UseSocketProps = {
 
 export const useSocket = (opts?: UseSocketProps) => {
   const socket = reactive<Socket<ServerToClientEvents, ClientToServerEvents>>(
-    io(opts),
+    io(opts)
   );
   const isConnected = ref(false);
   const transport = ref("N/A");

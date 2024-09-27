@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GameBoardDto } from "@/app/GameBoard/dtos/gameBoard";
+import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
 import { useGameStore } from "@/stores/game";
 
 const gameStore = useGameStore();
