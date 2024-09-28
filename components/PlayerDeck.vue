@@ -31,7 +31,7 @@ watch(
   }),
   ({ player }) => {
     cards.value = orderedCards.toOrdered([...player.cards]);
-  }
+  },
 );
 
 const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
@@ -69,7 +69,7 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
         @change="handleChange"
       >
         <template #item="{ element: card }">
-          <Card :color="card.color" :number="card.number" />
+          <Card :color="card.color" :number="card.number" movable />
         </template>
       </Draggable>
     </div>
