@@ -20,6 +20,7 @@ export default {
         separator: "#E2E2E2",
         card: {
           bg: "#FFFFFF",
+          border: "#E5E5E5",
           "overlay-locked": "#EEEEEE",
           "text-red": "#DB2727",
           "text-blue": "#2070B9",

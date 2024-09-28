@@ -15,7 +15,7 @@ defineProps<{
 </script>
 <template>
   <div
-    class="relative overflow-hidden select-none w-9 h-11 md:w-12 md:h-16 bg-card-bg rounded flex-col justify-center items-center gap-1 inline-flex"
+    class="border border-card-border relative overflow-hidden select-none w-9 h-11 md:w-12 md:h-16 bg-card-bg rounded flex-col justify-center items-center gap-1 inline-flex"
     :class="movable && 'hover:shadow-lg cursor-move'"
   >
     <span
