@@ -9,5 +9,5 @@
 import { generate } from "random-words";
 
 const newRoomId = (generate(2) as [string, string]).join("-");
-const newRoomUrl = `/room/${newRoomId}`;
+const newRoomUrl = `/game/${newRoomId}`;
 </script>
