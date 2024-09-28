@@ -12,7 +12,7 @@ const props = defineProps<{
 const handleCardMoved = (
   oldCardIndex: number,
   newCardIndex: number,
-  combinationIndex: number
+  combinationIndex: number,
 ) => {
   props.cardDraggingHandler.to(newCardIndex, combinationIndex);
   props.cardDraggingHandler.from(oldCardIndex, combinationIndex);

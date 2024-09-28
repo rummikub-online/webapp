@@ -18,7 +18,7 @@ watch(
   () => props.player,
   () => {
     cards.value = [];
-  }
+  },
 );
 
 const handleChange = (e: ChangeEvent<CardDto>) => {
@@ -28,7 +28,7 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
 };
 </script>
 <template>
-  <div class="p-2">
+  <div class="p-2 px-4">
     <Draggable
       v-model="cards"
       group="combinations"

@@ -41,7 +41,7 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
 };
 </script>
 <template>
-  <div class="w-min flex flex-col items-center gap-1 p-2">
+  <div class="w-min flex flex-col items-center gap-1 p-2 px-4">
     <Draggable
       :disabled="disabled"
       v-model="cards"
