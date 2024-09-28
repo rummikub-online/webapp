@@ -1,3 +1,4 @@
+import { CARDS } from "@/app/Card/domain/constants/card";
 import { Game } from "@/app/Game/application/Game";
 import { GameRepository } from "@/app/GameRepository/application/GameRepository";
 import { Player } from "@/app/Player/application/Player";
@@ -52,6 +53,34 @@ describe("GameRepository", () => {
 
       expect(game).toBeInstanceOf(Game);
       expect(gameRepository.findById(game.id)).toBe(game);
+    });
+
+    test("create game with test id won't shuffle cards", () => {
+      const gameRepository = new GameRepository();
+      const game = gameRepository.create("test");
+
+      const firstPlayer = game.addPlayer();
+      game.addPlayer();
+      game.start();
+
+      const firstPlayerCards = firstPlayer.toDto().cards;
+      const unshuffledStartupCards = CARDS.slice(0, firstPlayerCards.length);
+
+      expect(firstPlayerCards).toStrictEqual(unshuffledStartupCards);
+    });
+
+    test("create game without test id will shuffle cards", () => {
+      const gameRepository = new GameRepository();
+      const game = gameRepository.create();
+
+      const firstPlayer = game.addPlayer();
+      game.addPlayer();
+      game.start();
+
+      const firstPlayerCards = firstPlayer.toDto().cards;
+      const unshuffledStartupCards = CARDS.slice(0, firstPlayerCards.length);
+
+      expect(firstPlayerCards).not.toStrictEqual(unshuffledStartupCards);
     });
   });
 

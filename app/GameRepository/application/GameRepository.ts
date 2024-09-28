@@ -46,12 +46,12 @@ export class GameRepository implements IGameRepository {
   }
 
   create(id?: GameId): IGame {
-    const fakeDrawStack = new DrawStack({});
+    const fakeDrawStack = new DrawStack();
     fakeDrawStack.shuffle = () => {};
 
     const game = new Game({
       id: id ?? uuidv4(),
-      drawStack: fakeDrawStack,
+      drawStack: id === "test" ? fakeDrawStack : new DrawStack(),
     });
 
     this.games.set(game.id, game);

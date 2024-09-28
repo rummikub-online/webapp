@@ -23,8 +23,8 @@ type DrawStackProps = {
 export class DrawStack implements IDrawStack {
   private cards: CardListDto;
 
-  constructor(props: DrawStackProps) {
-    this.cards = props.cards ?? [...CARDS];
+  constructor(props?: DrawStackProps) {
+    this.cards = props?.cards ?? [...CARDS];
   }
   putBack(card: CardDto): void {
     this.cards = [card, ...this.cards];
