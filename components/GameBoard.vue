@@ -50,6 +50,7 @@ const handleCardAdded = (cardIndex: number, combinationIndex: number) => {
     />
 
     <CreateCombinationDragZone
+      v-if="player.canPlaceCardAlone || player.canMoveCardAlone"
       :card-dragging-handler="cardDraggingHandler"
       :player="player"
     />

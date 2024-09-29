@@ -36,7 +36,7 @@ defineProps<{
 
     <div
       v-if="locked"
-      class="absolute inset-0 bg-card-overlay-locked/70 flex items-center justify-center"
+      class="absolute inset-0 bg-card-bg-overlay-locked/70 text-card-text-overlay-locked flex items-center justify-center"
     >
       <LockClosedIcon class="size-4 md:size-6" />
     </div>

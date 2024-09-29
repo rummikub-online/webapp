@@ -15,13 +15,15 @@ export default {
       colors: {
         body: {
           text: "#000000",
-          bg: "#F9F9F9",
+          bg: "#F3F3F3",
         },
         separator: "#E2E2E2",
         card: {
           bg: "#FFFFFF",
           border: "#E5E5E5",
-          "overlay-locked": "#EEEEEE",
+          create: "#a0a0a0",
+          "bg-overlay-locked": "#EEEEEE",
+          "text-overlay-locked": "#6a6a6a",
           "text-red": "#DB2727",
           "text-blue": "#2070B9",
           "text-black": "#252323",
