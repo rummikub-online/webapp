@@ -1,5 +1,9 @@
 # Rummikub en TS
 
+## Jouer
+
+Sur [rummikub.arthaud.dev](https://rummikub.arthaud.dev)
+
 ## Lancer le projet
 
 1. Installer les dépendances
@@ -50,7 +54,7 @@ Ensuite, nous avons opté pour une Architecture Hurlante laissant apparaître le
 
 ### Explications
 
-- [**app/**](app)
+- **app/**
   - **[module]/**
     > Ex : Une partie du logiciel : Player, Card, WebSockets
     - **application/**
