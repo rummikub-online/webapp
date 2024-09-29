@@ -39,6 +39,7 @@ type AddPlayerProps = {
 export interface IGame {
   id: GameId;
   addPlayer(props?: AddPlayerProps): IPlayer;
+  findPlayerByUsername(username: string): IPlayer;
   findOrAddPlayer(props?: AddPlayerProps): IPlayer;
   removePlayer(id: string): void;
   get playerCount(): number;
@@ -143,7 +144,7 @@ export class Game implements IGame {
     return this.players.length;
   }
 
-  private findPlayerByUsername(username?: string): IPlayer {
+  findPlayerByUsername(username?: string): IPlayer {
     if (!username) {
       throw new Error("No username given");
     }

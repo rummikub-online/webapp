@@ -12,11 +12,6 @@ type GameManagerProps = {
   games?: Array<IGame>;
 };
 
-type GameAndPlayer = {
-  game: IGame;
-  player: IPlayer;
-};
-
 export interface IGameRepository {
   exists: (id: GameId) => boolean;
   findById: (id: GameId) => IGame;

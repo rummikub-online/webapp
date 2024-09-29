@@ -1,8 +1,7 @@
 import type { IGame } from "@/app/Game/application/Game";
-import type { IGameRepository } from "@/app/GameRepository/application/GameRepository";
+import { type IGameManager } from "@/app/Game/application/GameManager";
 import type { IPlayer } from "@/app/Player/application/Player";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
-import { ConnectedPlayerGateway } from "@/app/WebSocket/infrastructure/ConnectedPlayerGateway";
 import type {
   WebSocketServer,
   WebSocketServerSocket,
@@ -12,12 +11,13 @@ const gameRoom = (game: IGame) => `${game.id}`;
 const playerRoom = (game: IGame, player: IPlayer | PlayerDto) =>
   `${game.id}-${player.id}`;
 
-const connectedPlayerGateway = new ConnectedPlayerGateway();
-
-export const registerSocketEvents = (
-  gameRepository: IGameRepository,
-  socketServer: WebSocketServer,
-) => {
+export const registerSocketEvents = ({
+  socketServer,
+  gameManager,
+}: {
+  socketServer: WebSocketServer;
+  gameManager: IGameManager;
+}) => {
   const emitGameUpdate = (game: IGame) => {
     const gameDto = game.toDto();
 
@@ -51,14 +51,11 @@ export const registerSocketEvents = (
     socket.emit("game.infos.update", game.toInfosDto());
 
     socket.on("disconnect", () => {
-      connectedPlayerGateway.disconnect({
+      gameManager.disconnect({
         gameId: game.id,
         username: player.username,
       });
 
-      if (!game.isStarted()) {
-        game.removePlayer(player.id);
-      }
       console.log("A player disconnected");
       console.log(`${game.playerCount} players`);
 
@@ -152,21 +149,15 @@ export const registerSocketEvents = (
     }
 
     try {
-      connectedPlayerGateway.connect({
+      const { game, player } = gameManager.connect({
         gameId,
         username,
       });
+
+      bindEventsToSocket({ socket, game, player });
     } catch {
       socket.disconnect();
       return;
     }
-
-    const game = gameRepository.findOrCreate(gameId);
-
-    const player = game.findOrAddPlayer({
-      username,
-    });
-
-    bindEventsToSocket({ socket, game, player });
   });
 };

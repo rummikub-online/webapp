@@ -1,6 +1,6 @@
 import { CARDS } from "@/app/Card/domain/constants/card";
 import { Game } from "@/app/Game/application/Game";
-import { GameRepository } from "@/app/GameRepository/application/GameRepository";
+import { GameRepository } from "@/app/Game/application/GameRepository";
 import { describe, expect, test } from "vitest";
 
 describe("GameRepository", () => {
