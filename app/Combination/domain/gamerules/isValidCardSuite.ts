@@ -5,7 +5,7 @@ import {
   SUITE_MAX_END_NUM,
   SUITE_MIN_CARDS_COUNT,
   SUITE_MIN_START_NUM,
-} from "@/app/CardSuite/domain/constants/cardSuite";
+} from "@/app/Combination/domain/constants/cardSuite";
 
 const hasValidLength = (cardSuite: CardListDto): boolean =>
   SUITE_MIN_CARDS_COUNT <= cardSuite.length &&

@@ -1,5 +1,5 @@
 import type { CardListDto } from "@/app/Card/domain/dtos/cardList";
-import { isValidCardSerie } from "@/app/CardSerie/domain/gamerules/isValid";
+import { isValidCardSerie } from "@/app/Combination/domain/gamerules/isValidCardSerie";
 import { describe, expect, test } from "vitest";
 
 describe("isValidCardSerie", () => {

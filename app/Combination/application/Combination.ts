@@ -1,11 +1,11 @@
 import type { CardDto } from "@/app/Card/domain/dtos/card";
 import type { CardListDto } from "@/app/Card/domain/dtos/cardList";
-import { isValidCardSerie } from "@/app/CardSerie/domain/gamerules/isValid";
-import { isValidCardSuite } from "@/app/CardSuite/domain/gamerules/isValid";
 import type {
   CombinationDto,
   CombinationType,
 } from "@/app/Combination/domain/dtos/combination";
+import { isValidCardSerie } from "@/app/Combination/domain/gamerules/isValidCardSerie";
+import { isValidCardSuite } from "@/app/Combination/domain/gamerules/isValidCardSuite";
 
 export interface ICombination {
   isValid(): boolean;

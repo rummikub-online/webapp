@@ -4,7 +4,7 @@ import { isJoker } from "@/app/Card/domain/gamerules/isJoker";
 import {
   SERIE_MAX_CARDS_COUNT,
   SERIE_MIN_CARDS_COUNT,
-} from "@/app/CardSerie/domain/constants/cardSerie";
+} from "@/app/Combination/domain/constants/cardSerie";
 
 const hasSameNumber = (cardSerie: CardListDto): boolean => {
   let numberRef: CardNumber | null = null;
