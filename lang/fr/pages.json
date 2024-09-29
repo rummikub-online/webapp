@@ -1,0 +1,10 @@
+{
+  "home": {
+    "username": "Nom d'utilisateur",
+    "create_game": "Créer une partie"
+  },
+  "game": {
+    "is_playing": "{user} est en train de jouer...",
+    "is_playing_but_afk": "C'est le tour de {user}, qui est déconnecté(e)..."
+  }
+}

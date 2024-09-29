@@ -32,6 +32,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxt/test-utils/module",
     "@nuxtjs/storybook",
+    "@nuxtjs/i18n",
   ],
   compatibilityDate: "2024-08-24",
   nitro: {
@@ -47,6 +48,28 @@ export default defineNuxtConfig({
           "@/*": ["./*"],
         },
       },
+    },
+  },
+
+  i18n: {
+    locales: [
+      {
+        code: "fr",
+        file: "fr.ts",
+      },
+    ],
+    lazy: true,
+    langDir: "lang",
+    defaultLocale: "fr",
+    strategy: "no_prefix",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "rummikub.lang",
+      alwaysRedirect: true,
+    },
+    compilation: {
+      strictMessage: false,
+      escapeHtml: false,
     },
   },
 });

@@ -19,6 +19,8 @@ const emit = defineEmits<{
   moved: [card: CardDto, oldIndex: number, newIndex: number];
 }>();
 
+const { t } = useI18n();
+
 const cards = ref([...props.combination.cards]);
 
 watch(
@@ -66,7 +68,12 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
       class="flex items-center gap-1 text-button-text-danger text-xs font-black"
     >
       <ExclamationTriangleIcon class="w-3.5 h-3.5" />
-      Invalide
+      {{ t("invalid") }}
     </span>
   </div>
 </template>
+
+<i18n lang="yaml">
+fr:
+  invalid: "Invalide"
+</i18n>

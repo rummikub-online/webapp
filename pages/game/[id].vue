@@ -34,12 +34,18 @@
             ]
           "
         >
-          {{ game.gameInfos.value.currentPlayerUsername }} est en train de
-          jouer...
+          {{
+            t("pages.game.is_playing", {
+              user: game.gameInfos.value.currentPlayerUsername,
+            })
+          }}
         </template>
         <template v-else>
-          C'est le tour de {{ game.gameInfos.value.currentPlayerUsername }},
-          mais il est déconnecté
+          {{
+            t("pages.game.is_playing_but_afk", {
+              user: game.gameInfos.value.currentPlayerUsername,
+            })
+          }}
         </template>
       </div>
 
@@ -59,4 +65,5 @@ const { params } = useRoute();
 
 const { username } = useUsername();
 const game = useGame(params.id, username.value);
+const { t } = useI18n();
 </script>

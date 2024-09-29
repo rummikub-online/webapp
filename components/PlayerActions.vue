@@ -17,6 +17,8 @@ const emit = defineEmits<{
   endTurn: [];
 }>();
 
+const { t } = useI18n();
+
 const canChangeCardOrder = computed(() => props.player?.isPlaying);
 </script>
 <template>
@@ -26,7 +28,7 @@ const canChangeCardOrder = computed(() => props.player?.isPlaying);
       v-if="player.canStartGame"
       @click="emit('startGame')"
     >
-      Commencer
+      {{ t("start_game") }}
     </Button>
 
     <Button
@@ -34,7 +36,7 @@ const canChangeCardOrder = computed(() => props.player?.isPlaying);
       v-if="canChangeCardOrder && isOrderedByNumber"
       @click="emit('orderByColor')"
     >
-      Par couleur
+      {{ t("by_color") }}
     </Button>
 
     <Button
@@ -42,11 +44,11 @@ const canChangeCardOrder = computed(() => props.player?.isPlaying);
       v-if="canChangeCardOrder && isOrderedByColor"
       @click="emit('orderByNumber')"
     >
-      Par numéro
+      {{ t("by_number") }}
     </Button>
 
     <Button type="primary" v-if="player.canDrawCard" @click="emit('drawCard')">
-      Piocher
+      {{ t("draw") }}
     </Button>
 
     <Button
@@ -54,11 +56,20 @@ const canChangeCardOrder = computed(() => props.player?.isPlaying);
       v-if="player.canCancelTurnModifications"
       @click="emit('cancelTurnModications')"
     >
-      Annuler
+      {{ t("cancel") }}
     </Button>
 
     <Button type="primary" v-if="player.canEndTurn" @click="emit('endTurn')">
-      Terminer
+      {{ t("end_turn") }}
     </Button>
   </div>
 </template>
+<i18n lang="yaml">
+fr:
+  start_game: Démarrer la partie
+  by_color: Par couleur
+  by_number: Par numéro
+  draw: Piocher
+  cancel: Annuler
+  end_turn: Terminer le tour
+</i18n>
