@@ -53,6 +53,7 @@ describe("Game", () => {
 
       expect(() => game.removePlayer("e")).toThrow("Unknown player id");
     });
+
     test("remove player", () => {
       const game = new Game({ id: "game", generateUserId: () => "player" });
       const player = game.addPlayer();

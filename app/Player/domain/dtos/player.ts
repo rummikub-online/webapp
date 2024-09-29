@@ -4,7 +4,7 @@ export type PlayerId = string;
 
 export type PlayerDto = {
   id: PlayerId;
-  username?: string;
+  username: string;
   admin: boolean;
   cards: CardListDto;
   isPlaying: boolean;

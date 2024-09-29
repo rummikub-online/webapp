@@ -21,5 +21,7 @@
 </template>
 <script setup lang="ts">
 const { params } = useRoute();
-const game = useGame(params.id);
+
+const { username } = useUsername();
+const game = useGame(params.id, username.value);
 </script>

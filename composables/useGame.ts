@@ -4,9 +4,13 @@ import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import { makeCardDraggingHandler } from "@/logic/cardDragging";
 import { setupSocket } from "@/logic/socket";
 
-export const useGame = (gameId: any) => {
+export const useGame = (gameId: any, username: any) => {
   if (typeof gameId !== "string") {
     throw new Error("Game id is not a string");
+  }
+
+  if (typeof username !== "string") {
+    throw new Error("Username is not a string");
   }
 
   const gameInfos = ref<GameInfosDto>();
@@ -24,6 +28,7 @@ export const useGame = (gameId: any) => {
     placeCardInCombination,
   } = setupSocket({
     gameId,
+    username,
     onPlayerUpdate(newPlayer) {
       player.value = newPlayer;
     },

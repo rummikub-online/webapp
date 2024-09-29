@@ -20,7 +20,7 @@ export interface IGameRepository {
   create: (id?: GameId) => IGame;
   findOrCreate: (id: GameId) => IGame;
   createWithPlayer: (id?: GameId) => GameAndPlayer;
-  join: (id: GameId) => GameAndPlayer;
+  join: (id: GameId, withUsername?: string) => GameAndPlayer;
   destroy: (id: GameId) => void;
 }
 
@@ -73,10 +73,12 @@ export class GameRepository implements IGameRepository {
     };
   }
 
-  join(id: GameId): GameAndPlayer {
+  join(id: GameId, withUsername?: string): GameAndPlayer {
     const game = this.findOrCreate(id);
 
-    const player = game.addPlayer();
+    const player = game.findOrAddPlayer({
+      username: withUsername,
+    });
 
     return {
       game,

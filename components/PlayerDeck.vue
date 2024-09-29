@@ -22,7 +22,9 @@ const emit = defineEmits<{
 
 const orderedCards = useOrderedCards();
 
-const cards = ref<Array<OrderedCardDto>>([]);
+const cards = ref<Array<OrderedCardDto>>(
+  orderedCards.toOrdered([...props.player.cards]),
+);
 
 watch(
   () => ({

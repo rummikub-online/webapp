@@ -10,17 +10,19 @@ import { io, Socket } from "socket.io-client";
 
 export const setupSocket = ({
   gameId,
+  username,
   onPlayerUpdate,
   onGameBoardUpdate,
   onGameInfosUpdate,
 }: {
   gameId: string;
+  username: string;
   onPlayerUpdate: (player: PlayerDto) => void;
   onGameBoardUpdate: (gameBoard: GameBoardDto) => void;
   onGameInfosUpdate: (game: GameInfosDto) => void;
 }) => {
   const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io({
-    query: { gameId },
+    query: { gameId, username },
   });
 
   socket.on("connect", () => {
@@ -75,7 +77,7 @@ export const setupSocket = ({
 
   const moveCardToCombination = (
     source: CardPositionOnBoard,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ) => {
     socket.emit("player.moveCardToCombination", source, destination);
   };
@@ -86,7 +88,7 @@ export const setupSocket = ({
 
   const placeCardInCombination = (
     cardIndex: number,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ) => {
     socket.emit("player.placeCardInCombination", cardIndex, destination);
   };

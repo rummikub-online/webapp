@@ -10,23 +10,24 @@ import type {
 } from "@/app/GameBoard/application/GameBoard";
 import type { PlayerDto, PlayerId } from "@/app/Player/domain/dtos/player";
 import { isWinnerPlayer } from "@/app/Player/domain/gamerules/hasWon";
+import { generate } from "random-words";
 
 export interface IPlayer {
   admin: boolean;
   id: PlayerId;
-  username?: string;
+  username: string;
   drawStartupCards(): void;
   beginTurn(): void;
   drawCard(): void;
   placeCardAlone(cardIndex: number): CombinationPositionOnBoard;
   placeCardInCombination(
     cardIndex: number,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void;
   moveCardAlone(source: CardPositionOnBoard): CombinationPositionOnBoard;
   moveCardToCombination(
     source: CardPositionOnBoard,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void;
   cancelTurnModifications(): void;
   endTurn(): void;
@@ -61,7 +62,7 @@ export class Player implements IPlayer {
   private readonly drawStack: IDrawStack;
 
   public readonly id: PlayerId;
-  public readonly username?: string;
+  public readonly username: string;
   public admin: boolean;
 
   private cards: CardListDto;
@@ -81,7 +82,7 @@ export class Player implements IPlayer {
     this.cards = props.cards ?? [];
     this.hasDrawnStartupCards = props.hasDrewStartupCards ?? false;
     this.hasStarted = props.hasStarted ?? false;
-    this.username = props.username;
+    this.username = props.username ?? generate(1)[0];
     this.admin = props.admin ?? false;
 
     this.saveTurnCards();
@@ -113,11 +114,11 @@ export class Player implements IPlayer {
 
   placeCardInCombination(
     cardIndex: number,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void {
     this.gameBoard.placeCardInCombination(
       this.giveCard(cardIndex),
-      destination
+      destination,
     );
   }
 
@@ -127,7 +128,7 @@ export class Player implements IPlayer {
 
   moveCardToCombination(
     source: CardPositionOnBoard,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void {
     this.gameBoard.moveCardToCombination(source, destination);
   }

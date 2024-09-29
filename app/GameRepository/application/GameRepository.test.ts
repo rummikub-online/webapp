@@ -147,6 +147,32 @@ describe("GameRepository", () => {
 
       expect(() => gameRepository.join("1")).toThrow();
     });
+
+    test("create player with specified username and return it", () => {
+      const gameRepository = new GameRepository({
+        games: [new Game({ id: "1" })],
+      });
+
+      const { player } = gameRepository.join("1", "testman");
+
+      expect(player.username).toBe("testman");
+    });
+
+    test("if already exist, find player with specified username and return it", () => {
+      const gameRepository = new GameRepository({
+        games: [new Game({ id: "1" })],
+      });
+
+      const { game, player: alreadyExistentPlayer } = gameRepository.join(
+        "1",
+        "testman",
+      );
+
+      const { player } = gameRepository.join("1", "testman");
+
+      expect(game.playerCount).toBe(1);
+      expect(alreadyExistentPlayer.id).toBe(player.id);
+    });
   });
 
   describe("destroy", () => {

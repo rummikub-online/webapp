@@ -39,7 +39,9 @@ type AddPlayerProps = {
 export interface IGame {
   id: GameId;
   addPlayer(props?: AddPlayerProps): IPlayer;
+  findOrAddPlayer(props?: AddPlayerProps): IPlayer;
   removePlayer(id: string): void;
+  get playerCount(): number;
   start(): void;
   end(): void;
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer;
@@ -137,6 +139,34 @@ export class Game implements IGame {
     }
   }
 
+  get playerCount(): number {
+    return this.players.length;
+  }
+
+  private findPlayerByUsername(username?: string): IPlayer {
+    if (!username) {
+      throw new Error("No username given");
+    }
+
+    const playerIndex = this.players.findIndex(
+      (player) => player.username === username,
+    );
+
+    if (playerIndex === -1) {
+      throw new Error("Unknown player username");
+    }
+
+    return this.players[playerIndex];
+  }
+
+  findOrAddPlayer(props?: AddPlayerProps): IPlayer {
+    try {
+      return this.findPlayerByUsername(props?.username);
+    } catch (e) {
+      return this.addPlayer(props);
+    }
+  }
+
   start() {
     if (this.state !== "created") {
       throw new Error("Game already started");
@@ -169,7 +199,7 @@ export class Game implements IGame {
 
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer {
     const playerIndex = this.players.findIndex(
-      (player) => player.id === currentPlayer.id
+      (player) => player.id === currentPlayer.id,
     );
 
     if (playerIndex >= this.players.length - 1) {
