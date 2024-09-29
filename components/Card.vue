@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CardColor, CardNumber } from "@/app/Card/domain/dtos/card";
+import { isJokerNumber } from "@/app/Card/domain/gamerules/isJoker";
 import BlackCardSymbol from "@/assets/card/symbol/black.svg?component";
 import BlueCardSymbol from "@/assets/card/symbol/blue.svg?component";
 import RedCardSymbol from "@/assets/card/symbol/red.svg?component";
@@ -27,7 +28,7 @@ defineProps<{
         'text-card-text-black': color === 'black',
       }"
     >
-      {{ number }}
+      {{ isJokerNumber(number) ? "J" : number }}
     </span>
     <RedCardSymbol class="size-2 md:size-3" v-if="color === 'red'" />
     <BlueCardSymbol class="size-2 md:size-3" v-if="color === 'blue'" />
