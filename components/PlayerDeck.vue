@@ -56,7 +56,7 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
       @start-game="emit('startGame')"
     />
 
-    <div v-if="player" class="flex justify-start items-start gap-3">
+    <div v-if="player" class="flex justify-start items-start flex-wrap gap-3">
       <Draggable
         :disabled="!player.isPlaying"
         v-model="cards"
@@ -65,7 +65,7 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
           put: false,
         }"
         tag="div"
-        class="justify-start items-start gap-0.5 inline-flex"
+        class="justify-start items-start flex-wrap gap-0.5 inline-flex"
         :item-key="(card: CardDto) => toKey(card)"
         :sort="false"
         @change="handleChange"
