@@ -19,8 +19,11 @@ export const registerSocketEvents = ({
   gameManager: IGameManager;
 }) => {
   const emitGameUpdate = (game: IGame) => {
-    const gameDto = game.toDto();
+    socketServer
+      .to(gameRoom(game))
+      .emit("game.infos.update", game.toInfosDto());
 
+    const gameDto = game.toDto();
     socketServer.to(gameRoom(game)).emit("gameBoard.update", gameDto.gameBoard);
 
     gameDto.players.forEach((player) => {
@@ -54,7 +57,6 @@ export const registerSocketEvents = ({
 
     emitGameUpdate(game);
     emitConnectionsUpdate(game);
-    socket.emit("game.infos.update", game.toInfosDto());
 
     socket.on("disconnect", () => {
       gameManager.disconnect({
@@ -161,8 +163,12 @@ export const registerSocketEvents = ({
         username,
       });
 
+      console.log(`${username} connected`);
+
       bindEventsToSocket({ socket, game, player });
-    } catch {
+    } catch (e) {
+      console.error(e);
+
       socket.disconnect();
       return;
     }

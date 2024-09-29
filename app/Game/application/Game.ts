@@ -30,6 +30,7 @@ export type GameInfosDto = {
   id: GameId;
   state: GameState;
   isFull: boolean;
+  currentPlayerUsername?: string;
 };
 
 type AddPlayerProps = {
@@ -282,6 +283,8 @@ export class Game implements IGame {
       id: this.id,
       state: this.state,
       isFull: this.isFull(),
+      currentPlayerUsername:
+        this.state === "started" ? this.currentPlayer().username : undefined,
     };
   }
 }

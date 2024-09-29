@@ -17,14 +17,27 @@
       :card-dragging-handler="game.cardDraggingHandler"
       :player="game.player.value"
     ></GameBoard>
-    <PlayerDeck
-      :player="game.player.value"
-      :card-dragging-handler="game.cardDraggingHandler"
-      @cancel-turn-modications="game.cancelTurnModications()"
-      @draw-card="game.drawCard()"
-      @end-turn="game.endTurn()"
-      @start-game="game.startGame()"
-    />
+
+    <div class="relative">
+      <div
+        class="absolute bottom-full p-4"
+        v-if="
+          game.gameInfos.value?.currentPlayerUsername &&
+          game.gameInfos.value?.currentPlayerUsername !== username
+        "
+      >
+        {{ game.gameInfos.value?.currentPlayerUsername }} is playing...
+      </div>
+
+      <PlayerDeck
+        :player="game.player.value"
+        :card-dragging-handler="game.cardDraggingHandler"
+        @cancel-turn-modications="game.cancelTurnModications()"
+        @draw-card="game.drawCard()"
+        @end-turn="game.endTurn()"
+        @start-game="game.startGame()"
+      />
+    </div>
   </main>
 </template>
 <script setup lang="ts">
