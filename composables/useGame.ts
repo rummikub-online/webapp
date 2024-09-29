@@ -16,6 +16,7 @@ export const useGame = (gameId: any, username: any) => {
   const gameInfos = ref<GameInfosDto>();
   const player = ref<PlayerDto>();
   const gameBoard = ref<GameBoardDto>();
+  const connectedUsernames = ref<Record<string, boolean>>();
 
   const {
     startGame,
@@ -38,6 +39,9 @@ export const useGame = (gameId: any, username: any) => {
     onGameInfosUpdate(newGameInfos) {
       gameInfos.value = newGameInfos;
     },
+    onConnectedUsernamesUpdate(newConnectedUsernames) {
+      connectedUsernames.value = newConnectedUsernames;
+    },
   });
 
   const cardDraggingHandler = makeCardDraggingHandler({
@@ -51,6 +55,7 @@ export const useGame = (gameId: any, username: any) => {
     gameInfos,
     player,
     gameBoard,
+    connectedUsernames,
     startGame,
     cancelTurnModications,
     drawCard,

@@ -43,7 +43,7 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
 };
 </script>
 <template>
-  <div class="bg-body-bg flex flex-col gap-2 px-2 py-4">
+  <div class="bg-body-bg border-t flex flex-col gap-2 px-2 py-4">
     <PlayerActions
       :player="player"
       :is-ordered-by-color="orderedCards.isOrderedByColor.value"

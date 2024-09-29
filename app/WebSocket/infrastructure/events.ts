@@ -28,6 +28,11 @@ export const registerSocketEvents = ({
       socketServer.to(playerRoom(game, player)).emit("player.update", player);
     });
   };
+  const emitConnectionsUpdate = (game: IGame) => {
+    socketServer
+      .to(gameRoom(game))
+      .emit("connectedUsernames.update", gameManager.usernames(game.id));
+  };
 
   const bindEventsToSocket = ({
     socket,
@@ -48,6 +53,7 @@ export const registerSocketEvents = ({
     console.log(`${game.playerCount} players`);
 
     emitGameUpdate(game);
+    emitConnectionsUpdate(game);
     socket.emit("game.infos.update", game.toInfosDto());
 
     socket.on("disconnect", () => {
@@ -60,6 +66,7 @@ export const registerSocketEvents = ({
       console.log(`${game.playerCount} players`);
 
       emitGameUpdate(game);
+      emitConnectionsUpdate(game);
     });
 
     socket.on("game.start", () => {

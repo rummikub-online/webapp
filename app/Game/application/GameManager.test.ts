@@ -174,4 +174,53 @@ describe("GameManager", () => {
       expect(spy).toHaveBeenCalledOnce();
     });
   });
+
+  describe("usernames", () => {
+    test("return username of all players in game", () => {
+      // Arrange
+      const gameManager = new GameManager({
+        gameRepository: new GameRepository(),
+      });
+      const { game } = gameManager.connect({
+        gameId: "1",
+        username: "Alice",
+      });
+      gameManager.connect({
+        gameId: "1",
+        username: "Bob",
+      });
+
+      // Assert
+      expect(gameManager.usernames(game.id)).toStrictEqual({
+        Alice: true,
+        Bob: true,
+      });
+    });
+
+    test("disconnected players are marked false", () => {
+      // Arrange
+      const gameManager = new GameManager({
+        gameRepository: new GameRepository(),
+      });
+      const { game } = gameManager.connect({
+        gameId: "1",
+        username: "Alice",
+      });
+      gameManager.connect({
+        gameId: "1",
+        username: "Bob",
+      });
+      game.start();
+      gameManager.disconnect({
+        gameId: "1",
+        username: "Alice",
+      });
+
+      // Assert
+      expect(gameManager.usernames(game.id)).toStrictEqual({
+        Alice: false,
+        Bob: true,
+      });
+    });
+  });
 });

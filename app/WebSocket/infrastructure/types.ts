@@ -10,6 +10,7 @@ export interface ServerToClientEvents {
   "player.update": (player: PlayerDto) => void;
   "gameBoard.update": (gameBoard: GameBoardDto) => void;
   "game.infos.update": (game: GameInfosDto) => void;
+  "connectedUsernames.update": (usernames: Record<string, boolean>) => void;
 }
 
 export interface ClientToServerEvents {
@@ -18,12 +19,12 @@ export interface ClientToServerEvents {
   "player.placeCardAlone": (cardIndex: number) => void;
   "player.placeCardInCombination": (
     cardIndex: number,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ) => void;
   "player.moveCardAlone": (source: CardPositionOnBoard) => void;
   "player.moveCardToCombination": (
     source: CardPositionOnBoard,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ) => void;
   "player.cancelTurnModifications": () => void;
   "player.endTurn": () => void;

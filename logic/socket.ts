@@ -14,12 +14,16 @@ export const setupSocket = ({
   onPlayerUpdate,
   onGameBoardUpdate,
   onGameInfosUpdate,
+  onConnectedUsernamesUpdate,
 }: {
   gameId: string;
   username: string;
   onPlayerUpdate: (player: PlayerDto) => void;
   onGameBoardUpdate: (gameBoard: GameBoardDto) => void;
   onGameInfosUpdate: (game: GameInfosDto) => void;
+  onConnectedUsernamesUpdate: (
+    newConnectedUsernames: Record<string, boolean>,
+  ) => void;
 }) => {
   const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io({
     query: { gameId, username },
@@ -33,16 +37,20 @@ export const setupSocket = ({
     console.log("disconnected");
   });
 
-  socket.on("game.infos.update", (game: GameInfosDto) => {
+  socket.on("game.infos.update", (game) => {
     onGameInfosUpdate(game);
   });
 
-  socket.on("player.update", (player: PlayerDto) => {
+  socket.on("player.update", (player) => {
     onPlayerUpdate(player);
   });
 
-  socket.on("gameBoard.update", (gameBoard: GameBoardDto) => {
+  socket.on("gameBoard.update", (gameBoard) => {
     onGameBoardUpdate(gameBoard);
+  });
+
+  socket.on("connectedUsernames.update", (usernames) => {
+    onConnectedUsernamesUpdate(usernames);
   });
 
   socket.on("connect_error", (error) => {

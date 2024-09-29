@@ -1,9 +1,17 @@
 <template>
   <main
-    class="h-screen flex flex-col"
+    class="h-screen flex flex-col bg-body-bg"
     v-if="game.gameBoard.value && game.player.value"
   >
-    <div class="absolute"></div>
+    <nav class="flex gap-2 p-4 border-b items-center justify-between">
+      <span>{{ game.gameInfos.value?.id }}</span>
+
+      <ConnectedUsernames
+        v-if="game.connectedUsernames.value"
+        :usernames="game.connectedUsernames.value"
+      />
+    </nav>
+
     <GameBoard
       :game-board="game.gameBoard.value"
       :card-dragging-handler="game.cardDraggingHandler"

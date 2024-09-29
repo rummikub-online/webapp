@@ -20,6 +20,8 @@ export interface IGameManager {
   isConnected(connection: UserConnection): boolean;
   connect(connection: UserConnection): GameAndPlayer;
   disconnect(connection: UserConnection): void;
+  connectedCount(gameId: GameId): number;
+  usernames(gameId: GameId): Record<string, boolean>;
 }
 
 export class GameManager implements IGameManager {
@@ -30,31 +32,33 @@ export class GameManager implements IGameManager {
     this.gameRepository = props.gameRepository;
   }
 
-  private connectionToString(connection: UserConnection) {
-    return `${connection.gameId}-${connection.username}`;
-  }
-
   isConnected(connection: UserConnection) {
-    return this.playersInGames[connection.gameId]?.has(
-      this.connectionToString(connection),
-    );
+    return this.playersInGames[connection.gameId]?.has(connection.username);
   }
 
   private addConnection(connection: UserConnection) {
     this.playersInGames[connection.gameId] ??= new Set();
 
-    this.playersInGames[connection.gameId].add(
-      this.connectionToString(connection),
-    );
+    this.playersInGames[connection.gameId].add(connection.username);
   }
 
   private deleteConnection(connection: UserConnection) {
-    this.playersInGames[connection.gameId]?.delete(
-      this.connectionToString(connection),
+    this.playersInGames[connection.gameId]?.delete(connection.username);
+  }
+
+  usernames(gameId: GameId): Record<string, boolean> {
+    const game = this.gameRepository.findById(gameId);
+    const playerUsernames = game.toDto().players.map((p) => p.username);
+
+    return Object.fromEntries(
+      playerUsernames.map((username) => [
+        username,
+        this.isConnected({ gameId, username }),
+      ]),
     );
   }
 
-  private connectionsCount(gameId: GameId) {
+  connectedCount(gameId: GameId) {
     return this.playersInGames[gameId]?.size;
   }
 
@@ -80,7 +84,7 @@ export class GameManager implements IGameManager {
 
     this.deleteConnection(connection);
 
-    if (this.connectionsCount(connection.gameId) === 0) {
+    if (this.connectedCount(connection.gameId) === 0) {
       this.gameRepository.destroy(connection.gameId);
     }
   }
