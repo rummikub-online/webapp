@@ -34,11 +34,12 @@
             ]
           "
         >
-          {{ game.gameInfos.value.currentPlayerUsername }} is playing...
+          {{ game.gameInfos.value.currentPlayerUsername }} est en train de
+          jouer...
         </template>
         <template v-else>
-          It's turn of {{ game.gameInfos.value.currentPlayerUsername }}, but
-          they are AFK
+          C'est le tour de {{ game.gameInfos.value.currentPlayerUsername }},
+          mais il est déconnecté
         </template>
       </div>
 

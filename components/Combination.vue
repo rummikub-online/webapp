@@ -66,7 +66,7 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
       class="flex items-center gap-1 text-button-text-danger text-xs font-black"
     >
       <ExclamationTriangleIcon class="w-3.5 h-3.5" />
-      Invalid
+      Invalide
     </span>
   </div>
 </template>
