@@ -1,3 +1,4 @@
 deploy:
 	git pull
-	npm run build
+	yarn
+	yarn build
