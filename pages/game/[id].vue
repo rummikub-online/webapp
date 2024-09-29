@@ -22,11 +22,24 @@
       <div
         class="absolute bottom-full p-4"
         v-if="
+          game.connectedUsernames.value &&
           game.gameInfos.value?.currentPlayerUsername &&
           game.gameInfos.value?.currentPlayerUsername !== username
         "
       >
-        {{ game.gameInfos.value?.currentPlayerUsername }} is playing...
+        <template
+          v-if="
+            game.connectedUsernames.value[
+              game.gameInfos.value.currentPlayerUsername
+            ]
+          "
+        >
+          {{ game.gameInfos.value.currentPlayerUsername }} is playing...
+        </template>
+        <template v-else>
+          It's turn of {{ game.gameInfos.value.currentPlayerUsername }}, but
+          they are AFK
+        </template>
       </div>
 
       <PlayerDeck
