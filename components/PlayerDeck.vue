@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { CardDto } from "@/app/Card/domain/dtos/card";
 import type { OrderedCardDto } from "@/app/Card/domain/gamerules/grouping";
+import type { GameInfosDto } from "@/app/Game/application/Game";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import { useOrderedCards } from "@/composables/useOrderedCards";
 import type { ChangeEvent } from "@/lib/vueDraggable";
@@ -11,6 +12,7 @@ import Draggable from "vuedraggable";
 const props = defineProps<{
   player: PlayerDto;
   cardDraggingHandler: CardDraggingHandler;
+  game: GameInfosDto;
 }>();
 
 const emit = defineEmits<{
@@ -48,6 +50,7 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
       :player="player"
       :is-ordered-by-color="orderedCards.isOrderedByColor.value"
       :is-ordered-by-number="orderedCards.isOrderedByNumber.value"
+      :game="game"
       @cancel-turn-modications="emit('cancelTurnModications')"
       @draw-card="emit('drawCard')"
       @end-turn="emit('endTurn')"

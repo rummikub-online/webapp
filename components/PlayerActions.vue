@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { GameInfosDto } from "@/app/Game/application/Game";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import { computed } from "vue";
 
@@ -6,6 +7,7 @@ const props = defineProps<{
   player: PlayerDto;
   isOrderedByNumber: boolean;
   isOrderedByColor: boolean;
+  game: GameInfosDto;
 }>();
 
 const emit = defineEmits<{
@@ -19,7 +21,7 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 
-const canChangeCardOrder = computed(() => props.player?.isPlaying);
+const canChangeCardOrder = computed(() => props.game.state === "started");
 </script>
 <template>
   <div v-if="player" class="flex gap-3">

@@ -1,7 +1,9 @@
 <template>
   <main
     class="h-screen flex flex-col bg-body-bg"
-    v-if="game.gameBoard.value && game.player.value"
+    v-if="
+      game && game.gameBoard.value && game.player.value && game.gameInfos.value
+    "
   >
     <nav class="flex gap-2 p-4 border-b items-center justify-between">
       <span>{{ game.gameInfos.value?.id }}</span>
@@ -23,8 +25,8 @@
         class="absolute bottom-full p-4"
         v-if="
           game.connectedUsernames.value &&
-          game.gameInfos.value?.currentPlayerUsername &&
-          game.gameInfos.value?.currentPlayerUsername !== username
+          game.gameInfos.value.currentPlayerUsername &&
+          game.gameInfos.value.currentPlayerUsername !== username
         "
       >
         <template
@@ -52,6 +54,7 @@
       <PlayerDeck
         :player="game.player.value"
         :card-dragging-handler="game.cardDraggingHandler"
+        :game="game.gameInfos.value"
         @cancel-turn-modications="game.cancelTurnModications()"
         @draw-card="game.drawCard()"
         @end-turn="game.endTurn()"

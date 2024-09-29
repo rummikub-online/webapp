@@ -58,7 +58,7 @@ export interface IGame {
   toInfosDto(): GameInfosDto;
 }
 
-type GameState = "created" | "started" | "ended";
+export type GameState = "created" | "started" | "ended";
 export type GameId = string;
 
 type GameProps = {
