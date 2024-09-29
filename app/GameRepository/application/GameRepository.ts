@@ -1,4 +1,7 @@
-import { DrawStack } from "@/app/DrawStack/application/DrawStack";
+import {
+  DrawStack,
+  UnshuffledDrawStack,
+} from "@/app/DrawStack/application/DrawStack";
 import { type GameId, type IGame, Game } from "@/app/Game/application/Game";
 import type { IPlayer } from "@/app/Player/application/Player";
 import { v4 as uuidv4 } from "uuid";
@@ -46,12 +49,9 @@ export class GameRepository implements IGameRepository {
   }
 
   create(id?: GameId): IGame {
-    const fakeDrawStack = new DrawStack();
-    fakeDrawStack.shuffle = () => {};
-
     const game = new Game({
       id: id ?? uuidv4(),
-      drawStack: id === "test" ? fakeDrawStack : new DrawStack(),
+      drawStack: id === "test" ? new UnshuffledDrawStack() : new DrawStack(),
     });
 
     this.games.set(game.id, game);

@@ -66,3 +66,7 @@ export class DrawStack implements IDrawStack {
     };
   }
 }
+
+export class UnshuffledDrawStack extends DrawStack {
+  override shuffle() {}
+}
