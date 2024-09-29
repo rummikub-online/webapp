@@ -22,8 +22,6 @@ export interface IGameRepository {
   findById: (id: GameId) => IGame;
   create: (id?: GameId) => IGame;
   findOrCreate: (id: GameId) => IGame;
-  createWithPlayer: (id?: GameId) => GameAndPlayer;
-  join: (id: GameId, withUsername?: string) => GameAndPlayer;
   destroy: (id: GameId) => void;
 }
 
@@ -61,29 +59,6 @@ export class GameRepository implements IGameRepository {
 
   findOrCreate(id: GameId): IGame {
     return this.exists(id) ? this.findById(id) : this.create(id);
-  }
-
-  createWithPlayer(id?: GameId): GameAndPlayer {
-    const game = this.create(id);
-    const player = game.addPlayer();
-
-    return {
-      game,
-      player,
-    };
-  }
-
-  join(id: GameId, withUsername?: string): GameAndPlayer {
-    const game = this.findOrCreate(id);
-
-    const player = game.findOrAddPlayer({
-      username: withUsername,
-    });
-
-    return {
-      game,
-      player,
-    };
   }
 
   destroy(id: GameId): void {

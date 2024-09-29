@@ -161,7 +161,11 @@ export const registerSocketEvents = (
       return;
     }
 
-    const { game, player } = gameRepository.join(gameId, username);
+    const game = gameRepository.findOrCreate(gameId);
+
+    const player = game.findOrAddPlayer({
+      username,
+    });
 
     bindEventsToSocket({ socket, game, player });
   });

@@ -1,7 +1,6 @@
 import { CARDS } from "@/app/Card/domain/constants/card";
 import { Game } from "@/app/Game/application/Game";
 import { GameRepository } from "@/app/GameRepository/application/GameRepository";
-import { Player } from "@/app/Player/application/Player";
 import { describe, expect, test } from "vitest";
 
 describe("GameRepository", () => {
@@ -104,74 +103,6 @@ describe("GameRepository", () => {
       const createdGame = gameRepository.findOrCreate("1");
 
       expect(createdGame).toBeInstanceOf(Game);
-    });
-  });
-
-  describe("createWithPlayer", () => {
-    test("create game and player and return them", () => {
-      const gameRepository = new GameRepository();
-
-      const { game, player } = gameRepository.createWithPlayer();
-
-      expect(game).toBeInstanceOf(Game);
-      expect(player).toBeInstanceOf(Player);
-      expect(gameRepository.findById(game.id)).toBe(game);
-    });
-  });
-
-  describe("join", () => {
-    test("join game and return it", () => {
-      const gameRepository = new GameRepository({
-        games: [new Game({ id: "1" })],
-      });
-
-      const { game, player } = gameRepository.join("1");
-
-      expect(game).toBeInstanceOf(Game);
-      expect(player).toBeInstanceOf(Player);
-    });
-
-    test("create new gameif game not found", () => {
-      const gameRepository = new GameRepository();
-
-      const { game, player } = gameRepository.join("1");
-
-      expect(game).toBeInstanceOf(Game);
-      expect(player).toBeInstanceOf(Player);
-    });
-
-    test("throw an error if game not joinable", () => {
-      const gameRepository = new GameRepository({
-        games: [new Game({ id: "1", state: "started" })],
-      });
-
-      expect(() => gameRepository.join("1")).toThrow();
-    });
-
-    test("create player with specified username and return it", () => {
-      const gameRepository = new GameRepository({
-        games: [new Game({ id: "1" })],
-      });
-
-      const { player } = gameRepository.join("1", "testman");
-
-      expect(player.username).toBe("testman");
-    });
-
-    test("if already exist, find player with specified username and return it", () => {
-      const gameRepository = new GameRepository({
-        games: [new Game({ id: "1" })],
-      });
-
-      const { game, player: alreadyExistentPlayer } = gameRepository.join(
-        "1",
-        "testman",
-      );
-
-      const { player } = gameRepository.join("1", "testman");
-
-      expect(game.playerCount).toBe(1);
-      expect(alreadyExistentPlayer.id).toBe(player.id);
     });
   });
 

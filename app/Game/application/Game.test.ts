@@ -47,6 +47,26 @@ describe("Game", () => {
     });
   });
 
+  describe("findOrAddPlayer", () => {
+    test("create player with specified username and return it", () => {
+      const game = new Game({ id: "1" });
+
+      const player = game.findOrAddPlayer({ username: "testman" });
+
+      expect(player.username).toBe("testman");
+    });
+
+    test("if already exist, find player with specified username and return it", () => {
+      const game = new Game({ id: "1" });
+      const alreadyExistentPlayer = game.addPlayer({ username: "testman" });
+
+      const player = game.findOrAddPlayer({ username: "testman" });
+
+      expect(game.playerCount).toBe(1);
+      expect(alreadyExistentPlayer.id).toBe(player.id);
+    });
+  });
+
   describe("removePlayer", () => {
     test("throw error if unknown player id", () => {
       const game = new Game({ id: "game", generateUserId: () => "player" });
