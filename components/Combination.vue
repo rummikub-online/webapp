@@ -8,6 +8,7 @@ import { ref, watch } from "vue";
 import Draggable from "vuedraggable";
 
 const props = defineProps<{
+  highlightedCardIndex?: number;
   disabled?: boolean;
   locked?: boolean;
   combination: CombinationDto;
@@ -53,8 +54,9 @@ const handleChange = (e: ChangeEvent<CardDto>) => {
       :item-key="(card: CardDto) => toKey(card)"
       @change="handleChange"
     >
-      <template #item="{ element: card }">
+      <template #item="{ element: card, index }">
         <Card
+          :highlighted="index === highlightedCardIndex"
           :movable="!disabled"
           :locked="locked"
           :color="card.color"

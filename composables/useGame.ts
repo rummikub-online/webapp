@@ -1,4 +1,5 @@
 import type { GameInfosDto } from "@/app/Game/application/Game";
+import type { CardPositionOnBoard } from "@/app/GameBoard/application/GameBoard";
 import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import { makeCardDraggingHandler } from "@/logic/cardDragging";
@@ -19,6 +20,8 @@ export const useGame = (gameId: any, username: any) => {
   const selfPlayer = ref<PlayerDto>();
   const gameBoard = ref<GameBoardDto>();
   const connectedUsernames = ref<Record<string, boolean>>();
+  const highligthedCard = ref<CardPositionOnBoard>();
+
   const actionsLogs = ref<Array<string>>([]);
   const logAction = (action: string) => actionsLogs.value.push(action);
   const logs = computed(() => {
@@ -88,6 +91,14 @@ export const useGame = (gameId: any, username: any) => {
         }),
       );
     },
+    onPlayerMovedCard(player, cardPosition) {
+      console.log(cardPosition);
+
+      if (player.id === selfPlayer.value?.id) {
+        return;
+      }
+      highligthedCard.value = cardPosition;
+    },
   });
 
   const cardDraggingHandler = makeCardDraggingHandler({
@@ -102,6 +113,7 @@ export const useGame = (gameId: any, username: any) => {
     selfPlayer,
     gameBoard,
     connectedUsernames,
+    highligthedCard,
     logs,
     startGame,
     cancelTurnModications,

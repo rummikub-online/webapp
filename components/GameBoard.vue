@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { CardPositionOnBoard } from "@/app/GameBoard/application/GameBoard";
 import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import type { CardDraggingHandler } from "@/logic/cardDragging";
 
 const props = defineProps<{
+  highlightedCard?: CardPositionOnBoard;
   player: PlayerDto;
   gameBoard: GameBoardDto;
   cardDraggingHandler: CardDraggingHandler;
@@ -33,6 +35,11 @@ const handleCardAdded = (cardIndex: number, combinationIndex: number) => {
       :key="combinationIndex"
       :combination="combination"
       :disabled="!player?.canInteractWithCombination[combinationIndex]"
+      :highlighted-card-index="
+        combinationIndex === highlightedCard?.combinationIndex
+          ? highlightedCard.cardIndex
+          : undefined
+      "
       :locked="
         player?.isPlaying &&
         !player?.canInteractWithCombination[combinationIndex]

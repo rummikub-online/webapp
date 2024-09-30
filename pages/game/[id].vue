@@ -1,6 +1,6 @@
 <template>
   <main
-    class="h-screen flex flex-col bg-body-bg"
+    class="h-screen flex flex-col bg-body-bg text-body-text"
     v-if="
       game &&
       game.gameBoard.value &&
@@ -19,6 +19,7 @@
     </nav>
 
     <GameBoard
+      :highlighted-card="game.highligthedCard.value"
       :game-board="game.gameBoard.value"
       :card-dragging-handler="game.cardDraggingHandler"
       :player="game.selfPlayer.value"

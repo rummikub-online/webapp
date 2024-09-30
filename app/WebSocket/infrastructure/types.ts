@@ -11,6 +11,10 @@ export interface ServerToClientEvents {
   "player.drawnCard": (player: PlayerDto) => void;
   "player.played": (player: PlayerDto) => void;
   "player.canceledTurnModifications": (player: PlayerDto) => void;
+  "player.movedCard": (
+    player: PlayerDto,
+    cardPosition: CardPositionOnBoard,
+  ) => void;
   "gameBoard.update": (gameBoard: GameBoardDto) => void;
   "game.infos.update": (game: GameInfosDto) => void;
   "connectedUsernames.update": (usernames: Record<string, boolean>) => void;

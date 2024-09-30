@@ -7,6 +7,7 @@ export default {
   args: {
     movable: false,
     locked: false,
+    highlighted: false,
   },
   argTypes: {
     color: {
@@ -58,6 +59,14 @@ export const Movable = {
 export const Locked = {
   args: {
     locked: true,
+    color: "black",
+    number: 11,
+  },
+};
+
+export const Highlighted = {
+  args: {
+    highlighted: true,
     color: "black",
     number: 11,
   },

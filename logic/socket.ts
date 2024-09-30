@@ -15,6 +15,7 @@ export const setupSocket = ({
   onPlayerDrawnCard,
   onPlayerPlayed,
   onPlayerCanceledTurnModifications,
+  onPlayerMovedCard,
   onGameBoardUpdate,
   onGameInfosUpdate,
   onConnectedUsernamesUpdate,
@@ -25,6 +26,10 @@ export const setupSocket = ({
   onPlayerDrawnCard: (player: PlayerDto) => void;
   onPlayerPlayed: (player: PlayerDto) => void;
   onPlayerCanceledTurnModifications: (player: PlayerDto) => void;
+  onPlayerMovedCard: (
+    player: PlayerDto,
+    cardPosition: CardPositionOnBoard,
+  ) => void;
   onGameBoardUpdate: (gameBoard: GameBoardDto) => void;
   onGameInfosUpdate: (game: GameInfosDto) => void;
   onConnectedUsernamesUpdate: (
@@ -61,6 +66,10 @@ export const setupSocket = ({
 
   socket.on("player.canceledTurnModifications", (player) => {
     onPlayerCanceledTurnModifications(player);
+  });
+
+  socket.on("player.movedCard", (player, cardPosition) => {
+    onPlayerMovedCard(player, cardPosition);
   });
 
   socket.on("gameBoard.update", (gameBoard) => {

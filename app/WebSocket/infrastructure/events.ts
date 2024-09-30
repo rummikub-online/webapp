@@ -122,8 +122,12 @@ export const registerSocketEvents = ({
         return;
       }
 
-      player.moveCardAlone(source);
+      const combinationIndex = player.moveCardAlone(source);
       emitGameUpdate(game);
+      socketServer.to(gameRoom(game)).emit("player.movedCard", player.toDto(), {
+        combinationIndex,
+        cardIndex: 0,
+      });
     });
 
     socket.on("player.moveCardToCombination", (source, destination) => {
@@ -133,6 +137,9 @@ export const registerSocketEvents = ({
 
       player.moveCardToCombination(source, destination);
       emitGameUpdate(game);
+      socketServer
+        .to(gameRoom(game))
+        .emit("player.movedCard", player.toDto(), destination);
     });
 
     socket.on("player.placeCardAlone", (cardIndex) => {
@@ -140,8 +147,12 @@ export const registerSocketEvents = ({
         return;
       }
 
-      player.placeCardAlone(cardIndex);
+      const combinationIndex = player.placeCardAlone(cardIndex);
       emitGameUpdate(game);
+      socketServer.to(gameRoom(game)).emit("player.movedCard", player.toDto(), {
+        combinationIndex,
+        cardIndex: 0,
+      });
     });
 
     socket.on("player.placeCardInCombination", (cardIndex, destination) => {
@@ -151,6 +162,9 @@ export const registerSocketEvents = ({
 
       player.placeCardInCombination(cardIndex, destination);
       emitGameUpdate(game);
+      socketServer
+        .to(gameRoom(game))
+        .emit("player.movedCard", player.toDto(), destination);
     });
   };
 
