@@ -29,10 +29,10 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    "@nuxtjs/tailwindcss",
     "@nuxt/test-utils/module",
     "@nuxtjs/storybook",
     "@nuxtjs/i18n",
+    "@nuxt/ui",
   ],
   compatibilityDate: "2024-08-24",
   nitro: {
