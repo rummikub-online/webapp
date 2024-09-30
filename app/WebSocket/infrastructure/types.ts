@@ -7,7 +7,10 @@ import { Server, Socket as ServerSocker } from "socket.io";
 import { Socket } from "socket.io-client";
 
 export interface ServerToClientEvents {
-  "player.update": (player: PlayerDto) => void;
+  "player.self.update": (selfPlayer: PlayerDto) => void;
+  "player.drawnCard": (player: PlayerDto) => void;
+  "player.played": (player: PlayerDto) => void;
+  "player.canceledTurnModifications": (player: PlayerDto) => void;
   "gameBoard.update": (gameBoard: GameBoardDto) => void;
   "game.infos.update": (game: GameInfosDto) => void;
   "connectedUsernames.update": (usernames: Record<string, boolean>) => void;

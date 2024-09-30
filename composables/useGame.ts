@@ -13,10 +13,35 @@ export const useGame = (gameId: any, username: any) => {
     throw new Error("Username is not a string");
   }
 
+  const { t } = useI18n();
+
   const gameInfos = ref<GameInfosDto>();
-  const player = ref<PlayerDto>();
+  const selfPlayer = ref<PlayerDto>();
   const gameBoard = ref<GameBoardDto>();
   const connectedUsernames = ref<Record<string, boolean>>();
+  const actionsLogs = ref<Array<string>>([]);
+  const logAction = (action: string) => actionsLogs.value.push(action);
+  const logs = computed(() => {
+    const history = actionsLogs.value.slice(-3);
+
+    if (connectedUsernames.value && gameInfos.value?.currentPlayerUsername) {
+      if (connectedUsernames.value[gameInfos.value.currentPlayerUsername]) {
+        history.push(
+          t("pages.game.is_playing", {
+            user: gameInfos.value.currentPlayerUsername,
+          }),
+        );
+      } else {
+        history.push(
+          t("pages.game.is_playing_but_afk", {
+            user: gameInfos.value.currentPlayerUsername,
+          }),
+        );
+      }
+    }
+
+    return history;
+  });
 
   const {
     startGame,
@@ -30,8 +55,8 @@ export const useGame = (gameId: any, username: any) => {
   } = setupSocket({
     gameId,
     username,
-    onPlayerUpdate(newPlayer) {
-      player.value = newPlayer;
+    onSelfPlayerUpdate(newSelfPlayer) {
+      selfPlayer.value = newSelfPlayer;
     },
     onGameBoardUpdate(newGameBoard) {
       gameBoard.value = newGameBoard;
@@ -41,6 +66,27 @@ export const useGame = (gameId: any, username: any) => {
     },
     onConnectedUsernamesUpdate(newConnectedUsernames) {
       connectedUsernames.value = newConnectedUsernames;
+    },
+    onPlayerCanceledTurnModifications(player) {
+      logAction(
+        t("toast.player_actions.canceled_turn_modifications", {
+          username: player.username,
+        }),
+      );
+    },
+    onPlayerDrawnCard(player) {
+      logAction(
+        t("toast.player_actions.drawn_card", {
+          username: player.username,
+        }),
+      );
+    },
+    onPlayerPlayed(player) {
+      logAction(
+        t("toast.player_actions.played", {
+          username: player.username,
+        }),
+      );
     },
   });
 
@@ -53,9 +99,10 @@ export const useGame = (gameId: any, username: any) => {
 
   return {
     gameInfos,
-    player,
+    selfPlayer,
     gameBoard,
     connectedUsernames,
+    logs,
     startGame,
     cancelTurnModications,
     drawCard,

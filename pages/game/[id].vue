@@ -2,7 +2,11 @@
   <main
     class="h-screen flex flex-col bg-body-bg"
     v-if="
-      game && game.gameBoard.value && game.player.value && game.gameInfos.value
+      game &&
+      game.gameBoard.value &&
+      game.selfPlayer.value &&
+      game.gameInfos.value &&
+      game.connectedUsernames.value
     "
   >
     <nav class="flex gap-2 p-4 border-b items-center justify-between">
@@ -17,42 +21,17 @@
     <GameBoard
       :game-board="game.gameBoard.value"
       :card-dragging-handler="game.cardDraggingHandler"
-      :player="game.player.value"
+      :player="game.selfPlayer.value"
     ></GameBoard>
 
     <div class="relative">
-      <div
-        class="absolute bottom-full p-4"
-        v-if="
-          game.connectedUsernames.value &&
-          game.gameInfos.value.currentPlayerUsername &&
-          game.gameInfos.value.currentPlayerUsername !== username
-        "
-      >
-        <template
-          v-if="
-            game.connectedUsernames.value[
-              game.gameInfos.value.currentPlayerUsername
-            ]
-          "
-        >
-          {{
-            t("pages.game.is_playing", {
-              user: game.gameInfos.value.currentPlayerUsername,
-            })
-          }}
-        </template>
-        <template v-else>
-          {{
-            t("pages.game.is_playing_but_afk", {
-              user: game.gameInfos.value.currentPlayerUsername,
-            })
-          }}
-        </template>
-      </div>
+      <ActionsLogs
+        class="pointer-events-none absolute bottom-full w-full"
+        :actions="game.logs.value"
+      />
 
       <PlayerDeck
-        :player="game.player.value"
+        :player="game.selfPlayer.value"
         :card-dragging-handler="game.cardDraggingHandler"
         :game="game.gameInfos.value"
         @cancel-turn-modications="game.cancelTurnModications()"

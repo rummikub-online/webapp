@@ -11,14 +11,20 @@ import { io, Socket } from "socket.io-client";
 export const setupSocket = ({
   gameId,
   username,
-  onPlayerUpdate,
+  onSelfPlayerUpdate,
+  onPlayerDrawnCard,
+  onPlayerPlayed,
+  onPlayerCanceledTurnModifications,
   onGameBoardUpdate,
   onGameInfosUpdate,
   onConnectedUsernamesUpdate,
 }: {
   gameId: string;
   username: string;
-  onPlayerUpdate: (player: PlayerDto) => void;
+  onSelfPlayerUpdate: (player: PlayerDto) => void;
+  onPlayerDrawnCard: (player: PlayerDto) => void;
+  onPlayerPlayed: (player: PlayerDto) => void;
+  onPlayerCanceledTurnModifications: (player: PlayerDto) => void;
   onGameBoardUpdate: (gameBoard: GameBoardDto) => void;
   onGameInfosUpdate: (game: GameInfosDto) => void;
   onConnectedUsernamesUpdate: (
@@ -41,8 +47,20 @@ export const setupSocket = ({
     onGameInfosUpdate(game);
   });
 
-  socket.on("player.update", (player) => {
-    onPlayerUpdate(player);
+  socket.on("player.self.update", (selfPlayer) => {
+    onSelfPlayerUpdate(selfPlayer);
+  });
+
+  socket.on("player.drawnCard", (player) => {
+    onPlayerDrawnCard(player);
+  });
+
+  socket.on("player.played", (player) => {
+    onPlayerPlayed(player);
+  });
+
+  socket.on("player.canceledTurnModifications", (player) => {
+    onPlayerCanceledTurnModifications(player);
   });
 
   socket.on("gameBoard.update", (gameBoard) => {

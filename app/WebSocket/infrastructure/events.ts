@@ -28,9 +28,12 @@ export const registerSocketEvents = ({
 
     gameDto.players.forEach((player) => {
       console.log(`emited to ${player.username}`);
-      socketServer.to(playerRoom(game, player)).emit("player.update", player);
+      socketServer
+        .to(playerRoom(game, player))
+        .emit("player.self.update", player);
     });
   };
+
   const emitConnectionsUpdate = (game: IGame) => {
     socketServer
       .to(gameRoom(game))
@@ -89,6 +92,9 @@ export const registerSocketEvents = ({
 
       player.cancelTurnModifications();
       emitGameUpdate(game);
+      socketServer
+        .to(gameRoom(game))
+        .emit("player.canceledTurnModifications", player.toDto());
     });
 
     socket.on("player.drawCard", () => {
@@ -98,6 +104,7 @@ export const registerSocketEvents = ({
 
       player.drawCard();
       emitGameUpdate(game);
+      socketServer.to(gameRoom(game)).emit("player.drawnCard", player.toDto());
     });
 
     socket.on("player.endTurn", () => {
@@ -107,6 +114,7 @@ export const registerSocketEvents = ({
 
       player.endTurn();
       emitGameUpdate(game);
+      socketServer.to(gameRoom(game)).emit("player.played", player.toDto());
     });
 
     socket.on("player.moveCardAlone", (source) => {

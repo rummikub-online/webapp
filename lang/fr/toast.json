@@ -1,0 +1,7 @@
+{
+  "player_actions": {
+    "drawn_card": "{username} a pioché",
+    "canceled_turn_modifications": "{username} a annulé ses modifications",
+    "played": "{username} a joué"
+  }
+}
