@@ -74,7 +74,11 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
         @change="handleChange"
       >
         <template #item="{ element: card }">
-          <Card :color="card.color" :number="card.number" movable />
+          <Card
+            :color="card.color"
+            :number="card.number"
+            :movable="player.isPlaying"
+          />
         </template>
       </Draggable>
     </div>
