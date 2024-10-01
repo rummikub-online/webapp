@@ -1,4 +1,5 @@
 # Rummikub en TS
+[![Deploy](https://github.com/rummikub-online/webapp/actions/workflows/deploy.yml/badge.svg)](https://github.com/rummikub-online/webapp/actions/workflows/deploy.yml)
 
 ## Jouer
 
