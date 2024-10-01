@@ -1,52 +1,31 @@
 <template>
-  <main
-    class="h-screen flex flex-col bg-body-bg text-body-text"
-    v-if="
-      game &&
-      game.gameBoard.value &&
-      game.selfPlayer.value &&
-      game.gameInfos.value &&
-      game.connectedUsernames.value
-    "
+  <div
+    class="bg-body-bg h-screen w-full flex flex-col items-center justify-center px-4"
+    v-if="isUsernameBlank"
   >
-    <nav class="flex gap-2 p-4 border-b items-center justify-between">
-      <span>{{ game.gameInfos.value?.id }}</span>
+    <div>
+      <label class="flex flex-col mb-8">
+        <span class="mb-1">Choisissez un pseudo</span>
+        <CInput v-model="tempUsername" />
+      </label>
 
-      <ConnectedUsernames
-        v-if="game.connectedUsernames.value"
-        :usernames="game.connectedUsernames.value"
-      />
-    </nav>
-
-    <GameBoard
-      :highlighted-card="game.highligthedCard.value"
-      :game-board="game.gameBoard.value"
-      :card-dragging-handler="game.cardDraggingHandler"
-      :player="game.selfPlayer.value"
-    ></GameBoard>
-
-    <div class="relative">
-      <ActionsLogs
-        class="pointer-events-none absolute bottom-full w-full"
-        :actions="game.logs.value"
-      />
-
-      <PlayerDeck
-        :player="game.selfPlayer.value"
-        :card-dragging-handler="game.cardDraggingHandler"
-        :game="game.gameInfos.value"
-        @cancel-turn-modications="game.cancelTurnModications()"
-        @draw-card="game.drawCard()"
-        @end-turn="game.endTurn()"
-        @start-game="game.startGame()"
-      />
+      <Button
+        type="primary"
+        class="w-full"
+        :disabled="isTempUsername"
+        @click="saveUsername()"
+      >
+        Rejoindre la partie
+      </Button>
     </div>
-  </main>
+  </div>
+  <Game v-else />
 </template>
 <script setup lang="ts">
-const { params } = useRoute();
-
-const { username } = useUsername();
-const game = useGame(params.id, username.value);
-const { t } = useI18n();
+const tempUsername = ref("");
+const isTempUsername = computed(() => isBlank(toValue(tempUsername)));
+const saveUsername = () => {
+  username.value = tempUsername.value;
+};
+const { username, isUsernameBlank } = useUsername();
 </script>

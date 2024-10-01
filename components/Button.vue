@@ -1,13 +1,18 @@
 <script setup lang="ts">
-defineProps<{
-  type: "primary" | "secondary" | "danger" | "success";
-  text?: string;
-}>();
+withDefaults(
+  defineProps<{
+    type: "primary" | "secondary" | "danger" | "success";
+    text?: string;
+    disabled?: boolean;
+  }>(),
+  { type: "primary" },
+);
 </script>
 <template>
   <button
     @click="$emit('click')"
     type="button"
+    :disabled="disabled"
     class="h-8 px-4 rounded-md justify-center items-center gap-2 inline-flex bg-button-bg"
     :class="{
       'text-button-text-danger': type === 'danger',
