@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "npx nuxi typecheck && vitest",
+    "test": "vitest",
+    "test:ci": "npx nuxi typecheck && vitest",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
