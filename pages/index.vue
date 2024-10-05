@@ -1,6 +1,6 @@
 <template>
   <main class="h-screen bg-body-bg flex flex-col items-center justify-center">
-    <NuxtLink href="/game/create" target="_parent" no-prefetch class="mt-auto">
+    <NuxtLink href="/games/create" target="_parent" no-prefetch class="mt-auto">
       <Button type="primary">{{ t("pages.home.create_game") }}</Button>
     </NuxtLink>
     <label class="flex flex-col mt-auto mb-8">
