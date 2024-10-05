@@ -1,25 +1,33 @@
 import { GameManager } from "@/app/Game/application/GameManager";
-import {
-  type IGameRepository,
-  GameRepository,
-} from "@/app/Game/application/GameRepository";
-import { registerSocketEvents } from "@/app/WebSocket/infrastructure/events";
+import { GameRepository } from "@/app/Game/application/GameRepository";
+import { registerGameEvents } from "@/app/WebSocket/infrastructure/gameEvents";
 import type { WebSocketServer } from "@/app/WebSocket/infrastructure/types";
+import { Server as Engine } from "engine.io";
+import { Server } from "socket.io";
 
-export class App {
-  private gameRepository: IGameRepository;
-  private gameManager: GameManager;
+const engine = new Engine();
+const socketServer: WebSocketServer = new Server();
+socketServer.bind(engine);
+const gamesNamespace = socketServer.of("/games");
 
-  constructor(socketServer: WebSocketServer) {
-    this.gameRepository = new GameRepository();
+socketServer.on("connection", (socket) => {
+  const namespace = socket.nsp;
+  console.log(`Connected on ${namespace.name}`);
+});
 
-    this.gameManager = new GameManager({
-      gameRepository: this.gameRepository,
-    });
+const gameRepository = new GameRepository();
+const gameManager = new GameManager({
+  gameRepository: gameRepository,
+});
 
-    registerSocketEvents({
-      socketServer: socketServer,
-      gameManager: this.gameManager,
-    });
-  }
-}
+registerGameEvents({
+  io: gamesNamespace,
+  gameManager,
+});
+
+export const app = {
+  engine,
+  socketServer,
+  gameRepository,
+  gameManager,
+};

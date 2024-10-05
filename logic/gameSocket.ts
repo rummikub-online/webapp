@@ -8,7 +8,7 @@ import type {
 } from "@/app/WebSocket/infrastructure/types";
 import { io, Socket } from "socket.io-client";
 
-export const setupSocket = ({
+export const setupGameSocket = ({
   gameId,
   username,
   onSelfPlayerUpdate,
@@ -36,9 +36,12 @@ export const setupSocket = ({
     newConnectedUsernames: Record<string, boolean>,
   ) => void;
 }) => {
-  const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io({
-    query: { gameId, username },
-  });
+  const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+    "/games",
+    {
+      query: { gameId, username },
+    },
+  );
 
   socket.on("connect", () => {
     console.log("connected");

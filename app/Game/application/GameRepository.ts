@@ -3,12 +3,12 @@ import {
   UnshuffledDrawStack,
 } from "@/app/DrawStack/application/DrawStack";
 import { type GameId, type IGame, Game } from "@/app/Game/application/Game";
-import type { IPlayer } from "@/app/Player/application/Player";
+import { randomBytes } from "crypto";
 import { v4 as uuidv4 } from "uuid";
 
 type GameList = Map<GameId, IGame>;
 
-type GameManagerProps = {
+type GameRepositoryProps = {
   games?: Array<IGame>;
 };
 
@@ -18,12 +18,13 @@ export interface IGameRepository {
   create: (id?: GameId) => IGame;
   findOrCreate: (id: GameId) => IGame;
   destroy: (id: GameId) => void;
+  freeGameId: () => GameId;
 }
 
 export class GameRepository implements IGameRepository {
   private games: GameList;
 
-  constructor(props?: GameManagerProps) {
+  constructor(props?: GameRepositoryProps) {
     this.games = new Map(props?.games?.map((game) => [game.id, game]));
   }
 
@@ -60,5 +61,21 @@ export class GameRepository implements IGameRepository {
     const game = this.findById(id);
 
     this.games.delete(game.id);
+  }
+
+  freeGameId(): GameId {
+    // Easy way, but inefficient
+    // It's enough for the moment (because we have approximately none players)
+
+    const RANDOM_GAME_ID_LENGTH = 4;
+    const randomGameId = () =>
+      randomBytes(RANDOM_GAME_ID_LENGTH / 2).toString("hex");
+
+    let gameId: GameId;
+    do {
+      gameId = randomGameId();
+    } while (this.games.has(gameId));
+
+    return gameId;
   }
 }

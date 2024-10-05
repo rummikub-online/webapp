@@ -3,7 +3,7 @@ import type { CardPositionOnBoard } from "@/app/GameBoard/application/GameBoard"
 import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
 import type { IPlayer } from "@/app/Player/application/Player";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
-import { Server, Socket as ServerSocker } from "socket.io";
+import { Server, Socket as ServerSocker, type Namespace } from "socket.io";
 import { Socket } from "socket.io-client";
 
 export interface ServerToClientEvents {
@@ -49,6 +49,12 @@ export type WebSocketClient = Socket<
 >;
 
 export type WebSocketServer = Server<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>;
+export type WebSocketNamespace = Namespace<
   ClientToServerEvents,
   ServerToClientEvents,
   InterServerEvents,

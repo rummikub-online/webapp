@@ -3,7 +3,7 @@ import { type IGameManager } from "@/app/Game/application/GameManager";
 import type { IPlayer } from "@/app/Player/application/Player";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import type {
-  WebSocketServer,
+  WebSocketNamespace,
   WebSocketServerSocket,
 } from "@/app/WebSocket/infrastructure/types";
 
@@ -11,33 +11,30 @@ const gameRoom = (game: IGame) => `${game.id}`;
 const playerRoom = (game: IGame, player: IPlayer | PlayerDto) =>
   `${game.id}-${player.id}`;
 
-export const registerSocketEvents = ({
-  socketServer,
+export const registerGameEvents = ({
+  io,
   gameManager,
 }: {
-  socketServer: WebSocketServer;
+  io: WebSocketNamespace;
   gameManager: IGameManager;
 }) => {
   const emitGameUpdate = (game: IGame) => {
-    socketServer
-      .to(gameRoom(game))
-      .emit("game.infos.update", game.toInfosDto());
+    io.to(gameRoom(game)).emit("game.infos.update", game.toInfosDto());
 
     const gameDto = game.toDto();
-    socketServer.to(gameRoom(game)).emit("gameBoard.update", gameDto.gameBoard);
+    io.to(gameRoom(game)).emit("gameBoard.update", gameDto.gameBoard);
 
     gameDto.players.forEach((player) => {
       console.log(`emited to ${player.username}`);
-      socketServer
-        .to(playerRoom(game, player))
-        .emit("player.self.update", player);
+      io.to(playerRoom(game, player)).emit("player.self.update", player);
     });
   };
 
   const emitConnectionsUpdate = (game: IGame) => {
-    socketServer
-      .to(gameRoom(game))
-      .emit("connectedUsernames.update", gameManager.usernames(game.id));
+    io.to(gameRoom(game)).emit(
+      "connectedUsernames.update",
+      gameManager.usernames(game.id),
+    );
   };
 
   const bindEventsToSocket = ({
@@ -92,9 +89,10 @@ export const registerSocketEvents = ({
 
       player.cancelTurnModifications();
       emitGameUpdate(game);
-      socketServer
-        .to(gameRoom(game))
-        .emit("player.canceledTurnModifications", player.toDto());
+      io.to(gameRoom(game)).emit(
+        "player.canceledTurnModifications",
+        player.toDto(),
+      );
     });
 
     socket.on("player.drawCard", () => {
@@ -104,7 +102,7 @@ export const registerSocketEvents = ({
 
       player.drawCard();
       emitGameUpdate(game);
-      socketServer.to(gameRoom(game)).emit("player.drawnCard", player.toDto());
+      io.to(gameRoom(game)).emit("player.drawnCard", player.toDto());
     });
 
     socket.on("player.endTurn", () => {
@@ -114,7 +112,7 @@ export const registerSocketEvents = ({
 
       player.endTurn();
       emitGameUpdate(game);
-      socketServer.to(gameRoom(game)).emit("player.played", player.toDto());
+      io.to(gameRoom(game)).emit("player.played", player.toDto());
     });
 
     socket.on("player.moveCardAlone", (source) => {
@@ -124,7 +122,7 @@ export const registerSocketEvents = ({
 
       const combinationIndex = player.moveCardAlone(source);
       emitGameUpdate(game);
-      socketServer.to(gameRoom(game)).emit("player.movedCard", player.toDto(), {
+      io.to(gameRoom(game)).emit("player.movedCard", player.toDto(), {
         combinationIndex,
         cardIndex: 0,
       });
@@ -137,9 +135,11 @@ export const registerSocketEvents = ({
 
       player.moveCardToCombination(source, destination);
       emitGameUpdate(game);
-      socketServer
-        .to(gameRoom(game))
-        .emit("player.movedCard", player.toDto(), destination);
+      io.to(gameRoom(game)).emit(
+        "player.movedCard",
+        player.toDto(),
+        destination,
+      );
     });
 
     socket.on("player.placeCardAlone", (cardIndex) => {
@@ -149,7 +149,7 @@ export const registerSocketEvents = ({
 
       const combinationIndex = player.placeCardAlone(cardIndex);
       emitGameUpdate(game);
-      socketServer.to(gameRoom(game)).emit("player.movedCard", player.toDto(), {
+      io.to(gameRoom(game)).emit("player.movedCard", player.toDto(), {
         combinationIndex,
         cardIndex: 0,
       });
@@ -162,13 +162,15 @@ export const registerSocketEvents = ({
 
       player.placeCardInCombination(cardIndex, destination);
       emitGameUpdate(game);
-      socketServer
-        .to(gameRoom(game))
-        .emit("player.movedCard", player.toDto(), destination);
+      io.to(gameRoom(game)).emit(
+        "player.movedCard",
+        player.toDto(),
+        destination,
+      );
     });
   };
 
-  socketServer.on("connection", (socket): void => {
+  io.on("connection", (socket) => {
     const gameId = socket.handshake.query.gameId;
     const username = socket.handshake.query.username;
 

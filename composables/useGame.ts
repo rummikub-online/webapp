@@ -3,7 +3,7 @@ import type { CardPositionOnBoard } from "@/app/GameBoard/application/GameBoard"
 import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import { makeCardDraggingHandler } from "@/logic/cardDragging";
-import { setupSocket } from "@/logic/socket";
+import { setupGameSocket } from "@/logic/gameSocket";
 
 export const useGame = (gameId: any, username: any) => {
   if (typeof gameId !== "string") {
@@ -55,7 +55,7 @@ export const useGame = (gameId: any, username: any) => {
     moveCardToCombination,
     placeCardAlone,
     placeCardInCombination,
-  } = setupSocket({
+  } = setupGameSocket({
     gameId,
     username,
     onSelfPlayerUpdate(newSelfPlayer) {
