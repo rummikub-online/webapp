@@ -41,6 +41,7 @@ export default defineNuxtConfig({
     },
   },
   typescript: {
+    typeCheck: true,
     tsConfig: {
       compilerOptions: {
         paths: {
