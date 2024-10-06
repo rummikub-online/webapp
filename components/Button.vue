@@ -1,7 +1,7 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    type: "primary" | "secondary" | "danger" | "success";
+    type?: "primary" | "secondary" | "danger" | "success";
     text?: string;
     disabled?: boolean;
   }>(),

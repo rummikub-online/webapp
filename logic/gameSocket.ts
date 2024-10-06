@@ -19,6 +19,8 @@ export const setupGameSocket = ({
   onGameBoardUpdate,
   onGameInfosUpdate,
   onConnectedUsernamesUpdate,
+  onConnect,
+  onDisconnect,
 }: {
   gameId: string;
   username: string;
@@ -35,6 +37,8 @@ export const setupGameSocket = ({
   onConnectedUsernamesUpdate: (
     newConnectedUsernames: Record<string, boolean>,
   ) => void;
+  onConnect: () => void;
+  onDisconnect: () => void;
 }) => {
   const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
     "/games",
@@ -43,13 +47,9 @@ export const setupGameSocket = ({
     },
   );
 
-  socket.on("connect", () => {
-    console.log("connected");
-  });
+  socket.on("connect", onConnect);
 
-  socket.on("disconnect", () => {
-    console.log("disconnected");
-  });
+  socket.on("disconnect", onDisconnect);
 
   socket.on("game.infos.update", (game) => {
     onGameInfosUpdate(game);

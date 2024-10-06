@@ -1,5 +1,6 @@
 import { GameManager } from "@/app/Game/application/GameManager";
 import { GameRepository } from "@/app/Game/application/GameRepository";
+import { loadMocks } from "@/app/mocks";
 import { registerGameEvents } from "@/app/WebSocket/infrastructure/gameEvents";
 import type { WebSocketServer } from "@/app/WebSocket/infrastructure/types";
 import { Server as Engine } from "engine.io";
@@ -24,6 +25,13 @@ registerGameEvents({
   io: gamesNamespace,
   gameManager,
 });
+
+if (process.dev) {
+  loadMocks({
+    gameRepository,
+    gameManager,
+  });
+}
 
 export const app = {
   engine,

@@ -16,6 +16,8 @@ export const useGame = (gameId: any, username: any) => {
 
   const { t } = useI18n();
 
+  const connected = ref(false);
+  const disconnected = ref<boolean>();
   const gameInfos = ref<GameInfosDto>();
   const selfPlayer = ref<PlayerDto>();
   const gameBoard = ref<GameBoardDto>();
@@ -99,6 +101,13 @@ export const useGame = (gameId: any, username: any) => {
       }
       highligthedCard.value = cardPosition;
     },
+    onConnect() {
+      connected.value = true;
+    },
+    onDisconnect() {
+      connected.value = false;
+      disconnected.value = true;
+    },
   });
 
   const cardDraggingHandler = makeCardDraggingHandler({
@@ -109,6 +118,8 @@ export const useGame = (gameId: any, username: any) => {
   });
 
   return {
+    connected,
+    disconnected,
     gameInfos,
     selfPlayer,
     gameBoard,

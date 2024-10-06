@@ -1,7 +1,17 @@
 <template>
+  <div
+    class="h-screen flex flex-col items-center justify-center bg-body-bg text-body-text"
+    v-if="game.disconnected.value"
+  >
+    <h1 class="text-xl mb-4">{{ t("pages.game.unable_to_connect.title") }}</h1>
+    <p class="mb-4">{{ t("pages.game.unable_to_connect.explanation") }}</p>
+    <NuxtLink href="/">
+      <Button>{{ t("pages.game.unable_to_connect.back_home") }}</Button>
+    </NuxtLink>
+  </div>
   <main
     class="h-screen flex flex-col bg-body-bg text-body-text"
-    v-if="
+    v-else-if="
       game &&
       game.gameBoard.value &&
       game.selfPlayer.value &&
@@ -45,8 +55,8 @@
 </template>
 <script setup lang="ts">
 const { params } = useRoute();
+const { t } = useI18n();
 
 const { username } = useUsername();
 const game = useGame(params.id, username.value);
-const { t } = useI18n();
 </script>
