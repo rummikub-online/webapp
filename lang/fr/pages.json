@@ -1,7 +1,9 @@
 {
   "home": {
     "username": "Nom d'utilisateur",
-    "create_game": "Créer une partie"
+    "create_game": "Créer une partie",
+    "join_game": "Rejoindre",
+    "code_join_game": "Code de la partie"
   },
   "game": {
     "unable_to_connect": {
