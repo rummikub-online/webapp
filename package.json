@@ -14,7 +14,8 @@
     "deps:overview": "npx depcruise app --config ./.dependencyCruise/overview.cjs --output-type archi | dot -T svg | npx depcruise-wrap-stream-in-html > .dependencyCruise/graphs/overview.html",
     "deps:full": "npx depcruise app --config ./.dependencyCruise/full.cjs --output-type ddot | dot -T svg | npx depcruise-wrap-stream-in-html > .dependencyCruise/graphs/full.html",
     "storybook": "storybook dev --port 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "release": "release-it"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -36,15 +37,16 @@
     "@vue/test-utils": "^2.4.6",
     "autoprefixer": "^10.4.19",
     "dependency-cruiser": "^16.4.2",
+    "h3": "1.12.0",
     "nuxt": "^3.13.2",
     "postcss": "^8.4.38",
+    "release-it": "^17.7.0",
     "storybook": "8.2.7",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.6.2",
     "vite-svg-loader": "^5.1.0",
     "vitest": "^2.1.1",
-    "vue-tsc": "^2.1.6",
-    "h3": "1.12.0"
+    "vue-tsc": "^2.1.6"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "dependencies": {
