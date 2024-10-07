@@ -117,4 +117,21 @@ describe("GameRepository", () => {
       expect(() => gameRepository.findById("1")).toThrow();
     });
   });
+
+  describe("freeGameId", () => {
+    test("return free id with length of 3", () => {
+      const gameRepository = new GameRepository();
+
+      const REPEATS = 1000;
+      const ids: Array<string> = [];
+
+      for (let i = 0; i < REPEATS; i++) {
+        const id = gameRepository.freeGameId();
+        expect(id).toHaveLength(3);
+        expect(ids).not.toContain(id);
+        ids.push(id);
+        gameRepository.create(id);
+      }
+    });
+  });
 });

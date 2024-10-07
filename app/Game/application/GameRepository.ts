@@ -67,9 +67,7 @@ export class GameRepository implements IGameRepository {
     // Easy way, but inefficient
     // It's enough for the moment (because we have approximately none players)
 
-    const RANDOM_GAME_ID_LENGTH = 4;
-    const randomGameId = () =>
-      randomBytes(RANDOM_GAME_ID_LENGTH / 2).toString("hex");
+    const randomGameId = () => randomBytes(2).toString("hex").slice(0, 3);
 
     let gameId: GameId;
     do {
