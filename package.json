@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "test:ci": "npx nuxi typecheck && vitest run",
+    "test:ci": "npx nuxi typecheck && vitest run && playwright test",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
