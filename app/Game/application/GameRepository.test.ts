@@ -119,15 +119,19 @@ describe("GameRepository", () => {
   });
 
   describe("freeGameId", () => {
-    test("return free id with length of 3", () => {
+    test("return free id composed of digits with length of 3", () => {
       const gameRepository = new GameRepository();
 
-      const REPEATS = 1000;
+      const REPEATS = 100;
       const ids: Array<string> = [];
+
+      const isNumeric = (value: any) => /^-?\d+$/.test(value);
 
       for (let i = 0; i < REPEATS; i++) {
         const id = gameRepository.freeGameId();
+        expect(typeof id).toBe("string");
         expect(id).toHaveLength(3);
+        expect(isNumeric(id)).toBeTruthy();
         expect(ids).not.toContain(id);
         ids.push(id);
         gameRepository.create(id);

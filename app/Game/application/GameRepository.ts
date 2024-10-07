@@ -3,7 +3,7 @@ import {
   UnshuffledDrawStack,
 } from "@/app/DrawStack/application/DrawStack";
 import { type GameId, type IGame, Game } from "@/app/Game/application/Game";
-import { randomBytes } from "crypto";
+import { randomInt } from "crypto";
 import { v4 as uuidv4 } from "uuid";
 
 type GameList = Map<GameId, IGame>;
@@ -67,7 +67,7 @@ export class GameRepository implements IGameRepository {
     // Easy way, but inefficient
     // It's enough for the moment (because we have approximately none players)
 
-    const randomGameId = () => randomBytes(2).toString("hex").slice(0, 3);
+    const randomGameId = () => randomInt(0, 999).toString().padStart(3, "0");
 
     let gameId: GameId;
     do {
