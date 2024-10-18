@@ -70,6 +70,14 @@ export const Success = {
   },
 };
 
+export const Disabled = {
+  args: {
+    type: "primary",
+    text: "Button",
+    disabled: true,
+  },
+};
+
 export const ClickExample = {
   play: async ({ canvasElement }: any) => {
     const canvas = within(canvasElement);

@@ -15,6 +15,7 @@ export default {
       colors: {
         body: {
           text: "#000000",
+          "text-disabled": "#868686",
           bg: "#F3F3F3",
         },
         separator: "#E2E2E2",
@@ -31,6 +32,8 @@ export default {
         },
         button: {
           bg: "#FFFFFF",
+          "bg-disabled": "#fafafa",
+          "text-disabled": "#868686",
           "text-success": "#3F8415",
           "text-danger": "#AA0505",
         },

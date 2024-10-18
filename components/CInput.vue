@@ -2,7 +2,7 @@
   <UInput
     v-model="model"
     variant="none"
-    class="bg-button-bg rounded-md border"
+    class="h-8 bg-button-bg rounded-md border"
   />
 </template>
 <script setup lang="ts" generic="T extends string | number | undefined">
