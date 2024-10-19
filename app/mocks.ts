@@ -12,4 +12,8 @@ export const loadMocks = ({
   startedGame.addPlayer();
   startedGame.addPlayer();
   startedGame.start();
+
+  const usernamesOverflowGame = gameRepository.create("usernames-overflow");
+  usernamesOverflowGame.addPlayer({ username: "VeryLongAndAnnoyingUsername" });
+  usernamesOverflowGame.addPlayer({ username: "AnotherPlayer" });
 };

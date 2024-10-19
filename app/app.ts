@@ -26,7 +26,7 @@ registerGameEvents({
   gameManager,
 });
 
-if (process.dev) {
+if (import.meta.dev) {
   loadMocks({
     gameRepository,
     gameManager,
