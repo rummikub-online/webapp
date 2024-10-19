@@ -22,11 +22,11 @@ export interface IGameBoard {
   moveCardAlone(source: CardPositionOnBoard): CombinationPositionOnBoard;
   moveCardToCombination(
     source: CardPositionOnBoard,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void;
   wasCombinationPlacedThisTurn(combinationIndex: number): boolean;
   deleteEmptyCombinations(): void;
-  cancelTurnModications(): void;
+  cancelTurnModifications(): void;
   hasModifications(): boolean;
   isEmpty(): boolean;
   isValid(): boolean;
@@ -67,11 +67,11 @@ export class GameBoard implements IGameBoard {
 
   placeCardInCombination(
     card: CardDto,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void {
     this.combinations[destination.combinationIndex].addCardAt(
       card,
-      destination.cardIndex
+      destination.cardIndex,
     );
   }
 
@@ -89,27 +89,27 @@ export class GameBoard implements IGameBoard {
 
   moveCardToCombination(
     source: CardPositionOnBoard,
-    destination: CardPositionOnBoard
+    destination: CardPositionOnBoard,
   ): void {
     const sourceCombi = this.combinations[source.combinationIndex];
     const destinationCombi = this.combinations[destination.combinationIndex];
 
     destinationCombi.addCardAt(
       sourceCombi.pickCardFrom(source.cardIndex),
-      destination.cardIndex
+      destination.cardIndex,
     );
 
     this.deleteEmptyCombinations();
   }
 
-  cancelTurnModications(): void {
+  cancelTurnModifications(): void {
     this.throwIfTurnHasNotStarted();
 
     this.combinations = this.previousTurnCombinations!.map(
       (combinationDto) =>
         new Combination({
           cards: combinationDto.cards,
-        })
+        }),
     );
 
     this.saveTurnCombinations();
@@ -119,7 +119,7 @@ export class GameBoard implements IGameBoard {
     return (
       JSON.stringify(this.previousTurnCombinations) !==
       JSON.stringify(
-        this.combinations.map((combination) => combination.toDto())
+        this.combinations.map((combination) => combination.toDto()),
       )
     );
   }
@@ -128,7 +128,7 @@ export class GameBoard implements IGameBoard {
     const combiDto = this.combinations[combinationIndex].toDto();
 
     const wasCombinationInPreviousTurn = this.previousTurnCombinations.some(
-      (previousTurnCombiDto) => areEqual(combiDto, previousTurnCombiDto)
+      (previousTurnCombiDto) => areEqual(combiDto, previousTurnCombiDto),
     );
 
     return !wasCombinationInPreviousTurn;
@@ -150,7 +150,7 @@ export class GameBoard implements IGameBoard {
     this.throwIfTurnHasNotStarted();
 
     const previousTurnPoints = cardCombinationsPoints(
-      [...this.previousTurnCombinations]!
+      [...this.previousTurnCombinations]!,
     );
 
     return this.points() - previousTurnPoints;

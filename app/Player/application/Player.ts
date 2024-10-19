@@ -138,7 +138,7 @@ export class Player implements IPlayer {
 
     this.saveTurnCards();
 
-    this.gameBoard.cancelTurnModications();
+    this.gameBoard.cancelTurnModifications();
   }
 
   private canStart(): boolean {

@@ -9,7 +9,7 @@ describe("GameBoard", () => {
 
       gameBoard.beginTurn();
       gameBoard.placeCardAlone({ color: "black", number: 7, duplicata: 1 });
-      gameBoard.cancelTurnModications();
+      gameBoard.cancelTurnModifications();
 
       expect(gameBoard.toDto()).toStrictEqual({
         combinations: [],
@@ -71,7 +71,7 @@ describe("GameBoard", () => {
 
       gameBoard.placeCardInCombination(
         { color: "black", number: 7, duplicata: 1 },
-        { combinationIndex: 0, cardIndex: 1 }
+        { combinationIndex: 0, cardIndex: 1 },
       );
 
       expect(gameBoard.toDto().combinations).toStrictEqual([
@@ -104,7 +104,7 @@ describe("GameBoard", () => {
 
       gameBoard.moveCardToCombination(
         { combinationIndex: 0, cardIndex: 0 },
-        { combinationIndex: 1, cardIndex: 0 }
+        { combinationIndex: 1, cardIndex: 0 },
       );
 
       expect(gameBoard.toDto().combinations).toStrictEqual([
@@ -136,7 +136,7 @@ describe("GameBoard", () => {
 
       gameBoard.moveCardToCombination(
         { combinationIndex: 0, cardIndex: 0 },
-        { combinationIndex: 1, cardIndex: 0 }
+        { combinationIndex: 1, cardIndex: 0 },
       );
 
       expect(gameBoard.toDto().combinations).toStrictEqual([
