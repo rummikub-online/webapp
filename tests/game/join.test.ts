@@ -5,7 +5,7 @@ test("can join game from lobby", async ({ page, goto }) => {
 
   await page.getByLabel("Code de la partie").fill("123");
 
-  await page.getByRole("button", { name: "Rejoindre" }).click();
+  await page.locator("a").filter({ hasText: "Rejoindre" }).click();
 
   await expect(page).toHaveURL("/games/123");
 
