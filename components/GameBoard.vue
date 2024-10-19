@@ -28,7 +28,7 @@ const handleCardAdded = (cardIndex: number, combinationIndex: number) => {
 </script>
 <template>
   <div
-    class="px-2 py-4 bg-body-bg flex flex-wrap justify-start items-start content-start flex-1"
+    class="px-2 py-4 bg-body-bg flex flex-wrap overflow-auto justify-start items-start content-start flex-1"
   >
     <Combination
       v-for="(combination, combinationIndex) in gameBoard.combinations"
