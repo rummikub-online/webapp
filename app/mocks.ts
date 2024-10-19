@@ -1,5 +1,6 @@
 import type { IGameManager } from "@/app/Game/application/GameManager";
 import type { IGameRepository } from "@/app/Game/application/GameRepository";
+import { randomGameBoard } from "@/app/GameBoard/application/utils/random";
 
 export const loadMocks = ({
   gameRepository,
@@ -8,12 +9,36 @@ export const loadMocks = ({
   gameRepository: IGameRepository;
   gameManager: IGameManager;
 }) => {
-  const startedGame = gameRepository.create("started");
-  startedGame.addPlayer();
-  startedGame.addPlayer();
-  startedGame.start();
+  // {
+  //   const { game: overflowGame } = gameManager.connect({
+  //     gameId: "overflow",
+  //     username: "VeryLongAndAnnoyingUsername",
+  //   });
+  //   gameManager.connect({
+  //     gameId: "overflow",
+  //     username: "AnotherPlayer",
+  //   });
+  //   gameManager.connect({
+  //     gameId: "overflow",
+  //     username: "Bob",
+  //   });
+  //   overflowGame.start();
+  //   gameManager.disconnect({ gameId: "ending", username: "Bob" });
+  // }
 
-  const usernamesOverflowGame = gameRepository.create("usernames-overflow");
-  usernamesOverflowGame.addPlayer({ username: "VeryLongAndAnnoyingUsername" });
-  usernamesOverflowGame.addPlayer({ username: "AnotherPlayer" });
+  {
+    gameRepository.create("ending", {
+      gameBoard: randomGameBoard(),
+    });
+    const { game: endingGame, player: alice } = gameManager.connect({
+      gameId: "ending",
+      username: "Alice",
+    });
+    const { player: bob } = gameManager.connect({
+      gameId: "ending",
+      username: "Bob",
+    });
+    endingGame.start();
+    gameManager.disconnect({ gameId: "ending", username: "Bob" });
+  }
 };

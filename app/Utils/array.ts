@@ -1,3 +1,5 @@
+import { randomInt } from "@/app/Utils/number";
+
 export const toShuffled = <T>(arr: readonly T[], rounds: number = 1) => {
   const arrCopy = [...arr];
 
@@ -10,3 +12,6 @@ export const toShuffled = <T>(arr: readonly T[], rounds: number = 1) => {
 
   return arrCopy;
 };
+
+export const randomElement = <T>(array: T[]): T =>
+  array[randomInt(0, array.length - 1)];

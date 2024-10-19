@@ -15,7 +15,7 @@ type GameRepositoryProps = {
 export interface IGameRepository {
   exists: (id: GameId) => boolean;
   findById: (id: GameId) => IGame;
-  create: (id?: GameId) => IGame;
+  create: (id?: GameId, props?: GameProps) => IGame;
   findOrCreate: (id: GameId) => IGame;
   destroy: (id: GameId) => void;
   freeGameId: () => GameId;
@@ -42,10 +42,11 @@ export class GameRepository implements IGameRepository {
     return game;
   }
 
-  create(id?: GameId): IGame {
+  create(id?: GameId, props: GameProps): IGame {
     const game = new Game({
       id: id ?? uuidv4(),
       drawStack: id === "test" ? new UnshuffledDrawStack() : new DrawStack(),
+      ...props,
     });
 
     this.games.set(game.id, game);
