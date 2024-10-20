@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-body-bg h-screen w-full flex flex-col items-center justify-center px-4"
+    class="bg-body-bg h-dvh w-full flex flex-col items-center justify-center px-4"
     v-if="isUsernameBlank"
   >
     <div>

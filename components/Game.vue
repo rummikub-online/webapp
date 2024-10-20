@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-screen flex flex-col items-center justify-center bg-body-bg text-body-text"
+    class="h-dvh flex flex-col items-center justify-center bg-body-bg text-body-text"
     v-if="game.disconnected.value"
   >
     <h1 class="text-xl mb-4">{{ t("pages.game.unable_to_connect.title") }}</h1>
@@ -11,7 +11,7 @@
   </div>
 
   <div
-    class="h-screen flex flex-col items-center justify-center bg-body-bg text-body-text"
+    class="h-dvh flex flex-col items-center justify-center bg-body-bg text-body-text"
     v-else-if="game.gameInfos.value?.state === 'ended'"
   >
     <h1 class="text-xl mb-4">{{ t("pages.game.ended.title") }}</h1>
@@ -28,7 +28,7 @@
   </div>
 
   <main
-    class="h-screen flex flex-col bg-body-bg text-body-text"
+    class="h-dvh flex flex-col bg-body-bg text-body-text"
     v-else-if="
       game &&
       game.gameBoard.value &&
