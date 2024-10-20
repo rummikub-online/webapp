@@ -9,36 +9,47 @@ export const loadMocks = ({
   gameRepository: IGameRepository;
   gameManager: IGameManager;
 }) => {
-  // {
-  //   const { game: overflowGame } = gameManager.connect({
-  //     gameId: "overflow",
-  //     username: "VeryLongAndAnnoyingUsername",
-  //   });
-  //   gameManager.connect({
-  //     gameId: "overflow",
-  //     username: "AnotherPlayer",
-  //   });
-  //   gameManager.connect({
-  //     gameId: "overflow",
-  //     username: "Bob",
-  //   });
-  //   overflowGame.start();
-  //   gameManager.disconnect({ gameId: "ending", username: "Bob" });
-  // }
-
   {
-    gameRepository.create("ending", {
-      gameBoard: randomGameBoard(),
+    const { game: overflowGame } = gameManager.connect({
+      gameId: "overflow",
+      username: "VeryLongAndAnnoyingUsername",
     });
-    const { game: endingGame, player: alice } = gameManager.connect({
-      gameId: "ending",
-      username: "Alice",
+    gameManager.connect({
+      gameId: "overflow",
+      username: "AnotherPlayer",
     });
-    const { player: bob } = gameManager.connect({
-      gameId: "ending",
+    gameManager.connect({
+      gameId: "overflow",
       username: "Bob",
     });
-    endingGame.start();
-    gameManager.disconnect({ gameId: "ending", username: "Bob" });
+    overflowGame.start();
+    gameManager.disconnect({ gameId: "overflow", username: "Bob" });
+  }
+
+  {
+    const game = gameRepository.create({
+      id: "ending",
+      gameBoard: randomGameBoard(),
+    });
+    const bob = game.addPlayer({ username: "Bob" });
+    bob.drawStartupCards = function () {
+      // @ts-expect-error
+      this.hasDrawnStartupCards = true;
+
+      // @ts-expect-error
+      this.hasStarted = true;
+
+      // @ts-expect-error
+      this.cards = [
+        { number: 10, color: "blue", duplicata: 1 },
+        { number: 11, color: "blue", duplicata: 1 },
+        { number: 12, color: "blue", duplicata: 1 },
+      ];
+    };
+
+    const alice = game.addPlayer({ username: "Alice" });
+    gameManager.connect({ gameId: "ending", username: "Alice" });
+
+    game.start();
   }
 };

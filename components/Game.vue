@@ -9,6 +9,24 @@
       <Button>{{ t("pages.game.unable_to_connect.back_home") }}</Button>
     </NuxtLink>
   </div>
+
+  <div
+    class="h-screen flex flex-col items-center justify-center bg-body-bg text-body-text"
+    v-else-if="game.gameInfos.value?.state === 'ended'"
+  >
+    <h1 class="text-xl mb-4">{{ t("pages.game.ended.title") }}</h1>
+    <p class="mb-4">
+      {{
+        t("pages.game.ended.winner", {
+          username: game.gameInfos.value.winnerUsername,
+        })
+      }}
+    </p>
+    <NuxtLink href="/">
+      <Button>{{ t("pages.game.ended.back_home") }}</Button>
+    </NuxtLink>
+  </div>
+
   <main
     class="h-screen flex flex-col bg-body-bg text-body-text"
     v-else-if="

@@ -8,7 +8,11 @@ import {
   type IGameBoard,
 } from "@/app/GameBoard/application/GameBoard";
 import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
-import { type IPlayer, Player } from "@/app/Player/application/Player";
+import {
+  type IPlayer,
+  type IPlayerFactory,
+  Player,
+} from "@/app/Player/application/Player";
 import { MAX_PLAYERS } from "@/app/Player/domain/constants/player";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import { indexOfFirstPlayerByDrawedCard } from "@/app/Player/domain/gamerules/firstToPlay";
@@ -31,6 +35,7 @@ export type GameInfosDto = {
   state: GameState;
   isFull: boolean;
   currentPlayerUsername?: string;
+  winnerUsername?: string;
 };
 
 type AddPlayerProps = {
@@ -39,7 +44,7 @@ type AddPlayerProps = {
 
 export interface IGame {
   id: GameId;
-  addPlayer(props?: AddPlayerProps): IPlayer;
+  addPlayer(props?: AddPlayerProps, PlayerClass?: IPlayerFactory): IPlayer;
   findPlayerByUsername(username: string): IPlayer;
   findOrAddPlayer(props?: AddPlayerProps): IPlayer;
   removePlayer(id: string): void;
@@ -47,6 +52,7 @@ export interface IGame {
   start(): void;
   end(): void;
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer;
+  beginTurnOfNextPlayer(): void;
   isFull(): boolean;
   currentPlayer(): IPlayer;
   winner(): IPlayer;
@@ -61,7 +67,7 @@ export interface IGame {
 export type GameState = "created" | "started" | "ended";
 export type GameId = string;
 
-type GameProps = {
+export type GameProps = {
   id: GameId;
   drawStack?: IDrawStack;
   gameBoard?: IGameBoard;
@@ -97,7 +103,7 @@ export class Game implements IGame {
     return this.usernames.find((username) => !usedUsernames.includes(username));
   }
 
-  addPlayer(props?: AddPlayerProps): IPlayer {
+  addPlayer(props?: AddPlayerProps, PlayerClass?: IPlayerFactory): IPlayer {
     if (this.state !== "created") {
       throw new Error("Game has started");
     }
@@ -107,7 +113,7 @@ export class Game implements IGame {
     }
 
     const admin = this.players.length === 0;
-    const player = new Player({
+    const player = new (PlayerClass ?? Player)({
       game: this,
       drawStack: this.drawStack,
       gameBoard: this.gameBoard,
@@ -215,6 +221,10 @@ export class Game implements IGame {
     return this.players[playerIndex + 1];
   }
 
+  beginTurnOfNextPlayer() {
+    this.nextPlayerAfter(this.currentPlayer()).beginTurn();
+  }
+
   currentPlayer(): IPlayer {
     if (this.state !== "started") {
       throw new Error("Game has not started");
@@ -285,6 +295,8 @@ export class Game implements IGame {
       isFull: this.isFull(),
       currentPlayerUsername:
         this.state === "started" ? this.currentPlayer().username : undefined,
+      winnerUsername:
+        this.state === "ended" ? this.winner().username : undefined,
     };
   }
 }

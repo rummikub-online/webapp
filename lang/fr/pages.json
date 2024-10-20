@@ -12,6 +12,11 @@
       "explanation": "La partie a déjà commencé",
       "back_home": "Retour à l'accueil"
     },
+    "ended": {
+      "title": "La partie est terminée !",
+      "winner": "{username} a gagné(e) !",
+      "back_home": "Retour à l'accueil"
+    },
     "connected_usernames": "{n} utilisateur connecté | {n} utilisateurs connectés",
     "is_playing": "{user} est en train de jouer...",
     "is_playing_but_afk": "C'est le tour de {user}, qui est déconnecté(e)..."

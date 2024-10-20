@@ -56,7 +56,7 @@ describe("GameRepository", () => {
 
     test("create game with test id won't shuffle cards", () => {
       const gameRepository = new GameRepository();
-      const game = gameRepository.create("test");
+      const game = gameRepository.create({ id: "test" });
 
       const firstPlayer = game.addPlayer();
       game.addPlayer();
@@ -134,7 +134,7 @@ describe("GameRepository", () => {
         expect(isNumeric(id)).toBeTruthy();
         expect(ids).not.toContain(id);
         ids.push(id);
-        gameRepository.create(id);
+        gameRepository.create({ id });
       }
     });
   });

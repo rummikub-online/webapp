@@ -187,7 +187,7 @@ describe("Player", () => {
     test("return true when player has drawn startup cards and has placed everything", () => {
       const player = new Player({
         id: "player",
-        hasDrewStartupCards: true,
+        hasDrawnStartupCards: true,
         gameBoard: new GameBoard({}),
         drawStack: new DrawStack({}),
       });
@@ -201,7 +201,7 @@ describe("Player", () => {
       const gameBoard = new GameBoard({});
       const player = new Player({
         id: "player",
-        hasDrewStartupCards: true,
+        hasDrawnStartupCards: true,
         gameBoard,
         drawStack: new DrawStack({}),
         cards: [{ color: "black", number: 7, duplicata: 1 }],
@@ -217,7 +217,7 @@ describe("Player", () => {
       const gameBoard = new GameBoard({});
       const player = new Player({
         id: "player",
-        hasDrewStartupCards: true,
+        hasDrawnStartupCards: true,
         gameBoard,
         drawStack: new DrawStack({}),
         cards: [{ color: "black", number: 7, duplicata: 1 }],
@@ -249,7 +249,7 @@ describe("Player", () => {
       const gameBoard = makeBoard();
       const player = new Player({
         id: "player",
-        hasDrewStartupCards: true,
+        hasDrawnStartupCards: true,
         gameBoard,
         hasStarted: true,
         drawStack: new DrawStack({}),
@@ -263,7 +263,7 @@ describe("Player", () => {
       const gameBoard = makeBoard();
       const player = new Player({
         id: "player",
-        hasDrewStartupCards: true,
+        hasDrawnStartupCards: true,
         gameBoard,
         hasStarted: true,
         drawStack: new DrawStack({}),
@@ -280,7 +280,7 @@ describe("Player", () => {
       const gameBoard = new GameBoard({});
       const player = new Player({
         id: "player",
-        hasDrewStartupCards: true,
+        hasDrawnStartupCards: true,
         gameBoard,
         hasStarted: true,
         drawStack: new DrawStack({}),
@@ -297,7 +297,7 @@ describe("Player", () => {
         const gameBoard = makeBoard();
         const player = new Player({
           id: "player",
-          hasDrewStartupCards: true,
+          hasDrawnStartupCards: true,
           gameBoard,
           hasStarted: false,
           drawStack: new DrawStack({}),
@@ -313,7 +313,7 @@ describe("Player", () => {
         const gameBoard = makeBoard();
         const player = new Player({
           id: "player",
-          hasDrewStartupCards: true,
+          hasDrawnStartupCards: true,
           gameBoard,
           hasStarted: true,
           drawStack: new DrawStack({}),
@@ -331,7 +331,7 @@ describe("Player", () => {
         const gameBoard = new GameBoard({});
         const player = new Player({
           id: "player",
-          hasDrewStartupCards: true,
+          hasDrawnStartupCards: true,
           gameBoard,
           hasStarted: false,
           drawStack: new DrawStack({}),

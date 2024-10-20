@@ -44,13 +44,17 @@ export interface IPlayer {
   toDto(): PlayerDto;
 }
 
+export interface IPlayerFactory {
+  new (props: PlayerProps): IPlayer;
+}
+
 export type PlayerProps = {
   gameBoard: IGameBoard;
   drawStack: IDrawStack;
   id: string;
   game?: IGame;
   cards?: CardListDto;
-  hasDrewStartupCards?: boolean;
+  hasDrawnStartupCards?: boolean;
   hasStarted?: boolean;
   username?: string;
   admin?: boolean;
@@ -80,7 +84,7 @@ export class Player implements IPlayer {
     this.drawStack = props.drawStack;
     this.id = props.id;
     this.cards = props.cards ?? [];
-    this.hasDrawnStartupCards = props.hasDrewStartupCards ?? false;
+    this.hasDrawnStartupCards = props.hasDrawnStartupCards ?? false;
     this.hasStarted = props.hasStarted ?? false;
     this.username = props.username ?? generate(1)[0];
     this.admin = props.admin ?? false;
@@ -183,7 +187,7 @@ export class Player implements IPlayer {
     if (this.hasWon()) {
       this.game.end();
     } else {
-      this.game.nextPlayerAfter(this).beginTurn();
+      this.game.beginTurnOfNextPlayer();
     }
   }
 
