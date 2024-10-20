@@ -1,6 +1,6 @@
 import { Game } from "@/app/Game/application/Game";
 import { GameManager } from "@/app/Game/application/GameManager";
-import { GameRepository } from "@/app/Game/application/GameRepository";
+import { InMemoryGameRepository } from "@/app/Game/application/GameRepository/InMemoryGameRepository";
 import { Player } from "@/app/Player/application/Player";
 import { afterEach, describe, expect, test, vi } from "vitest";
 
@@ -9,7 +9,7 @@ describe("GameManager", () => {
     test("add player to connections", () => {
       // Arrange
       const gameManager = new GameManager({
-        gameRepository: new GameRepository(),
+        gameRepository: new InMemoryGameRepository(),
       });
 
       // Act
@@ -29,7 +29,7 @@ describe("GameManager", () => {
 
     test("create game and player and return them", () => {
       const gameManager = new GameManager({
-        gameRepository: new GameRepository(),
+        gameRepository: new InMemoryGameRepository(),
       });
 
       const { game, player } = gameManager.connect({
@@ -44,7 +44,7 @@ describe("GameManager", () => {
     test("can't connect if username already connected", () => {
       //Arrange
       const gameManager = new GameManager({
-        gameRepository: new GameRepository(),
+        gameRepository: new InMemoryGameRepository(),
       });
       gameManager.connect({
         gameId: "1",
@@ -63,7 +63,7 @@ describe("GameManager", () => {
     test("can connect again if disconected after game start", () => {
       // Arrange
       const gameManager = new GameManager({
-        gameRepository: new GameRepository(),
+        gameRepository: new InMemoryGameRepository(),
       });
       const { game } = gameManager.connect({
         gameId: "1",
@@ -103,7 +103,7 @@ describe("GameManager", () => {
     test("remove player from connections", () => {
       // Arrange
       const gameManager = new GameManager({
-        gameRepository: new GameRepository(),
+        gameRepository: new InMemoryGameRepository(),
       });
       gameManager.connect({
         gameId: "1",
@@ -132,7 +132,7 @@ describe("GameManager", () => {
       });
       const spy = vi.spyOn(game, "removePlayer");
       const gameManager = new GameManager({
-        gameRepository: new GameRepository({
+        gameRepository: new InMemoryGameRepository({
           games: [game],
         }),
       });
@@ -153,7 +153,7 @@ describe("GameManager", () => {
 
     test("destory game if it was the last player connected", () => {
       // Arrange
-      const gameRepository = new GameRepository();
+      const gameRepository = new InMemoryGameRepository();
       const spy = vi.spyOn(gameRepository, "destroy");
 
       const gameManager = new GameManager({
@@ -179,7 +179,7 @@ describe("GameManager", () => {
     test("return username of all players in game", () => {
       // Arrange
       const gameManager = new GameManager({
-        gameRepository: new GameRepository(),
+        gameRepository: new InMemoryGameRepository(),
       });
       const { game } = gameManager.connect({
         gameId: "1",
@@ -200,7 +200,7 @@ describe("GameManager", () => {
     test("disconnected players are marked false", () => {
       // Arrange
       const gameManager = new GameManager({
-        gameRepository: new GameRepository(),
+        gameRepository: new InMemoryGameRepository(),
       });
       const { game } = gameManager.connect({
         gameId: "1",

@@ -1,5 +1,5 @@
 import type { IGameManager } from "@/app/Game/application/GameManager";
-import type { IGameRepository } from "@/app/Game/application/GameRepository";
+import type { IGameRepository } from "@/app/Game/application/GameRepository/IGameRepository";
 import { randomGameBoard } from "@/app/GameBoard/application/utils/random";
 
 export const loadMocks = ({

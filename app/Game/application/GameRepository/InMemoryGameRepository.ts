@@ -8,6 +8,7 @@ import {
   type IGame,
   Game,
 } from "@/app/Game/application/Game";
+import type { IGameRepository } from "@/app/Game/application/GameRepository/IGameRepository";
 import { randomInt } from "crypto";
 import { v4 as uuidv4 } from "uuid";
 
@@ -17,16 +18,7 @@ type GameRepositoryProps = {
   games?: Array<IGame>;
 };
 
-export interface IGameRepository {
-  exists: (id: GameId) => boolean;
-  findById: (id: GameId) => IGame;
-  create: (props?: GameProps) => IGame;
-  findOrCreate: (id: GameId) => IGame;
-  destroy: (id: GameId) => void;
-  freeGameId: () => GameId;
-}
-
-export class GameRepository implements IGameRepository {
+export class InMemoryGameRepository implements IGameRepository {
   private games: GameList;
 
   constructor(props?: GameRepositoryProps) {

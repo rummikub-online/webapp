@@ -1,5 +1,5 @@
 import type { GameId, IGame } from "@/app/Game/application/Game";
-import type { IGameRepository } from "@/app/Game/application/GameRepository";
+import type { IGameRepository } from "@/app/Game/application/GameRepository/IGameRepository";
 import type { IPlayer } from "@/app/Player/application/Player";
 
 export type UserConnection = {

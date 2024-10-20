@@ -1,13 +1,13 @@
 import { CARDS } from "@/app/Card/domain/constants/card";
 import { Game } from "@/app/Game/application/Game";
-import { GameRepository } from "@/app/Game/application/GameRepository";
+import { InMemoryGameRepository } from "@/app/Game/application/GameRepository/InMemoryGameRepository";
 import { describe, expect, test } from "vitest";
 
 describe("GameRepository", () => {
   describe("exists", () => {
     test("return true if game exists", () => {
       const game = new Game({ id: "1", state: "started" });
-      const gameRepository = new GameRepository({
+      const gameRepository = new InMemoryGameRepository({
         games: [game],
       });
 
@@ -15,7 +15,7 @@ describe("GameRepository", () => {
     });
 
     test("return false if game do not exists", () => {
-      const gameRepository = new GameRepository({
+      const gameRepository = new InMemoryGameRepository({
         games: [],
       });
 
@@ -26,7 +26,7 @@ describe("GameRepository", () => {
   describe("findById", () => {
     test("return existent game", () => {
       const game = new Game({ id: "1", state: "started" });
-      const gameRepository = new GameRepository({
+      const gameRepository = new InMemoryGameRepository({
         games: [game],
       });
 
@@ -36,7 +36,7 @@ describe("GameRepository", () => {
     });
 
     test("throw error if inexistent game", () => {
-      const gameRepository = new GameRepository({
+      const gameRepository = new InMemoryGameRepository({
         games: [],
       });
 
@@ -46,7 +46,7 @@ describe("GameRepository", () => {
 
   describe("create", () => {
     test("create game and return it", () => {
-      const gameRepository = new GameRepository();
+      const gameRepository = new InMemoryGameRepository();
 
       const game = gameRepository.create();
 
@@ -55,7 +55,7 @@ describe("GameRepository", () => {
     });
 
     test("create game with test id won't shuffle cards", () => {
-      const gameRepository = new GameRepository();
+      const gameRepository = new InMemoryGameRepository();
       const game = gameRepository.create({ id: "test" });
 
       const firstPlayer = game.addPlayer();
@@ -69,7 +69,7 @@ describe("GameRepository", () => {
     });
 
     test("create game without test id will shuffle cards", () => {
-      const gameRepository = new GameRepository();
+      const gameRepository = new InMemoryGameRepository();
       const game = gameRepository.create();
 
       const firstPlayer = game.addPlayer();
@@ -86,7 +86,7 @@ describe("GameRepository", () => {
   describe("findOrCreate", () => {
     test("return existent game", () => {
       const game = new Game({ id: "1", state: "started" });
-      const gameRepository = new GameRepository({
+      const gameRepository = new InMemoryGameRepository({
         games: [game],
       });
 
@@ -96,7 +96,7 @@ describe("GameRepository", () => {
     });
 
     test("create new game if inexistent game", () => {
-      const gameRepository = new GameRepository({
+      const gameRepository = new InMemoryGameRepository({
         games: [],
       });
 
@@ -108,7 +108,7 @@ describe("GameRepository", () => {
 
   describe("destroy", () => {
     test("delete game", () => {
-      const gameRepository = new GameRepository({
+      const gameRepository = new InMemoryGameRepository({
         games: [new Game({ id: "1", state: "started" })],
       });
 
@@ -120,7 +120,7 @@ describe("GameRepository", () => {
 
   describe("freeGameId", () => {
     test("return free id composed of digits with length of 3", () => {
-      const gameRepository = new GameRepository();
+      const gameRepository = new InMemoryGameRepository();
 
       const REPEATS = 100;
       const ids: Array<string> = [];

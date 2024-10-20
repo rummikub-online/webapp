@@ -1,5 +1,5 @@
 import { GameManager } from "@/app/Game/application/GameManager";
-import { GameRepository } from "@/app/Game/application/GameRepository";
+import { InMemoryGameRepository } from "@/app/Game/application/GameRepository/InMemoryGameRepository";
 import { loadMocks } from "@/app/mocks";
 import { registerGameEvents } from "@/app/WebSocket/infrastructure/gameEvents";
 import type { WebSocketServer } from "@/app/WebSocket/infrastructure/types";
@@ -16,7 +16,7 @@ socketServer.on("connection", (socket) => {
   console.log(`Connected on ${namespace.name}`);
 });
 
-const gameRepository = new GameRepository();
+const gameRepository = new InMemoryGameRepository();
 const gameManager = new GameManager({
   gameRepository: gameRepository,
 });
