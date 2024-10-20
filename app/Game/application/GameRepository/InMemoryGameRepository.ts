@@ -8,15 +8,14 @@ import {
   type IGame,
   Game,
 } from "@/app/Game/application/Game";
-import type { IGameRepository } from "@/app/Game/application/GameRepository/IGameRepository";
+import type {
+  GameRepositoryProps,
+  IGameRepository,
+} from "@/app/Game/application/GameRepository/IGameRepository";
 import { randomInt } from "crypto";
 import { v4 as uuidv4 } from "uuid";
 
 type GameList = Map<GameId, IGame>;
-
-type GameRepositoryProps = {
-  games?: Array<IGame>;
-};
 
 export class InMemoryGameRepository implements IGameRepository {
   private games: GameList;

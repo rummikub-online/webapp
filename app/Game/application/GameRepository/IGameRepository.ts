@@ -8,3 +8,11 @@ export interface IGameRepository {
   destroy: (id: GameId) => void;
   freeGameId: () => GameId;
 }
+
+export type GameRepositoryProps = {
+  games?: Array<IGame>;
+};
+
+export interface IGameRepositoryFactory {
+  new (props?: GameRepositoryProps): IGameRepository;
+}
