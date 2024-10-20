@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { CardColor, CardNumber } from "@/app/Card/domain/dtos/card";
 import { isJokerNumber } from "@/app/Card/domain/gamerules/isJoker";
+import BlackJokerSymbol from "@/assets/card/joker/black.svg?component";
+import RedJokerSymbol from "@/assets/card/joker/red.svg?component";
 import BlackCardSymbol from "@/assets/card/symbol/black.svg?component";
 import BlueCardSymbol from "@/assets/card/symbol/blue.svg?component";
 import RedCardSymbol from "@/assets/card/symbol/red.svg?component";
@@ -20,7 +22,15 @@ defineProps<{
     class="border border-card-border relative overflow-hidden select-none w-9 h-11 md:w-12 md:h-16 bg-card-bg rounded flex-col justify-center items-center gap-1 inline-flex"
     :class="[movable && 'hover:shadow-lg cursor-move', highlighted && 'ring-4']"
   >
+    <template v-if="isJokerNumber(number)">
+      <BlackJokerSymbol
+        v-if="color === 'black'"
+        class="size-4 md:size-6 mb-1"
+      />
+      <RedJokerSymbol v-if="color === 'red'" class="size-4 md:size-6 mb-1" />
+    </template>
     <span
+      v-else
       class="text-sm md:text-xl font-black font-sans"
       :class="{
         'text-card-text-red': color === 'red',
@@ -29,8 +39,9 @@ defineProps<{
         'text-card-text-black': color === 'black',
       }"
     >
-      {{ isJokerNumber(number) ? "J" : number }}
+      {{ number }}
     </span>
+
     <RedCardSymbol class="size-2 md:size-3" v-if="color === 'red'" />
     <BlueCardSymbol class="size-2 md:size-3" v-if="color === 'blue'" />
     <YellowCardSymbol class="size-2 md:size-3" v-if="color === 'yellow'" />
