@@ -64,5 +64,5 @@
     "vuedraggable": "^4.1.0",
     "zod": "^3.23.8"
   },
-  "version": "0.2.0"
+  "version": "1.0.0"
 }
