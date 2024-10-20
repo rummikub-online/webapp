@@ -174,8 +174,6 @@ export class Player implements IPlayer {
 
     this.gameBoard.endTurn();
 
-    this._isPlaying = false;
-
     if (!this.hasDrawnThisTurn && !this.hasStarted) {
       this.hasStarted = true;
     }
@@ -189,6 +187,8 @@ export class Player implements IPlayer {
     } else {
       this.game.beginTurnOfNextPlayer();
     }
+
+    this._isPlaying = false;
   }
 
   canDrawCard(): boolean {

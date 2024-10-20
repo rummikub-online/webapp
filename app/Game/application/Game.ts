@@ -230,6 +230,8 @@ export class Game implements IGame {
       throw new Error("Game has not started");
     }
 
+    console.log(this.players);
+
     const player = this.players.find((player) => player.isPlaying());
 
     if (!player) {
