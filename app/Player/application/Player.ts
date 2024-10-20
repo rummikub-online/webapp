@@ -178,14 +178,12 @@ export class Player implements IPlayer {
       this.hasStarted = true;
     }
 
-    if (!this.game) {
-      return;
-    }
-
-    if (this.hasWon()) {
-      this.game.end();
-    } else {
-      this.game.beginTurnOfNextPlayer();
+    if (this.game) {
+      if (this.hasWon()) {
+        this.game.end();
+      } else {
+        this.game.beginTurnOfNextPlayer();
+      }
     }
 
     this._isPlaying = false;
