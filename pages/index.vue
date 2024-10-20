@@ -1,5 +1,7 @@
 <template>
-  <main class="h-dvh bg-body-bg flex flex-col items-center justify-center">
+  <main
+    class="h-dvh bg-body-bg text-body-text flex flex-col items-center justify-center"
+  >
     <div class="mt-auto flex flex-col gap-4 items-center mb-16">
       <div class="relative flex items-end">
         <Card class="-rotate-12 -mr-1" color="red" :number="7" />
