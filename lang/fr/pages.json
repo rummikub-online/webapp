@@ -18,6 +18,7 @@
       "back_home": "Retour à l'accueil"
     },
     "connected_usernames": "{n} utilisateur connecté | {n} utilisateurs connectés",
+    "self_is_playing": "Vous êtes en train de jouer...",
     "is_playing": "{user} est en train de jouer...",
     "is_playing_but_afk": "C'est le tour de {user}, qui est déconnecté(e)..."
   }

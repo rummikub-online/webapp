@@ -30,19 +30,25 @@ export const useGame = (gameId: any, username: any) => {
     const history = actionsLogs.value.slice(-3);
 
     if (connectedUsernames.value && gameInfos.value?.currentPlayerUsername) {
-      if (connectedUsernames.value[gameInfos.value.currentPlayerUsername]) {
-        history.push(
-          t("pages.game.is_playing", {
-            user: gameInfos.value.currentPlayerUsername,
-          }),
-        );
-      } else {
+      if (!connectedUsernames.value[gameInfos.value.currentPlayerUsername]) {
         history.push(
           t("pages.game.is_playing_but_afk", {
             user: gameInfos.value.currentPlayerUsername,
           }),
         );
+        return history;
       }
+
+      if (gameInfos.value.currentPlayerUsername === username) {
+        history.push(t("pages.game.self_is_playing"));
+        return history;
+      }
+
+      history.push(
+        t("pages.game.is_playing", {
+          user: gameInfos.value.currentPlayerUsername,
+        }),
+      );
     }
 
     return history;
