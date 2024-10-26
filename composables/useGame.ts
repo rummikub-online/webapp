@@ -5,6 +5,11 @@ import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import { makeCardDraggingHandler } from "@/logic/cardDragging";
 import { setupGameSocket } from "@/logic/gameSocket";
 
+type HighlightedCard = {
+  positionOnBoard?: CardPositionOnBoard;
+  indexInHand?: number;
+}
+
 export const useGame = (gameId: any, username: any) => {
   if (typeof gameId !== "string") {
     throw new Error("Game id is not a string");
@@ -22,7 +27,7 @@ export const useGame = (gameId: any, username: any) => {
   const selfPlayer = ref<PlayerDto>();
   const gameBoard = ref<GameBoardDto>();
   const connectedUsernames = ref<Record<string, boolean>>();
-  const highligthedCard = ref<CardPositionOnBoard>();
+  const highlightedCard = ref<HighlightedCard>();
 
   const actionsLogs = ref<Array<string>>([]);
   const logAction = (action: string) => actionsLogs.value.push(action);
@@ -56,7 +61,7 @@ export const useGame = (gameId: any, username: any) => {
 
   const {
     startGame,
-    cancelTurnModications,
+    cancelTurnModifications,
     drawCard,
     endTurn,
     moveCardAlone,
@@ -91,6 +96,11 @@ export const useGame = (gameId: any, username: any) => {
           username: player.username,
         }),
       );
+      if(player.id === selfPlayer.value?.id) {
+        highlightedCard.value = {
+          indexInHand: player.cards.length - 1
+        };
+      }
     },
     onPlayerPlayed(player) {
       logAction(
@@ -100,12 +110,12 @@ export const useGame = (gameId: any, username: any) => {
       );
     },
     onPlayerMovedCard(player, cardPosition) {
-      console.log(cardPosition);
-
       if (player.id === selfPlayer.value?.id) {
         return;
       }
-      highligthedCard.value = cardPosition;
+      highlightedCard.value = {
+        positionOnBoard: cardPosition
+      };
     },
     onConnect() {
       connected.value = true;
@@ -130,10 +140,10 @@ export const useGame = (gameId: any, username: any) => {
     selfPlayer,
     gameBoard,
     connectedUsernames,
-    highligthedCard,
+    highlightedCard,
     logs,
     startGame,
-    cancelTurnModications,
+    cancelTurnModifications,
     drawCard,
     endTurn,
     cardDraggingHandler,

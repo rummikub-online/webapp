@@ -47,7 +47,7 @@
     </nav>
 
     <GameBoard
-      :highlighted-card="game.highligthedCard.value"
+      :highlighted-card="game.highlightedCard.value?.positionOnBoard"
       :game-board="game.gameBoard.value"
       :card-dragging-handler="game.cardDraggingHandler"
       :player="game.selfPlayer.value"
@@ -63,7 +63,8 @@
         :player="game.selfPlayer.value"
         :card-dragging-handler="game.cardDraggingHandler"
         :game="game.gameInfos.value"
-        @cancel-turn-modications="game.cancelTurnModications()"
+        :highlighted-card-index="game.highlightedCard.value?.indexInHand"
+        @cancel-turn-modifications="game.cancelTurnModifications()"
         @draw-card="game.drawCard()"
         @end-turn="game.endTurn()"
         @start-game="game.startGame()"

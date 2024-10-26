@@ -13,12 +13,13 @@ const props = defineProps<{
   player: PlayerDto;
   cardDraggingHandler: CardDraggingHandler;
   game: GameInfosDto;
+  highlightedCardIndex?: number
 }>();
 
 const emit = defineEmits<{
   startGame: [];
   drawCard: [];
-  cancelTurnModications: [];
+  cancelTurnModifications: [];
   endTurn: [];
 }>();
 
@@ -51,7 +52,7 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
       :is-ordered-by-color="orderedCards.isOrderedByColor.value"
       :is-ordered-by-number="orderedCards.isOrderedByNumber.value"
       :game="game"
-      @cancel-turn-modications="emit('cancelTurnModications')"
+      @cancel-turn-modifications="emit('cancelTurnModifications')"
       @draw-card="emit('drawCard')"
       @end-turn="emit('endTurn')"
       @order-by-color="orderedCards.orderByColor()"
@@ -73,11 +74,12 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
         :sort="false"
         @change="handleChange"
       >
-        <template #item="{ element: card }">
+        <template #item="{ element: card }: {element: OrderedCardDto}">
           <Card
             :color="card.color"
             :number="card.number"
             :movable="player.isPlaying"
+            :highlighted="highlightedCardIndex === card.initialIndex"
           />
         </template>
       </Draggable>

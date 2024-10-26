@@ -97,7 +97,7 @@ export const setupGameSocket = ({
     socket.emit("game.start");
   };
 
-  const cancelTurnModications = () => {
+  const cancelTurnModifications = () => {
     socket.emit("player.cancelTurnModifications");
   };
 
@@ -134,7 +134,7 @@ export const setupGameSocket = ({
   return {
     socket,
     startGame,
-    cancelTurnModications,
+    cancelTurnModifications,
     drawCard,
     endTurn,
     moveCardAlone,
