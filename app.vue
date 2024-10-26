@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen">
+  <div class="min-h-screen bg-body-bg">
     <Head>
       <Link
         rel="apple-touch-icon"

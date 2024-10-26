@@ -9,6 +9,9 @@
         <Card class="rotate-12 -ml-1" color="blue" :number="7" />
       </div>
       <h1 class="text-4xl">Rummikub</h1>
+      <NuxtLink to="/rules" class="text-sm flex items-center gap-1">
+        {{ t("pages.home.see_rules") }}
+      </NuxtLink>
     </div>
 
     <div class="flex flex-col items-center justify-center gap-4">
@@ -18,8 +21,9 @@
         target="_parent"
         no-prefetch
         type="primary"
-        >{{ t("pages.home.create_game") }}</Button
       >
+        {{ t("pages.home.create_game") }}
+      </Button>
 
       <div class="flex gap-2 items-center w-full">
         <div class="h-px bg-separator grow" />
@@ -42,7 +46,8 @@
           :href="getJoinRoomUrl"
           :disabled="isBlank(joinRoomId)"
           type="primary"
-          >{{ t("pages.home.join_game") }}</Button
+        >{{ t("pages.home.join_game") }}
+        </Button
         >
       </div>
     </div>
@@ -56,11 +61,12 @@
 </template>
 <script setup lang="ts">
 import { useLightMode } from "@/composables/useLightMode";
+import { BookOpenIcon } from "@heroicons/vue/20/solid";
 
 const { username } = useUsername();
 const { t } = useI18n();
 
-useLightMode()
+useLightMode();
 
 const joinRoomId = ref("");
 const getJoinRoomUrl = computed(() => `/games/${joinRoomId.value}`);

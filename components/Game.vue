@@ -18,7 +18,7 @@
     <p class="mb-4">
       {{
         t("pages.game.ended.winner", {
-          username: game.gameInfos.value.winnerUsername,
+          username: game.gameInfos.value.winnerUsername
         })
       }}
     </p>
@@ -40,10 +40,14 @@
     <nav class="flex gap-2 p-4 border-b items-center justify-between">
       <span>{{ game.gameInfos.value?.id }}</span>
 
-      <ConnectedUsernames
-        v-if="game.connectedUsernames.value"
-        :usernames="game.connectedUsernames.value"
-      />
+      <div class="flex gap-2">
+        <GameRulesPopupButton />
+
+        <ConnectedUsernames
+          v-if="game.connectedUsernames.value"
+          :usernames="game.connectedUsernames.value"
+        />
+      </div>
     </nav>
 
     <GameBoard

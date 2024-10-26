@@ -24,7 +24,7 @@ const { t } = useI18n();
 const canChangeCardOrder = computed(() => props.game.state === "started");
 </script>
 <template>
-  <div v-if="player" class="flex gap-3">
+  <div v-if="player" class="flex flex-wrap gap-3">
     <Button
       type="primary"
       v-if="player.canStartGame"

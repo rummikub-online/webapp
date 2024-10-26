@@ -1,0 +1,47 @@
+{
+    "title": "Règles du Rummikub",
+    "purpose": {
+        "title": "But du jeu",
+        "content": "Le but du jeu est de poser toutes ses tuiles sur la table en créant des combinaisons."
+    },
+    "card": {
+        "title": "Tuile",
+        "content": "Une tuile possède une couleur (rouge, bleue, verte, noire) et est numérotée de 1 à 13."
+    },
+    "joker": {
+        "title": "Joker",
+        "content": "Il y a deux jokers, ils peuvent remplacer n'importe quelle tuile.\n\nLeur couleur n'importe pas."
+    },
+    "suite": {
+        "title": "Suite",
+        "content": "C'est une combinaison de minimum 3 tuiles de même couleur et consécutives."
+    },
+    "serie": {
+        "title": "Série",
+        "content": "C'est une combinaison de minimum 3 tuiles de même nombre et de couleurs différentes."
+    },
+    "first_turn": {
+        "title": "Déroulement du premier tour",
+        "content": "Lors de votre premier tour, vous devez poser au moins 30 points (addition des chiffres des tuiles).\nVous ne pouvez pas interagir avec les tuiles déjà posées.\n\nSi vous ne pouvez pas poser 30 points, vous piochez et terminez votre tour.",
+        "examples": {
+            "title": "Quelques exemples:",
+            "invalid": "Si vous ne posez que cette combinaison, vous n'avez que 27 points sur 30.",
+            "valid": "Là, vous avez 33 points, vous pouvez jouer."
+        }
+    },
+    "turn": {
+        "title": "Déroulement d'un tour",
+        "content": "Vous pouvez poser des combinaisons sur la table et modifier les combinaisons déjà posées.\n\nSi vous ne posez rien, vous piochez et terminez votre tour."
+    },
+    "combination_modification": {
+        "title": "Modifier une combinaison",
+        "content": "Vous pouvez ajouter/retirer des tuiles à une combinaison déjà posée, tant qu'elle reste valide.\n\nCela vous permet de créer de nouvelles combinaisons et d'y placer une de vos tuiles.",
+        "examples": {
+            "title": "Quelques exemples:",
+            "add": "Vous pouvez ajouter un 11 noir, ou un joker",
+            "remove": "Vous pouvez retirer le 10 ou le 13, il restera 3 cartes",
+            "replace": "Vous pouvez remplacer le joker par un 4 vert, et le réutiliser ailleurs",
+            "split": "Vous pouvez séparer pour faire 5-6 et 7-8-9, puis ajouter un 7 après le 6"
+        }
+    }
+}
