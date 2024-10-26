@@ -73,4 +73,8 @@ export default defineNuxtConfig({
       escapeHtml: false,
     },
   },
+
+  colorMode: {
+    preference: 'light'
+  }
 });

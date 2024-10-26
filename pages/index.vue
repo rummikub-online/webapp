@@ -55,8 +55,12 @@
   </main>
 </template>
 <script setup lang="ts">
+import { useLightMode } from "@/composables/useLightMode";
+
 const { username } = useUsername();
 const { t } = useI18n();
+
+useLightMode()
 
 const joinRoomId = ref("");
 const getJoinRoomUrl = computed(() => `/games/${joinRoomId.value}`);

@@ -22,8 +22,13 @@
   <Game v-else />
 </template>
 <script setup lang="ts">
+import { useLightMode } from "@/composables/useLightMode";
+
 const tempUsername = ref("");
 const isTempUsername = computed(() => isBlank(toValue(tempUsername)));
+
+useLightMode()
+
 const saveUsername = () => {
   username.value = tempUsername.value;
 };
