@@ -129,46 +129,62 @@
       </template>
     </UAccordion>
   </div>
-
 </template>
 
 <script setup lang="ts">
 import type { CombinationDto } from "@/app/Combination/domain/dtos/combination";
+import type { GameRule } from "@/utils/types/gamerule";
+
+const props = withDefaults(
+  defineProps<{
+    defaultOpen?: GameRule;
+  }>(),
+  {
+    defaultOpen: "purpose"
+  }
+);
 
 const { t } = useI18n();
 const items = [
   {
     label: t("rules.purpose.title"),
-    defaultOpen: true,
-    description: t("rules.purpose.content")
+    description: t("rules.purpose.content"),
+    defaultOpen: props.defaultOpen === "purpose"
   },
   {
     label: t("rules.card.title"),
-    slot: "card"
+    slot: "card",
+    defaultOpen: props.defaultOpen === "card"
   },
   {
     label: t("rules.joker.title"),
-    slot: "joker"
+    slot: "joker",
+    defaultOpen: props.defaultOpen === "joker"
   },
   {
     label: t("rules.suite.title"),
-    slot: "suite"
+    slot: "suite",
+    defaultOpen: props.defaultOpen === "suite"
   },
   {
     label: t("rules.serie.title"),
-    slot: "serie"
+    slot: "serie",
+    defaultOpen: props.defaultOpen === "serie"
   },
   {
     label: t("rules.first_turn.title"),
-    slot: "first_turn"
+    slot: "first_turn",
+    defaultOpen: props.defaultOpen === "first_turn"
   },
   {
     label: t("rules.turn.title"),
-    description: t("rules.turn.content")
+    description: t("rules.turn.content"),
+    defaultOpen: props.defaultOpen === "turn"
   },
   {
     label: t("rules.combination_modification.title"),
-    slot: "combination_modification"
+    slot: "combination_modification",
+    defaultOpen: props.defaultOpen === "combination_modification"
   }
 ];
 

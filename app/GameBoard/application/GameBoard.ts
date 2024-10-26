@@ -1,7 +1,7 @@
 import type { CardDto } from "@/app/Card/domain/dtos/card";
 import {
   Combination,
-  type ICombination,
+  type ICombination
 } from "@/app/Combination/application/Combination";
 import type { CombinationDto } from "@/app/Combination/domain/dtos/combination";
 import { areEqual } from "@/app/Combination/domain/gamerules/areEqual";
@@ -17,22 +17,36 @@ export type CardPositionOnBoard = {
 
 export interface IGameBoard {
   beginTurn(): void;
+
   placeCardAlone(card: CardDto): CombinationPositionOnBoard;
+
   placeCardInCombination(card: CardDto, destination: CardPositionOnBoard): void;
+
   moveCardAlone(source: CardPositionOnBoard): CombinationPositionOnBoard;
+
   moveCardToCombination(
     source: CardPositionOnBoard,
-    destination: CardPositionOnBoard,
+    destination: CardPositionOnBoard
   ): void;
+
   wasCombinationPlacedThisTurn(combinationIndex: number): boolean;
+
   deleteEmptyCombinations(): void;
+
   cancelTurnModifications(): void;
+
   hasModifications(): boolean;
+
   isEmpty(): boolean;
+
   isValid(): boolean;
+
   turnPoints(): number;
+
   endTurn(): void;
+
   points(): number;
+
   toDto(): GameBoardDto;
 }
 
@@ -55,7 +69,7 @@ export class GameBoard implements IGameBoard {
 
   private saveTurnCombinations() {
     this.previousTurnCombinations = Object.freeze([
-      ...this.toDto().combinations,
+      ...this.toDto().combinations
     ]);
   }
 
@@ -67,11 +81,11 @@ export class GameBoard implements IGameBoard {
 
   placeCardInCombination(
     card: CardDto,
-    destination: CardPositionOnBoard,
+    destination: CardPositionOnBoard
   ): void {
     this.combinations[destination.combinationIndex].addCardAt(
       card,
-      destination.cardIndex,
+      destination.cardIndex
     );
   }
 
@@ -89,14 +103,14 @@ export class GameBoard implements IGameBoard {
 
   moveCardToCombination(
     source: CardPositionOnBoard,
-    destination: CardPositionOnBoard,
+    destination: CardPositionOnBoard
   ): void {
     const sourceCombi = this.combinations[source.combinationIndex];
     const destinationCombi = this.combinations[destination.combinationIndex];
 
     destinationCombi.addCardAt(
       sourceCombi.pickCardFrom(source.cardIndex),
-      destination.cardIndex,
+      destination.cardIndex
     );
 
     this.deleteEmptyCombinations();
@@ -108,8 +122,8 @@ export class GameBoard implements IGameBoard {
     this.combinations = this.previousTurnCombinations!.map(
       (combinationDto) =>
         new Combination({
-          cards: combinationDto.cards,
-        }),
+          cards: combinationDto.cards
+        })
     );
 
     this.saveTurnCombinations();
@@ -119,7 +133,7 @@ export class GameBoard implements IGameBoard {
     return (
       JSON.stringify(this.previousTurnCombinations) !==
       JSON.stringify(
-        this.combinations.map((combination) => combination.toDto()),
+        this.combinations.map((combination) => combination.toDto())
       )
     );
   }
@@ -128,7 +142,7 @@ export class GameBoard implements IGameBoard {
     const combiDto = this.combinations[combinationIndex].toDto();
 
     const wasCombinationInPreviousTurn = this.previousTurnCombinations.some(
-      (previousTurnCombiDto) => areEqual(combiDto, previousTurnCombiDto),
+      (previousTurnCombiDto) => areEqual(combiDto, previousTurnCombiDto)
     );
 
     return !wasCombinationInPreviousTurn;
@@ -150,7 +164,7 @@ export class GameBoard implements IGameBoard {
     this.throwIfTurnHasNotStarted();
 
     const previousTurnPoints = cardCombinationsPoints(
-      [...this.previousTurnCombinations]!,
+      [...this.previousTurnCombinations]!
     );
 
     return this.points() - previousTurnPoints;
@@ -174,16 +188,17 @@ export class GameBoard implements IGameBoard {
   }
 
   points(): number {
-    return cardCombinationsPoints(this.toDto().combinations);
+    return cardCombinationsPoints(this.combinations.map((combination) => combination.toDto()));
   }
 
   toDto(): GameBoardDto {
     return {
       isValid: this.isValid(),
       combinations: [
-        ...this.combinations.map((combination) => combination.toDto()),
+        ...this.combinations.map((combination) => combination.toDto())
       ],
       hasModifications: this.hasModifications(),
+      points: this.points()
     };
   }
 }

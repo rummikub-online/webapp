@@ -8,8 +8,11 @@ import type { ChangeEvent } from "@/lib/vueDraggable";
 import { toKey } from "@/logic/card";
 import type { CardDraggingHandler } from "@/logic/cardDragging";
 import Draggable from "vuedraggable";
+import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
+import { MIN_POINTS_TO_START } from "@/app/Player/domain/constants/player";
 
 const props = defineProps<{
+  gameBoard: GameBoardDto;
   player: PlayerDto;
   cardDraggingHandler: CardDraggingHandler;
   game: GameInfosDto;
@@ -23,20 +26,21 @@ const emit = defineEmits<{
   endTurn: [];
 }>();
 
+const { t } = useI18n();
 const orderedCards = useOrderedCards();
 
 const cards = ref<Array<OrderedCardDto>>(
-  orderedCards.toOrdered([...props.player.cards]),
+  orderedCards.toOrdered([...props.player.cards])
 );
 
 watch(
   () => ({
     player: props.player,
-    cardOrder: orderedCards.isOrderedByColor.value,
+    cardOrder: orderedCards.isOrderedByColor.value
   }),
   ({ player }) => {
     cards.value = orderedCards.toOrdered([...player.cards]);
-  },
+  }
 );
 
 const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
@@ -47,6 +51,10 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
 </script>
 <template>
   <div class="bg-body-bg border-t flex flex-col gap-2 px-2 py-4">
+    <GameRuleReminder v-if="player.isPlaying && !player.hasStarted" :game-rule="'first_turn'" dismissible>
+      {{ t("rules.first_turn.reminder", { playedPoints: gameBoard.points, neededPoints: MIN_POINTS_TO_START }) }}
+    </GameRuleReminder>
+
     <PlayerActions
       :player="player"
       :is-ordered-by-color="orderedCards.isOrderedByColor.value"

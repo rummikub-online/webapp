@@ -41,7 +41,11 @@
       <span>{{ game.gameInfos.value?.id }}</span>
 
       <div class="flex gap-2">
-        <GameRulesPopupButton />
+        <Button @click="modal.open(GameRulesModal)">
+          <div class="flex gap-2">
+            <BookOpenIcon class="size-4 text-body-text" />
+          </div>
+        </Button>
 
         <ConnectedUsernames
           v-if="game.connectedUsernames.value"
@@ -64,6 +68,7 @@
       />
 
       <PlayerDeck
+        :gameBoard="game.gameBoard.value"
         :player="game.selfPlayer.value"
         :card-dragging-handler="game.cardDraggingHandler"
         :game="game.gameInfos.value"
@@ -77,6 +82,10 @@
   </main>
 </template>
 <script setup lang="ts">
+import { BookOpenIcon } from "@heroicons/vue/20/solid";
+import GameRulesModal from "@/components/GameRulesModal.vue";
+
+const modal = useModal();
 const { params } = useRoute();
 const { t } = useI18n();
 

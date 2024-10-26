@@ -3,7 +3,7 @@ import svgLoader from "vite-svg-loader";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   vite: {
     plugins: [
       svgLoader({
@@ -16,29 +16,29 @@ export default defineNuxtConfig({
               params: {
                 overrides: {
                   // @see https://github.com/svg/svgo/issues/1128
-                  removeViewBox: false,
-                },
-              },
-            },
-          ],
-        },
-      }),
+                  removeViewBox: false
+                }
+              }
+            }
+          ]
+        }
+      })
     ],
     optimizeDeps: {
-      include: ["jsdoc-type-pratt-parser"],
-    },
+      include: ["jsdoc-type-pratt-parser"]
+    }
   },
   modules: [
     "@nuxt/test-utils/module",
     "@nuxtjs/storybook",
     "@nuxtjs/i18n",
-    "@nuxt/ui",
+    "@nuxt/ui"
   ],
   compatibilityDate: "2024-08-24",
   nitro: {
     experimental: {
-      websocket: true,
-    },
+      websocket: true
+    }
   },
   typescript: {
     typeCheck: true,
@@ -46,18 +46,18 @@ export default defineNuxtConfig({
       compilerOptions: {
         paths: {
           "@": ["."],
-          "@/*": ["./*"],
-        },
-      },
-    },
+          "@/*": ["./*"]
+        }
+      }
+    }
   },
 
   i18n: {
     locales: [
       {
         code: "fr",
-        file: "fr.ts",
-      },
+        file: "fr.ts"
+      }
     ],
     lazy: true,
     langDir: "lang",
@@ -66,15 +66,15 @@ export default defineNuxtConfig({
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: "rummikub.lang",
-      alwaysRedirect: true,
+      alwaysRedirect: true
     },
     compilation: {
       strictMessage: false,
-      escapeHtml: false,
-    },
+      escapeHtml: false
+    }
   },
 
   colorMode: {
-    preference: 'light'
+    preference: "light"
   }
 });

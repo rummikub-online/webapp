@@ -1,5 +1,6 @@
 {
     "title": "Règles du Rummikub",
+    "see_details": "Voir la règle \"{0}\" en détail",
     "purpose": {
         "title": "But du jeu",
         "content": "Le but du jeu est de poser toutes ses tuiles sur la table en créant des combinaisons."
@@ -27,7 +28,8 @@
             "title": "Quelques exemples:",
             "invalid": "Si vous ne posez que cette combinaison, vous n'avez que 27 points sur 30.",
             "valid": "Là, vous avez 33 points, vous pouvez jouer."
-        }
+        },
+        "reminder": "Vous avez posé {playedPoints} point(s) sur les {neededPoints} nécessaires pour jouer."
     },
     "turn": {
         "title": "Déroulement d'un tour",

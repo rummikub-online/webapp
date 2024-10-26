@@ -29,6 +29,7 @@
     </Head>
     <NuxtPage />
 
+    <UModals />
     <UNotifications />
   </div>
 </template>

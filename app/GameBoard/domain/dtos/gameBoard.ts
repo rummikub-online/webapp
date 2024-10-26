@@ -4,4 +4,5 @@ export type GameBoardDto = {
   isValid: boolean;
   combinations: Array<CombinationDto>;
   hasModifications: boolean;
+  points: number;
 };
