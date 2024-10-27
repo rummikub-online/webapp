@@ -16,9 +16,15 @@ defineProps<{
   number: CardNumber;
   color: CardColor;
 }>();
+
+const { t } = useI18n();
+
+const dragHintOpen = ref(false);
 </script>
 <template>
   <div
+    @click="dragHintOpen=true"
+    @mousedown="dragHintOpen = false"
     class="border border-card-border relative overflow-hidden select-none w-9 h-11 md:w-12 md:h-16 bg-card-bg rounded flex-col justify-center items-center gap-1 inline-flex"
     :class="[movable && 'hover:shadow-lg cursor-move', highlighted && 'ring-4']"
   >
@@ -53,5 +59,14 @@ defineProps<{
     >
       <LockClosedIcon class="size-4 md:size-6" />
     </div>
+
+    <UPopover class="absolute inset-0" v-model:open="dragHintOpen" :ui="{ring: 'ring-0'}">
+      <div class="-z-10 absolute inset-0"></div>
+      <template #panel>
+        <div class="p-2 text-xs">
+          {{ t("components.card.drag_hint") }}
+        </div>
+      </template>
+    </UPopover>
   </div>
 </template>
