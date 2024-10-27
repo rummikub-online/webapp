@@ -38,7 +38,11 @@
     "
   >
     <nav class="flex gap-2 p-4 border-b items-center justify-between">
-      <span>{{ game.gameInfos.value?.id }}</span>
+      <span v-if="game.gameInfos.value.state === 'created'">{{ game.gameInfos.value?.id }}</span>
+      <template v-if="game.gameInfos.value.state === 'started'">
+        <span v-if="game.selfPlayer.value.isPlaying">{{ t("pages.game.your_turn") }}</span>
+        <span v-else>{{ t("pages.game.turn_of", { username: game.gameInfos.value.currentPlayerUsername }) }}</span>
+      </template>
 
       <div class="flex gap-2">
         <Button @click="modal.open(GameRulesModal)">

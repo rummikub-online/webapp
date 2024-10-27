@@ -31,33 +31,7 @@ export const useGame = (gameId: any, username: any) => {
 
   const actionsLogs = ref<Array<string>>([]);
   const logAction = (action: string) => actionsLogs.value.push(action);
-  const logs = computed(() => {
-    const history = actionsLogs.value.slice(-3);
-
-    if (connectedUsernames.value && gameInfos.value?.currentPlayerUsername) {
-      if (!connectedUsernames.value[gameInfos.value.currentPlayerUsername]) {
-        history.push(
-          t("pages.game.is_playing_but_afk", {
-            user: gameInfos.value.currentPlayerUsername,
-          }),
-        );
-        return history;
-      }
-
-      if (gameInfos.value.currentPlayerUsername === username) {
-        history.push(t("pages.game.self_is_playing"));
-        return history;
-      }
-
-      history.push(
-        t("pages.game.is_playing", {
-          user: gameInfos.value.currentPlayerUsername,
-        }),
-      );
-    }
-
-    return history;
-  });
+  const logs = computed(() => actionsLogs.value.slice(-3));
 
   const {
     startGame,
@@ -67,7 +41,7 @@ export const useGame = (gameId: any, username: any) => {
     moveCardAlone,
     moveCardToCombination,
     placeCardAlone,
-    placeCardInCombination,
+    placeCardInCombination
   } = setupGameSocket({
     gameId,
     username,
@@ -86,17 +60,17 @@ export const useGame = (gameId: any, username: any) => {
     onPlayerCanceledTurnModifications(player) {
       logAction(
         t("toast.player_actions.canceled_turn_modifications", {
-          username: player.username,
-        }),
+          username: player.username
+        })
       );
     },
     onPlayerDrawnCard(player) {
       logAction(
         t("toast.player_actions.drawn_card", {
-          username: player.username,
-        }),
+          username: player.username
+        })
       );
-      if(player.id === selfPlayer.value?.id) {
+      if (player.id === selfPlayer.value?.id) {
         highlightedCard.value = {
           indexInHand: player.cards.length - 1
         };
@@ -105,8 +79,8 @@ export const useGame = (gameId: any, username: any) => {
     onPlayerPlayed(player) {
       logAction(
         t("toast.player_actions.played", {
-          username: player.username,
-        }),
+          username: player.username
+        })
       );
     },
     onPlayerMovedCard(player, cardPosition) {
@@ -123,14 +97,14 @@ export const useGame = (gameId: any, username: any) => {
     onDisconnect() {
       connected.value = false;
       disconnected.value = true;
-    },
+    }
   });
 
   const cardDraggingHandler = makeCardDraggingHandler({
     placeCardAlone,
     placeCardInCombination,
     moveCardAlone,
-    moveCardToCombination,
+    moveCardToCombination
   });
 
   return {
@@ -146,6 +120,6 @@ export const useGame = (gameId: any, username: any) => {
     cancelTurnModifications,
     drawCard,
     endTurn,
-    cardDraggingHandler,
+    cardDraggingHandler
   };
 };
