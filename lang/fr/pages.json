@@ -1,28 +1,28 @@
 {
-    "home": {
-        "username": "Nom d'utilisateur",
-        "create_game": "Créer une partie",
-        "join_game": "Rejoindre la partie",
-        "code_join_game": "Code de la partie",
-        "or": "Ou",
-        "see_rules": "Voir les règles du jeu"
+  "home": {
+    "username": "Nom d'utilisateur",
+    "create_game": "Créer une partie",
+    "join_game": "Rejoindre la partie",
+    "code_join_game": "Code de la partie",
+    "or": "Ou",
+    "see_rules": "Voir les règles du jeu"
+  },
+  "game": {
+    "unable_to_connect": {
+      "title": "Impossible de se connecter",
+      "explanation": "La partie a déjà commencé",
+      "back_home": "Retour à l'accueil"
     },
-    "game": {
-        "unable_to_connect": {
-            "title": "Impossible de se connecter",
-            "explanation": "La partie a déjà commencé",
-            "back_home": "Retour à l'accueil"
-        },
-        "ended": {
-            "title": "La partie est terminée !",
-            "winner": "{username} a gagné(e) !",
-            "back_home": "Retour à l'accueil"
-        },
-        "connected_usernames": "{n} personne connecté | {n} personnes connectés",
-        "your_turn": "Votre tour",
-        "turn_of": "Tour de {username}"
+    "ended": {
+      "title": "Partie terminée",
+      "winner": "{username} a gagné(e) !",
+      "back_home": "Retour à l'accueil"
     },
-    "rules": {
-        "back_home": "Retour à l'accueil"
-    }
+    "connected_usernames": "{n} personne connecté | {n} personnes connectés",
+    "your_turn": "Votre tour",
+    "turn_of": "Tour de {username}"
+  },
+  "rules": {
+    "back_home": "Retour à l'accueil"
+  }
 }

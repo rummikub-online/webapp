@@ -1,7 +1,8 @@
 {
   "player_actions": {
-    "drawn_card": "{username} a pioché",
-    "canceled_turn_modifications": "{username} a annulé ses modifications",
-    "played": "{username} a joué"
+    "drawn_card": "{username} a pioché(e)",
+    "canceled_turn_modifications": "{username} a annulé(e) ses modifications",
+    "played": "{username} a joué(e)",
+    "won": "{username} a gagné(e)"
   }
 }

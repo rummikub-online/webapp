@@ -10,23 +10,6 @@
     </NuxtLink>
   </div>
 
-  <div
-    class="h-dvh flex flex-col items-center justify-center bg-body-bg text-body-text"
-    v-else-if="game.gameInfos.value?.state === 'ended'"
-  >
-    <h1 class="text-xl mb-4">{{ t("pages.game.ended.title") }}</h1>
-    <p class="mb-4">
-      {{
-        t("pages.game.ended.winner", {
-          username: game.gameInfos.value.winnerUsername
-        })
-      }}
-    </p>
-    <NuxtLink href="/">
-      <Button>{{ t("pages.game.ended.back_home") }}</Button>
-    </NuxtLink>
-  </div>
-
   <main
     class="h-dvh flex flex-col bg-body-bg text-body-text"
     v-else-if="
@@ -38,10 +21,18 @@
     "
   >
     <nav class="flex gap-2 p-4 border-b items-center justify-between">
-      <span v-if="game.gameInfos.value.state === 'created'">{{ game.gameInfos.value?.id }}</span>
+      <span v-if="game.gameInfos.value.state === 'created'">{{
+        game.gameInfos.value?.id
+      }}</span>
       <template v-if="game.gameInfos.value.state === 'started'">
-        <span v-if="game.selfPlayer.value.isPlaying">{{ t("pages.game.your_turn") }}</span>
-        <span v-else>{{ t("pages.game.turn_of", { username: game.gameInfos.value.currentPlayerUsername }) }}</span>
+        <span v-if="game.selfPlayer.value.isPlaying">{{
+          t("pages.game.your_turn")
+        }}</span>
+        <span v-else>{{
+          t("pages.game.turn_of", {
+            username: game.gameInfos.value.currentPlayerUsername,
+          })
+        }}</span>
       </template>
 
       <div class="flex gap-2">

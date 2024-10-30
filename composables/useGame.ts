@@ -2,13 +2,14 @@ import type { GameInfosDto } from "@/app/Game/application/Game";
 import type { CardPositionOnBoard } from "@/app/GameBoard/application/GameBoard";
 import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
+import GameEndModal from "@/components/GameEndModal.vue";
 import { makeCardDraggingHandler } from "@/logic/cardDragging";
 import { setupGameSocket } from "@/logic/gameSocket";
 
 type HighlightedCard = {
   positionOnBoard?: CardPositionOnBoard;
   indexInHand?: number;
-}
+};
 
 export const useGame = (gameId: any, username: any) => {
   if (typeof gameId !== "string") {
@@ -19,6 +20,7 @@ export const useGame = (gameId: any, username: any) => {
     throw new Error("Username is not a string");
   }
 
+  const modal = useModal();
   const { t } = useI18n();
 
   const connected = ref(false);
@@ -41,7 +43,7 @@ export const useGame = (gameId: any, username: any) => {
     moveCardAlone,
     moveCardToCombination,
     placeCardAlone,
-    placeCardInCombination
+    placeCardInCombination,
   } = setupGameSocket({
     gameId,
     username,
@@ -52,6 +54,16 @@ export const useGame = (gameId: any, username: any) => {
       gameBoard.value = newGameBoard;
     },
     onGameInfosUpdate(newGameInfos) {
+      if (newGameInfos.state === "ended") {
+        modal.open(GameEndModal, {
+          winnerUsername: newGameInfos.winnerUsername,
+        });
+        logAction(
+          t("toast.player_actions.won", {
+            username: newGameInfos.winnerUsername,
+          }),
+        );
+      }
       gameInfos.value = newGameInfos;
     },
     onConnectedUsernamesUpdate(newConnectedUsernames) {
@@ -60,27 +72,28 @@ export const useGame = (gameId: any, username: any) => {
     onPlayerCanceledTurnModifications(player) {
       logAction(
         t("toast.player_actions.canceled_turn_modifications", {
-          username: player.username
-        })
+          username: player.username,
+        }),
       );
     },
     onPlayerDrawnCard(player) {
       logAction(
         t("toast.player_actions.drawn_card", {
-          username: player.username
-        })
+          username: player.username,
+        }),
       );
       if (player.id === selfPlayer.value?.id) {
         highlightedCard.value = {
-          indexInHand: player.cards.length - 1
+          indexInHand: player.cards.length - 1,
         };
       }
     },
     onPlayerPlayed(player) {
+      if (gameInfos.value?.state === "ended") return;
       logAction(
         t("toast.player_actions.played", {
-          username: player.username
-        })
+          username: player.username,
+        }),
       );
     },
     onPlayerMovedCard(player, cardPosition) {
@@ -88,7 +101,7 @@ export const useGame = (gameId: any, username: any) => {
         return;
       }
       highlightedCard.value = {
-        positionOnBoard: cardPosition
+        positionOnBoard: cardPosition,
       };
     },
     onConnect() {
@@ -97,14 +110,14 @@ export const useGame = (gameId: any, username: any) => {
     onDisconnect() {
       connected.value = false;
       disconnected.value = true;
-    }
+    },
   });
 
   const cardDraggingHandler = makeCardDraggingHandler({
     placeCardAlone,
     placeCardInCombination,
     moveCardAlone,
-    moveCardToCombination
+    moveCardToCombination,
   });
 
   return {
@@ -120,6 +133,6 @@ export const useGame = (gameId: any, username: any) => {
     cancelTurnModifications,
     drawCard,
     endTurn,
-    cardDraggingHandler
+    cardDraggingHandler,
   };
 };

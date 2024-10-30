@@ -31,6 +31,13 @@ export const loadMocks = ({
       id: "ending",
       gameBoard: randomGameBoard(),
     });
+
+    // @ts-expect-error
+    game.determineFirstPlayer = function () {
+      // @ts-expect-error
+      return this.players[0];
+    };
+
     const bob = game.addPlayer({ username: "Bob" });
     bob.drawStartupCards = function () {
       // @ts-expect-error
