@@ -229,16 +229,17 @@ describe("Game", () => {
         id: "game",
         players: [],
         drawStack: {
-          isEmpty: false
+          isEmpty: false,
         },
         gameBoard: {
           isValid: true,
           combinations: [],
           hasModifications: false,
-          points: 0
+          points: 0,
+          turnPoints: 0,
         },
         state: "created",
-        isFull: false
+        isFull: false,
       });
     });
   });
@@ -249,7 +250,7 @@ const drawStackMockedToGiveWinningStartupCards = vi
   .mockImplementation(() => [
     { color: "blue", number: 11, duplicata: 1 },
     { color: "blue", number: 12, duplicata: 1 },
-    { color: "blue", number: 13, duplicata: 1 }
+    { color: "blue", number: 13, duplicata: 1 },
   ]);
 
 test("A game can be played", () => {
@@ -258,7 +259,7 @@ test("A game can be played", () => {
   const game = new Game({
     id: "game",
     gameBoard,
-    drawStack
+    drawStack,
   });
   expect(game.toDto().state).toBe("created");
 

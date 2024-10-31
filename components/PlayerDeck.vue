@@ -2,21 +2,21 @@
 import type { CardDto } from "@/app/Card/domain/dtos/card";
 import type { OrderedCardDto } from "@/app/Card/domain/gamerules/grouping";
 import type { GameInfosDto } from "@/app/Game/application/Game";
+import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
+import { MIN_POINTS_TO_START } from "@/app/Player/domain/constants/player";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
 import { useOrderedCards } from "@/composables/useOrderedCards";
 import type { ChangeEvent } from "@/lib/vueDraggable";
 import { toKey } from "@/logic/card";
 import type { CardDraggingHandler } from "@/logic/cardDragging";
 import Draggable from "vuedraggable";
-import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
-import { MIN_POINTS_TO_START } from "@/app/Player/domain/constants/player";
 
 const props = defineProps<{
   gameBoard: GameBoardDto;
   player: PlayerDto;
   cardDraggingHandler: CardDraggingHandler;
   game: GameInfosDto;
-  highlightedCardIndex?: number
+  highlightedCardIndex?: number;
 }>();
 
 const emit = defineEmits<{
@@ -29,17 +29,17 @@ const { t } = useI18n();
 const orderedCards = useOrderedCards();
 
 const cards = ref<Array<OrderedCardDto>>(
-  orderedCards.toOrdered([...props.player.cards])
+  orderedCards.toOrdered([...props.player.cards]),
 );
 
 watch(
   () => ({
     player: props.player,
-    cardOrder: orderedCards.isOrderedByColor.value
+    cardOrder: orderedCards.isOrderedByColor.value,
   }),
   ({ player }) => {
     cards.value = orderedCards.toOrdered([...player.cards]);
-  }
+  },
 );
 
 const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
@@ -50,8 +50,17 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
 </script>
 <template>
   <div class="bg-body-bg border-t flex flex-col gap-2 px-2 py-4">
-    <GameRuleReminder v-if="player.isPlaying && !player.hasStarted" :game-rule="'first_turn'" dismissible>
-      {{ t("rules.first_turn.reminder", { playedPoints: gameBoard.points, neededPoints: MIN_POINTS_TO_START }) }}
+    <GameRuleReminder
+      v-if="player.isPlaying && !player.hasStarted"
+      :game-rule="'first_turn'"
+      dismissible
+    >
+      {{
+        t("rules.first_turn.reminder", {
+          playedPoints: gameBoard.turnPoints,
+          neededPoints: MIN_POINTS_TO_START,
+        })
+      }}
     </GameRuleReminder>
 
     <PlayerActions
@@ -80,7 +89,7 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
         :sort="false"
         @change="handleChange"
       >
-        <template #item="{ element: card }: {element: OrderedCardDto}">
+        <template #item="{ element: card }: { element: OrderedCardDto }">
           <Card
             :color="card.color"
             :number="card.number"
