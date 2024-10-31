@@ -152,6 +152,11 @@ const items = [
     defaultOpen: props.defaultOpen === "purpose"
   },
   {
+    label: t("rules.players_count.title"),
+    description: t("rules.players_count.content"),
+    defaultOpen: props.defaultOpen === "players_count"
+  },
+  {
     label: t("rules.card.title"),
     slot: "card",
     defaultOpen: props.defaultOpen === "card"

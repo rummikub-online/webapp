@@ -5,6 +5,10 @@
         "title": "But du jeu",
         "content": "Le but du jeu est de poser toutes ses tuiles sur la table en créant des combinaisons."
     },
+    "players_count": {
+        "title": "Nombre de joueurs",
+        "content": "Entre 2 et 4 joueurs."
+    },
     "card": {
         "title": "Tuile",
         "content": "Une tuile possède une couleur (rouge, bleue, verte, noire) et est numérotée de 1 à 13."
@@ -14,11 +18,11 @@
         "content": "Il y a deux jokers, ils peuvent remplacer n'importe quelle tuile.\n\nLeur couleur n'importe pas."
     },
     "suite": {
-        "title": "Suite",
+        "title": "Combinaison - Suite",
         "content": "C'est une combinaison de minimum 3 tuiles de même couleur et consécutives."
     },
     "serie": {
-        "title": "Série",
+        "title": "Combinaison - Série",
         "content": "C'est une combinaison de minimum 3 tuiles de même nombre et de couleurs différentes."
     },
     "first_turn": {

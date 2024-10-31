@@ -1,1 +1,1 @@
-export type GameRule = "purpose" | "card" | "joker" | "suite" | "serie" | "first_turn" | "turn" | "combination_modification";
+export type GameRule = "purpose" | "players_count" | "card" | "joker" | "suite" | "serie" | "first_turn" | "turn" | "combination_modification";
