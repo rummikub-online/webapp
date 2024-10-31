@@ -11,7 +11,6 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  startGame: [];
   orderByColor: [];
   orderByNumber: [];
   drawCard: [];
@@ -25,14 +24,6 @@ const canChangeCardOrder = computed(() => props.game.state === "started");
 </script>
 <template>
   <div v-if="player" class="flex flex-wrap gap-3">
-    <Button
-      type="primary"
-      v-if="player.canStartGame"
-      @click="emit('startGame')"
-    >
-      {{ t("start_game") }}
-    </Button>
-
     <Button
       type="primary"
       v-if="canChangeCardOrder && isOrderedByNumber"
@@ -68,7 +59,6 @@ const canChangeCardOrder = computed(() => props.game.state === "started");
 </template>
 <i18n lang="yaml">
 fr:
-  start_game: Démarrer la partie
   by_color: Par couleur
   by_number: Par numéro
   draw: Piocher

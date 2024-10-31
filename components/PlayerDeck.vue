@@ -20,7 +20,6 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  startGame: [];
   drawCard: [];
   cancelTurnModifications: [];
   endTurn: [];
@@ -65,7 +64,6 @@ const handleChange = (e: ChangeEvent<OrderedCardDto>) => {
       @end-turn="emit('endTurn')"
       @order-by-color="orderedCards.orderByColor()"
       @order-by-number="orderedCards.orderByNumber()"
-      @start-game="emit('startGame')"
     />
 
     <div v-if="player" class="flex justify-start items-start flex-wrap gap-3">

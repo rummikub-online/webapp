@@ -1,17 +1,17 @@
 import {
   DrawStack,
-  type IDrawStack,
+  type IDrawStack
 } from "@/app/DrawStack/application/DrawStack";
 import type { DrawStackDto } from "@/app/DrawStack/domain/dtos/drawStack";
 import {
   GameBoard,
-  type IGameBoard,
+  type IGameBoard
 } from "@/app/GameBoard/application/GameBoard";
 import type { GameBoardDto } from "@/app/GameBoard/domain/dtos/gameBoard";
 import {
   type IPlayer,
   type IPlayerFactory,
-  Player,
+  Player
 } from "@/app/Player/application/Player";
 import { MAX_PLAYERS } from "@/app/Player/domain/constants/player";
 import type { PlayerDto } from "@/app/Player/domain/dtos/player";
@@ -34,6 +34,7 @@ export type GameInfosDto = {
   id: GameId;
   state: GameState;
   isFull: boolean;
+  playersCount: number;
   currentPlayerUsername?: string;
   winnerUsername?: string;
 };
@@ -44,23 +45,41 @@ type AddPlayerProps = {
 
 export interface IGame {
   id: GameId;
+
   addPlayer(props?: AddPlayerProps, PlayerClass?: IPlayerFactory): IPlayer;
+
   findPlayerByUsername(username: string): IPlayer;
+
   findOrAddPlayer(props?: AddPlayerProps): IPlayer;
+
   removePlayer(id: string): void;
+
   get playerCount(): number;
+
   start(): void;
+
   end(): void;
+
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer;
+
   beginTurnOfNextPlayer(): void;
+
   isFull(): boolean;
+
   currentPlayer(): IPlayer;
+
   winner(): IPlayer;
+
   canStart(): boolean;
+
   canAddPlayer(): boolean;
+
   isStarted(): boolean;
+
   isEnded(): boolean;
+
   toDto(): GameDto;
+
   toInfosDto(): GameInfosDto;
 }
 
@@ -119,7 +138,7 @@ export class Game implements IGame {
       gameBoard: this.gameBoard,
       id: this.generateUserId(),
       admin,
-      username: props?.username ?? this.firstUnusedUsername(),
+      username: props?.username ?? this.firstUnusedUsername()
     });
 
     this.players.push(player);
@@ -157,7 +176,7 @@ export class Game implements IGame {
     }
 
     const playerIndex = this.players.findIndex(
-      (player) => player.username === username,
+      (player) => player.username === username
     );
 
     if (playerIndex === -1) {
@@ -207,7 +226,7 @@ export class Game implements IGame {
 
   nextPlayerAfter(currentPlayer: IPlayer): IPlayer {
     const playerIndex = this.players.findIndex(
-      (player) => player.id === currentPlayer.id,
+      (player) => player.id === currentPlayer.id
     );
 
     if (playerIndex >= this.players.length - 1) {
@@ -286,7 +305,7 @@ export class Game implements IGame {
       gameBoard: this.gameBoard.toDto(),
       players: this.players.map((player) => player.toDto()),
       state: this.state,
-      isFull: this.isFull(),
+      isFull: this.isFull()
     };
   }
 
@@ -295,10 +314,11 @@ export class Game implements IGame {
       id: this.id,
       state: this.state,
       isFull: this.isFull(),
+      playersCount: this.players.length,
       currentPlayerUsername:
         this.state === "started" ? this.currentPlayer().username : undefined,
       winnerUsername:
-        this.state === "ended" ? this.winner().username : undefined,
+        this.state === "ended" ? this.winner().username : undefined
     };
   }
 }

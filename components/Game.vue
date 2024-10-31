@@ -22,17 +22,17 @@
   >
     <nav class="flex gap-2 p-4 border-b items-center justify-between">
       <span v-if="game.gameInfos.value.state === 'created'">{{
-        game.gameInfos.value?.id
-      }}</span>
+          game.gameInfos.value?.id
+        }}</span>
       <template v-if="game.gameInfos.value.state === 'started'">
         <span v-if="game.selfPlayer.value.isPlaying">{{
-          t("pages.game.your_turn")
-        }}</span>
+            t("pages.game.your_turn")
+          }}</span>
         <span v-else>{{
-          t("pages.game.turn_of", {
-            username: game.gameInfos.value.currentPlayerUsername,
-          })
-        }}</span>
+            t("pages.game.turn_of", {
+              username: game.gameInfos.value.currentPlayerUsername
+            })
+          }}</span>
       </template>
 
       <div class="flex gap-2">
@@ -49,7 +49,22 @@
       </div>
     </nav>
 
+    <div v-if="game.gameInfos.value.state === 'created'" class="grow flex flex-col items-center justify-center text-center gap-2 p-4">
+      <p v-if="game.selfPlayer.value?.admin && !game.selfPlayer.value?.canStartGame">
+        {{ t("pages.game.waiting_for_players", { n: game.gameInfos.value.playersCount }) }}</p>
+      <p v-if="!game.selfPlayer.value?.admin">{{ t("pages.game.waiting_for_host") }}</p>
+      <p>{{ t("pages.game.invite_friends", { code: params.id }) }}</p>
+      <Button
+        type="primary"
+        v-if="game.selfPlayer.value?.canStartGame"
+        @click="game.startGame()"
+      >
+        {{ t("pages.game.start") }}
+      </Button>
+    </div>
+
     <GameBoard
+      v-if="game.gameInfos.value.state!=='created'"
       :highlighted-card="game.highlightedCard.value?.positionOnBoard"
       :game-board="game.gameBoard.value"
       :card-dragging-handler="game.cardDraggingHandler"
@@ -71,7 +86,6 @@
         @cancel-turn-modifications="game.cancelTurnModifications()"
         @draw-card="game.drawCard()"
         @end-turn="game.endTurn()"
-        @start-game="game.startGame()"
       />
     </div>
   </main>
