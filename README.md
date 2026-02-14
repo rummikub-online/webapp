@@ -1,6 +1,10 @@
 # Rummikub en TS
 [![Deploy](https://github.com/rummikub-online/webapp/actions/workflows/deploy.yml/badge.svg)](https://github.com/rummikub-online/webapp/actions/workflows/deploy.yml)
 
+## Présentation
+
+[Voir les vidéos](https://github.com/rummikub-online/webapp/wiki)
+
 ## Jouer
 
 Sur [rummikub.arthaud.dev](https://rummikub.arthaud.dev)
